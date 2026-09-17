@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './components/M3Register';
 import { ButtonsSection } from './components/explorer/ButtonsSection';
 import { InputsSection } from './components/explorer/InputsSection';
@@ -6,15 +6,26 @@ import { SelectionSection } from './components/explorer/SelectionSection';
 import { ChipsSection } from './components/explorer/ChipsSection';
 import { FeedbackSection } from './components/explorer/FeedbackSection';
 import { GuideSection } from './components/explorer/GuideSection';
+import { ExpressiveSection } from './components/explorer/ExpressiveSection';
 
-type Category = 'all' | 'buttons' | 'inputs' | 'selection' | 'chips' | 'feedback' | 'guide';
+type Category = 'all' | 'expressive' | 'buttons' | 'inputs' | 'selection' | 'chips' | 'feedback' | 'guide';
 
 export const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentTheme, setCurrentTheme] = useState<string>('baseline');
+
+  useEffect(() => {
+    if (currentTheme === 'baseline') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+    }
+  }, [currentTheme]);
 
   const categories: { id: Category; label: string; icon: string }[] = [
     { id: 'all', label: 'All Components', icon: 'grid_view' },
+    { id: 'expressive', label: 'M3 Expressive Lab', icon: 'auto_awesome' },
     { id: 'buttons', label: 'Buttons & FAB', icon: 'smart_button' },
     { id: 'inputs', label: 'Inputs & Fields', icon: 'edit_note' },
     { id: 'selection', label: 'Selection Controls', icon: 'toggle_on' },
@@ -104,6 +115,15 @@ export const App: React.FC = () => {
 
         {/* Sections Display */}
         <div className="flex flex-col gap-10">
+          {/* M3 Expressive Section */}
+          {(activeCategory === 'expressive' || activeCategory === 'all') &&
+            matchesSearch(['expressive', 'theme', 'color', 'tonal', 'asymmetric', 'coral', 'mint', 'berry', 'shape']) && (
+              <ExpressiveSection
+                currentTheme={currentTheme}
+                onThemeSelect={setCurrentTheme}
+              />
+            )}
+
           {/* Guide Section */}
           {(activeCategory === 'guide' || (activeCategory === 'all' && matchesSearch(['guide', 'nextjs', 'vite', 'recipe', 'maintenance']))) && (
             <GuideSection />

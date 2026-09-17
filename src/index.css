@@ -4,7 +4,7 @@
   --background: #f8f9fa;
   --foreground: #1d1b20;
 
-  /* Material Design 3 Core Colors */
+  /* Material Design 3 Core Colors (Baseline) */
   --md-sys-color-primary: #6750A4;
   --md-sys-color-on-primary: #FFFFFF;
   --md-sys-color-primary-container: #EADDFF;
@@ -14,6 +14,9 @@
   --md-sys-color-secondary-container: #E8DEF8;
   --md-sys-color-on-secondary-container: #1D192B;
   --md-sys-color-tertiary: #7D5260;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FFD8E4;
+  --md-sys-color-on-tertiary-container: #31111D;
   --md-sys-color-surface: #FEF7FF;
   --md-sys-color-on-surface: #1D1B20;
   --md-sys-color-outline: #79747E;
@@ -29,6 +32,66 @@
   --md-elevated-button-container-height: 44px;
   --md-filled-tonal-button-container-height: 44px;
   --md-text-button-container-height: 44px;
+}
+
+/* Material 3 Expressive: Coral Sunrise */
+[data-theme="expressive-coral"] {
+  --background: #fff8f6;
+  --foreground: #231917;
+  --md-sys-color-primary: #B32824;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #FFDAD6;
+  --md-sys-color-on-primary-container: #410002;
+  --md-sys-color-secondary: #8F4C38;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #FFDBD1;
+  --md-sys-color-on-secondary-container: #3A0B02;
+  --md-sys-color-tertiary: #795900;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FFE088;
+  --md-sys-color-on-tertiary-container: #261A00;
+  --md-sys-color-surface: #FFF8F6;
+  --md-sys-color-outline: #85736F;
+}
+
+/* Material 3 Expressive: Cyber Mint */
+[data-theme="expressive-mint"] {
+  --background: #f4fbf7;
+  --foreground: #161d19;
+  --md-sys-color-primary: #006C50;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #88F8CD;
+  --md-sys-color-on-primary-container: #002116;
+  --md-sys-color-secondary: #4C6357;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #CEE9D9;
+  --md-sys-color-on-secondary-container: #092016;
+  --md-sys-color-tertiary: #3D6473;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #C1E9FB;
+  --md-sys-color-on-tertiary-container: #001F29;
+  --md-sys-color-surface: #F4FBF7;
+  --md-sys-color-outline: #707973;
+}
+
+/* Material 3 Expressive: Berry Neon */
+[data-theme="expressive-berry"] {
+  --background: #fdf7fb;
+  --foreground: #1e1a1d;
+  --md-sys-color-primary: #8E1F79;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #FFD7F0;
+  --md-sys-color-on-primary-container: #38002F;
+  --md-sys-color-secondary: #705267;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #FBD7EE;
+  --md-sys-color-on-secondary-container: #291122;
+  --md-sys-color-tertiary: #844C47;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FFDAD6;
+  --md-sys-color-on-tertiary-container: #340C0A;
+  --md-sys-color-surface: #FDF7FB;
+  --md-sys-color-outline: #7F737B;
 }
 
 /* Material Symbols configuration */

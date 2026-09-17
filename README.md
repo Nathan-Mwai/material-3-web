@@ -32,6 +32,27 @@ This repository serves two goals:
 
 ---
 
+## Material 3 Expressive (The Android 15+ Evolution)
+
+**Material 3 Expressive** represents Google's transition from subtle, utilitarian interfaces to vibrant, emotion-driven designs. Key features included in this workbench:
+
+1. **Morphing & Asymmetric Shapes**:
+   - Rather than uniform symmetric boxes, Expressive uses playful corner pairings (e.g. `rounded-tl-[40px] rounded-br-[40px] rounded-tr-[16px] rounded-bl-[16px]`) and oversized squircle containers.
+   - Buttons embrace full ultra-pill silhouettes (`rounded-full` / `9999px`).
+2. **High-Chroma Tonal Palettes**:
+   - High-contrast, expressive color pairing:
+     - **Coral Sunrise**: Warm, energetic crimson primary paired with sunny gold tertiary.
+     - **Cyber Mint**: Crisp aquamarine and deep forest teal.
+     - **Berry Neon**: Playful magenta orchid and warm rose.
+3. **Dynamic Theme Switching**:
+   - In `src/index.css`, switch themes via data attribute:
+     ```html
+     <html data-theme="expressive-coral">
+     ```
+   - All `@material/web` components adapt instantly via CSS variables.
+
+---
+
 ## 2. Current Status of `@material/web` (Maintenance Mode)
 
 Google has placed the `material-components/material-web` repository into **Maintenance Mode**. Here is what this means practically for your projects:
