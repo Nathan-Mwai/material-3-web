@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './components/M3Register';
 import { MinimalCard } from './components/MinimalCard';
 import { DetailModal, type ComponentId } from './components/DetailModal';
+import { ButtonStudio } from './components/buttons/ButtonStudio';
 
 const GoogleGLogo = () => (
   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -26,8 +27,24 @@ const GoogleGLogo = () => (
 
 export const App: React.FC = () => {
   const [selectedId, setSelectedId] = useState<ComponentId | null>(null);
+  const [activeStudio, setActiveStudio] = useState<string | null>(null);
   const [currentTheme, setCurrentTheme] = useState<string>('baseline');
   const [filterCategory, setFilterCategory] = useState<string>('all');
+
+  // Handle URL hash changes for deep linking
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#/components/buttons') {
+        setActiveStudio('buttons');
+      } else {
+        setActiveStudio(null);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   useEffect(() => {
     if (currentTheme === 'baseline') {
@@ -37,6 +54,21 @@ export const App: React.FC = () => {
     }
   }, [currentTheme]);
 
+  const openButtonStudio = () => {
+    window.location.hash = '/components/buttons';
+    setActiveStudio('buttons');
+  };
+
+  const closeStudio = () => {
+    window.location.hash = '';
+    setActiveStudio(null);
+  };
+
+  // If ButtonStudio is active, render the dedicated Studio Page
+  if (activeStudio === 'buttons') {
+    return <ButtonStudio onBack={closeStudio} />;
+  }
+
   const cards: {
     id: ComponentId;
     badge: string;
@@ -45,6 +77,7 @@ export const App: React.FC = () => {
     type: string;
     bgColor: string;
     icon: string;
+    onSelectAction?: () => void;
     renderPreview: () => React.ReactNode;
   }[] = [
     {
@@ -55,13 +88,14 @@ export const App: React.FC = () => {
       type: 'actions',
       bgColor: '#F7F4FE', // Soft Lavender (Reference Card 1)
       icon: 'smart_button',
+      onSelectAction: openButtonStudio,
       renderPreview: () => (
         <div className="flex items-center gap-3">
-          <md-filled-button onClick={() => setSelectedId('buttons')}>
+          <md-filled-button onClick={openButtonStudio}>
             <md-icon slot="icon">send</md-icon>
             Filled
           </md-filled-button>
-          <md-outlined-button onClick={() => setSelectedId('buttons')}>
+          <md-outlined-button onClick={openButtonStudio}>
             Outlined
           </md-outlined-button>
         </div>
@@ -75,6 +109,7 @@ export const App: React.FC = () => {
       type: 'inputs',
       bgColor: '#FFF6EB', // Soft Peach / Warm Cream (Reference Card 2)
       icon: 'edit_note',
+      onSelectAction: () => setSelectedId('inputs'),
       renderPreview: () => (
         <div className="w-full max-w-[240px]">
           <md-outlined-text-field
@@ -95,6 +130,7 @@ export const App: React.FC = () => {
       type: 'selection',
       bgColor: '#F1F8EE', // Soft Mint / Honeydew (Reference Card 3)
       icon: 'toggle_on',
+      onSelectAction: () => setSelectedId('selection'),
       renderPreview: () => (
         <div className="flex items-center gap-6">
           <md-switch selected icons></md-switch>
@@ -111,6 +147,7 @@ export const App: React.FC = () => {
       type: 'chips',
       bgColor: '#FEFCE9', // Soft Butter / Lemon (Reference Card 4)
       icon: 'label',
+      onSelectAction: () => setSelectedId('chips'),
       renderPreview: () => (
         <md-chip-set>
           <md-filter-chip label="Design" selected>
@@ -130,6 +167,7 @@ export const App: React.FC = () => {
       type: 'feedback',
       bgColor: '#EDF4FD', // Soft Periwinkle (Reference Card 5)
       icon: 'progress_activity',
+      onSelectAction: () => setSelectedId('feedback'),
       renderPreview: () => (
         <div className="flex items-center gap-5">
           <md-circular-progress fourColor indeterminate></md-circular-progress>
@@ -145,6 +183,7 @@ export const App: React.FC = () => {
       type: 'motion',
       bgColor: '#FDF1F3', // Soft Rose Pink (Reference Card 6)
       icon: 'animation',
+      onSelectAction: () => setSelectedId('motion'),
       renderPreview: () => (
         <button
           onClick={() => setSelectedId('motion')}
@@ -163,6 +202,7 @@ export const App: React.FC = () => {
       type: 'theming',
       bgColor: '#FFF5EB',
       icon: 'palette',
+      onSelectAction: () => setSelectedId('expressive'),
       renderPreview: () => (
         <div className="flex items-center gap-2.5">
           <span className="w-6 h-6 rounded-full bg-[#6750A4] shadow-xs"></span>
@@ -180,6 +220,7 @@ export const App: React.FC = () => {
       type: 'guide',
       bgColor: '#F8FAFC',
       icon: 'menu_book',
+      onSelectAction: () => setSelectedId('guide'),
       renderPreview: () => (
         <div className="px-3.5 py-1.5 rounded-xl bg-black/5 font-mono text-xs text-slate-700 flex items-center gap-1.5">
           <span className="material-symbols-outlined text-[14px]">terminal</span>
@@ -254,7 +295,7 @@ export const App: React.FC = () => {
               Material 3 Design
             </h1>
             <p className="text-sm text-slate-600 mt-1.5 max-w-lg">
-              Official Google Web Components. Select any item to view live specifications & code.
+              Official Google Web Components. Select any item to view live specifications, studio sandbox & code.
             </p>
           </div>
 
@@ -295,7 +336,7 @@ export const App: React.FC = () => {
               bgColor={card.bgColor}
               icon={card.icon}
               brandIcon="google"
-              onSelect={() => setSelectedId(card.id)}
+              onSelect={card.onSelectAction || (() => setSelectedId(card.id))}
             >
               {card.renderPreview()}
             </MinimalCard>
@@ -337,7 +378,14 @@ export const App: React.FC = () => {
       <DetailModal
         selectedId={selectedId}
         onClose={() => setSelectedId(null)}
-        onSelectId={(id) => setSelectedId(id)}
+        onSelectId={(id) => {
+          if (id === 'buttons') {
+            setSelectedId(null);
+            openButtonStudio();
+          } else {
+            setSelectedId(id);
+          }
+        }}
         currentTheme={currentTheme}
         onThemeSelect={setCurrentTheme}
       />

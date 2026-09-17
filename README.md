@@ -17,6 +17,25 @@
 
 ---
 
+
+---
+
+## 📋 Component Inventory & Learning Guides
+
+Material 3 components are organized into dedicated feature folders with their own learning manuals, interactive prop playgrounds, and integration code recipes:
+
+| Component Family | Web Component Tags | Learning Guide | Status | Live Route |
+| :--- | :--- | :--- | :--- | :--- |
+| **Buttons & Actions** | `<md-filled-button>`, `<md-filled-tonal-button>`, `<md-elevated-button>`, `<md-outlined-button>`, `<md-text-button>`, `<md-fab>`, `<md-icon-button>` | [Buttons Guide (src/components/buttons/README.md)](src/components/buttons/README.md) | 🟢 **Actualized** (Studio + Props) | `#/components/buttons` |
+| **Text Fields & Forms** | `<md-outlined-text-field>`, `<md-filled-text-field>`, `<md-outlined-select>`, `<md-filled-select>` | Inputs Guide *(In Progress)* | 🟡 Workbench Preview | `#/components/inputs` |
+| **Selection Controls** | `<md-switch>`, `<md-checkbox>`, `<md-radio>` | Selection Guide *(Planned)* | 🟡 Workbench Preview | `#/components/selection` |
+| **Chips & Tags** | `<md-filter-chip>`, `<md-assist-chip>`, `<md-input-chip>`, `<md-suggestion-chip>` | Chips Guide *(Planned)* | 🟡 Workbench Preview | `#/components/chips` |
+| **Progress & Dialogs** | `<md-circular-progress>`, `<md-linear-progress>`, `<md-dialog>` | Progress Guide *(Planned)* | 🟡 Workbench Preview | `#/components/feedback` |
+| **Spring Motion** | Android 15 Spring Dynamics, Ripple Surfaces, Container Morphs | Motion Guide *(Planned)* | 🟡 Workbench Preview | `#/components/motion` |
+| **Expressive Theming** | 4 Dynamic Color Themes (`baseline`, `coral`, `mint`, `berry`) | Expressive Guide *(Planned)* | 🟡 Workbench Preview | `#/components/theming` |
+
+---
+
 ## 1. Overview & Project Purpose
 
 **Material Design 3 (M3)** is Google’s latest design system, characterized by:
