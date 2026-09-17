@@ -90,6 +90,7 @@ export interface MaterialWebElements {
   'md-circular-progress': MaterialCustomElementProps;
   'md-linear-progress': MaterialCustomElementProps;
   'md-dialog': MaterialCustomElementProps;
+  'md-ripple': MaterialCustomElementProps;
 
   // Containment & Navigation
   'md-divider': MaterialCustomElementProps;

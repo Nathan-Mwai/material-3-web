@@ -33,3 +33,4 @@ import '@material/web/progress/circular-progress.js';
 import '@material/web/progress/linear-progress.js';
 import '@material/web/dialog/dialog.js';
 import '@material/web/divider/divider.js';
+import '@material/web/ripple/ripple.js';

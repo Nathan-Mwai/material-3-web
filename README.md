@@ -53,6 +53,52 @@ This repository serves two goals:
 
 ---
 
+## Material 3 Motion System & Expressive Spring Physics
+
+Material Design 3's motion system brings interfaces to life using physics-based curves, spring overshoots, and container transforms rather than mechanical linear movement.
+
+### 1. Easing Curve Tokens
+| Curve Name | CSS cubic-bezier | Visual Behavior |
+| :--- | :--- | :--- |
+| **M3 Emphasized** | `cubic-bezier(0.2, 0, 0, 1)` | Standard natural deceleration for screen entries and card reveals |
+| **M3 Expressive Spring** | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Tactile spring overshoot with realistic momentum and soft settle |
+| **Emphasized Accelerate** | `cubic-bezier(0.3, 0, 0.8, 0.15)` | Fast, purposeful exit animations |
+
+### 2. Spring Press & Hover (The "Squeeze" Physics)
+Buttons compress on `:active` and bounce back into resting state:
+```css
+.m3-spring-interactive {
+  transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+.m3-spring-interactive:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+.m3-spring-interactive:active {
+  transform: translateY(1px) scale(0.96);
+  transition-duration: 80ms;
+}
+```
+
+### 3. Container Transform (Morphing Shapes)
+M3 morphs containers smoothly when moving between preview and detailed view modes:
+```css
+.m3-container-morph {
+  transition: all 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+```
+
+### 4. Embedding Native Google Ink Ripples (`<md-ripple>`)
+You can add Google's authentic Material ink ripple to **any** custom card or HTML element:
+```html
+<div class="relative overflow-hidden cursor-pointer p-6 rounded-3xl bg-white shadow-sm">
+  <md-ripple></md-ripple>
+  <h3>Interactive Surface</h3>
+  <p>Click anywhere to trigger Google's radial ink ripple</p>
+</div>
+```
+
+---
+
 ## 2. Current Status of `@material/web` (Maintenance Mode)
 
 Google has placed the `material-components/material-web` repository into **Maintenance Mode**. Here is what this means practically for your projects:

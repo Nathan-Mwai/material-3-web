@@ -7,8 +7,9 @@ import { ChipsSection } from './components/explorer/ChipsSection';
 import { FeedbackSection } from './components/explorer/FeedbackSection';
 import { GuideSection } from './components/explorer/GuideSection';
 import { ExpressiveSection } from './components/explorer/ExpressiveSection';
+import { MotionSection } from './components/explorer/MotionSection';
 
-type Category = 'all' | 'expressive' | 'buttons' | 'inputs' | 'selection' | 'chips' | 'feedback' | 'guide';
+type Category = 'all' | 'expressive' | 'motion' | 'buttons' | 'inputs' | 'selection' | 'chips' | 'feedback' | 'guide';
 
 export const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('all');
@@ -26,6 +27,7 @@ export const App: React.FC = () => {
   const categories: { id: Category; label: string; icon: string }[] = [
     { id: 'all', label: 'All Components', icon: 'grid_view' },
     { id: 'expressive', label: 'M3 Expressive Lab', icon: 'auto_awesome' },
+    { id: 'motion', label: 'Motion & Physics', icon: 'animation' },
     { id: 'buttons', label: 'Buttons & FAB', icon: 'smart_button' },
     { id: 'inputs', label: 'Inputs & Fields', icon: 'edit_note' },
     { id: 'selection', label: 'Selection Controls', icon: 'toggle_on' },
@@ -122,6 +124,12 @@ export const App: React.FC = () => {
                 currentTheme={currentTheme}
                 onThemeSelect={setCurrentTheme}
               />
+            )}
+
+          {/* M3 Motion & Physics Section */}
+          {(activeCategory === 'motion' || activeCategory === 'all') &&
+            matchesSearch(['motion', 'physics', 'spring', 'animation', 'easing', 'ripple', 'morph', 'transform', 'stagger']) && (
+              <MotionSection />
             )}
 
           {/* Guide Section */}
