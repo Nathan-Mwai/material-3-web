@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
+  --background: #fcefdc;
   --foreground: #1d1b20;
 
   /* Material Design 3 Core Colors (Baseline) */
@@ -32,6 +32,15 @@
   --md-elevated-button-container-height: 44px;
   --md-filled-tonal-button-container-height: 44px;
   --md-text-button-container-height: 44px;
+}
+
+.ambient-m3-canvas {
+  background-color: #fbf2e3;
+  background-image: 
+    radial-gradient(circle at 12% 18%, rgba(254, 215, 170, 0.55) 0%, transparent 40%),
+    radial-gradient(circle at 88% 18%, rgba(254, 240, 138, 0.55) 0%, transparent 45%),
+    radial-gradient(circle at 50% 65%, rgba(254, 205, 211, 0.45) 0%, transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(224, 231, 255, 0.45) 0%, transparent 45%);
 }
 
 /* Material 3 Expressive: Coral Sunrise */
