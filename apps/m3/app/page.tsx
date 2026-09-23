@@ -5,8 +5,8 @@ const page = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center">
 
-        <Button variant={"elevated"} color={"destructive"}>
-          Page
+        <Button>
+          Testing the Button
         </Button>
 
     </div>
