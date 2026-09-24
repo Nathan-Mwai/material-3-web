@@ -86,10 +86,10 @@ export default function Page() {
       <div className="w-full max-w-4xl flex justify-between items-center pb-4 border-b border-outline-variant">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">
-            Material 3 Side Icons & Short Words Morph Test
+            Material 3 Button morphWidth & Sibling Inertia Test
           </h1>
           <p className="text-xs text-on-surface-variant mt-1">
-            Circular side icons now use shape="circle" with exact radii. Short words respect M3 min-width to prevent jitter.
+            morphWidth interpolates width across 500ms so sibling buttons glide outward and inward with inertia.
           </p>
         </div>
         <Button
@@ -101,8 +101,8 @@ export default function Page() {
         </Button>
       </div>
 
-      {/* Google Call Interactive Mockup */}
-      <section className="w-full max-w-md p-8 rounded-3xl bg-surface-container-low border border-outline-variant flex flex-col items-center gap-6 shadow-sm">
+      {/* Google Call Interactive Mockup with morphWidth */}
+      <section className="w-full max-w-md p-8 rounded-3xl bg-surface-container-low border border-outline-variant flex flex-col items-center gap-6 shadow-sm overflow-hidden">
         <div className="flex flex-col items-center text-center">
           <span className="text-lg font-semibold tracking-tight">
             Appointment - Thea
@@ -112,8 +112,9 @@ export default function Page() {
           </span>
         </div>
 
+        {/* Action Row: Center button uses morphWidth to glide between sizes */}
         <div className="flex items-center justify-center gap-4 w-full">
-          {/* 1. Video Toggle: Uses shape="circle" size="md" (56px circle: 28dp -> 12dp smooth morph) */}
+          {/* 1. Video Toggle */}
           <Button
             variant="outlined"
             shape="circle"
@@ -125,19 +126,20 @@ export default function Page() {
             <VideoIcon />
           </Button>
 
-          {/* 2. End Call / Rejoin Call: 56px height, morphs from 28dp -> 12dp smoothly */}
+          {/* 2. End Call button with morphWidth */}
           <Button
             variant="filled"
             shape="round"
             size="md"
+            morphWidth
             selected={callActive}
-            className="flex-1 px-8 text-base shadow-sm"
+            leadingIcon={<PhoneOffIcon />}
             onClick={() => setCallActive((prev) => !prev)}
           >
-            {callActive ? "End call" : "Ask to Join"}
+            {callActive ? "End call" : "Ask to Join Session"}
           </Button>
 
-          {/* 3. Mic Toggle: Uses shape="circle" size="md" (56px circle: 28dp -> 12dp smooth morph) */}
+          {/* 3. Mic Toggle */}
           <Button
             variant="outlined"
             shape="circle"
@@ -172,11 +174,8 @@ export default function Page() {
       {/* Circular Icon Buttons Across All 5 Sizes */}
       <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col gap-4">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-          Side & Circular Icon Buttons (shape="circle" across all sizes)
+          Side & Circular Icon Buttons (shape: Cacircle across all sizes)
         </h2>
-        <p className="text-xs text-on-surface-variant">
-          Press and hold any circle below: notice how it smoothly morphs from circle into a soft rounded square without any snapping!
-        </p>
         <div className="flex flex-wrap items-center gap-6 mt-1">
           <div className="flex flex-col items-center gap-1">
             <span className="text-[11px] text-on-surface-variant">XS (32dp)</span>
@@ -208,7 +207,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Precision Morph Test Bench for Standard Buttons */}
+      {/* Standard Buttons Scale (Round vs Square) */}
       <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col gap-6">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
           Standard Buttons Scale (Round vs Square)

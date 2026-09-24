@@ -8,8 +8,8 @@ export const buttonVariants = cva(
     // Base layout, interactive behavior, GPU compositing, and accessible touch target
     "relative inline-flex items-center justify-center shrink-0 select-none",
     "font-medium whitespace-nowrap outline-none cursor-pointer transform-gpu",
-    // Fluid shape morph transition: 500ms release, 300ms press compression
-    "transition-[border-radius,transform,box-shadow,background-color,color,opacity] duration-500 ease-out active:duration-300 active:scale-[0.98]",
+    // Fluid shape morph and width transition: 500ms release, 300ms press compression
+    "transition-[border-radius,width,transform,box-shadow,background-color,color,opacity] duration-500 ease-[cubic-bezier(0.2,0,0,1)] active:duration-300 active:scale-[0.98]",
     // Accessible touch target (48x48px min)
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
     // Focus indicator
@@ -174,6 +174,7 @@ export interface ButtonProps
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
   selected?: boolean;
+  morphWidth?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -184,23 +185,63 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       leadingIcon,
       trailingIcon,
       selected,
+      morphWidth = false,
       variant,
       size,
       shape,
+      style,
       children,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot.Root : "button";
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+    const innerRef = React.useRef<HTMLSpanElement>(null);
+    const [measuredWidth, setMeasuredWidth] = React.useState<number | undefined>(undefined);
+
     const hasLeading = Boolean(leadingIcon);
     const hasTrailing = Boolean(trailingIcon);
     const isToggle = typeof selected === "boolean";
     const toggleState = isToggle ? (selected ? "selected" : "unselected") : "none";
 
+    // Synchronize forwarded ref and local buttonRef
+    const setButtonRef = React.useCallback(
+      (node: HTMLButtonElement | null) => {
+        buttonRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+        }
+      },
+      [ref]
+    );
+
+    // Measure intrinsic content width + padding for smooth CSS width interpolation
+    React.useLayoutEffect(() => {
+      if (!morphWidth || !buttonRef.current || !innerRef.current) return;
+
+      const measure = () => {
+        if (!buttonRef.current || !innerRef.current) return;
+        const computed = window.getComputedStyle(buttonRef.current);
+        const pl = parseFloat(computed.paddingLeft) || 0;
+        const pr = parseFloat(computed.paddingRight) || 0;
+        const contentW = innerRef.current.scrollWidth;
+        const newWidth = Math.ceil(contentW + pl + pr);
+        setMeasuredWidth(newWidth);
+      };
+
+      measure();
+
+      const observer = new ResizeObserver(measure);
+      observer.observe(innerRef.current);
+      return () => observer.disconnect();
+    }, [morphWidth, children, leadingIcon, trailingIcon, size]);
+
     return (
       <Comp
-        ref={ref}
+        ref={setButtonRef}
         data-slot="button"
         data-variant={variant}
         data-size={size}
@@ -208,6 +249,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-pressed={isToggle ? selected : undefined}
         data-selected={isToggle ? selected : undefined}
         data-state={isToggle ? (selected ? "on" : "off") : undefined}
+        style={{
+          ...(morphWidth && measuredWidth ? { width: `${measuredWidth}px` } : {}),
+          ...style,
+        }}
         className={cn(
           buttonVariants({
             variant,
@@ -219,9 +264,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        {leadingIcon}
-        {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}
-        {trailingIcon}
+        {morphWidth ? (
+          <span
+            ref={innerRef}
+            className="inline-flex items-center justify-center gap-[inherit] whitespace-nowrap overflow-visible"
+          >
+            {leadingIcon}
+            {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}
+            {trailingIcon}
+          </span>
+        ) : (
+          <>
+            {leadingIcon}
+            {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}
+            {trailingIcon}
+          </>
+        )}
       </Comp>
     );
   }
