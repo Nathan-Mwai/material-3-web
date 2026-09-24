@@ -5,9 +5,9 @@ import * as React from "react";
 
 export const buttonVariants = cva(
   [
-    // Base layout, interactive behavior, and accessible touch target
+    // Base layout, interactive behavior, GPU compositing, and accessible touch target
     "relative inline-flex items-center justify-center shrink-0 select-none",
-    "font-medium whitespace-nowrap outline-none cursor-pointer",
+    "font-medium whitespace-nowrap outline-none cursor-pointer transform-gpu",
     // Fluid shape morph transition: 500ms release, 300ms press compression
     "transition-[border-radius,transform,box-shadow,background-color,color,opacity] duration-500 ease-out active:duration-300 active:scale-[0.98]",
     // Accessible touch target (48x48px min)
@@ -31,6 +31,7 @@ export const buttonVariants = cva(
       shape: {
         round: "",
         square: "",
+        circle: "aspect-square p-0 min-w-0",
       },
       size: {
         // Size dimensions, padding, icon sizing, and Family C compact pressed morph
@@ -48,19 +49,26 @@ export const buttonVariants = cva(
     },
 
     compoundVariants: [
-      // Family A: Exact half-height resting radii (replaces 9999px so transitions animate without browser clamping)
-      { shape: "round", size: "xs", className: "rounded-[16px]" },
-      { shape: "round", size: "sm", className: "rounded-[20px]" },
-      { shape: "round", size: "md", className: "rounded-[28px]" },
-      { shape: "round", size: "lg", className: "rounded-[48px]" },
-      { shape: "round", size: "xl", className: "rounded-[68px]" },
+      // Family A: Round buttons with M3 min-width (prevents corner overlap calculation on short words)
+      { shape: "round", size: "xs", className: "rounded-[16px] min-w-[48px]" },
+      { shape: "round", size: "sm", className: "rounded-[20px] min-w-[48px]" },
+      { shape: "round", size: "md", className: "rounded-[28px] min-w-[64px]" },
+      { shape: "round", size: "lg", className: "rounded-[48px] min-w-[96px]" },
+      { shape: "round", size: "xl", className: "rounded-[68px] min-w-[128px]" },
 
-      // Family B: Square button subtle resting radii mapped to container height
-      { shape: "square", size: "xs", className: "rounded-[12px]" },
-      { shape: "square", size: "sm", className: "rounded-[12px]" },
-      { shape: "square", size: "md", className: "rounded-[16px]" },
-      { shape: "square", size: "lg", className: "rounded-[28px]" },
-      { shape: "square", size: "xl", className: "rounded-[28px]" },
+      // Family B: Square buttons with subtle curved resting radii
+      { shape: "square", size: "xs", className: "rounded-[12px] min-w-[48px]" },
+      { shape: "square", size: "sm", className: "rounded-[12px] min-w-[48px]" },
+      { shape: "square", size: "md", className: "rounded-[16px] min-w-[64px]" },
+      { shape: "square", size: "lg", className: "rounded-[28px] min-w-[96px]" },
+      { shape: "square", size: "xl", className: "rounded-[28px] min-w-[128px]" },
+
+      // Circle shape: Exact half-dimension radii for circular icon buttons
+      { shape: "circle", size: "xs", className: "w-8 rounded-[16px]" },
+      { shape: "circle", size: "sm", className: "w-10 rounded-[20px]" },
+      { shape: "circle", size: "md", className: "w-14 rounded-[28px]" },
+      { shape: "circle", size: "lg", className: "w-24 rounded-[48px]" },
+      { shape: "circle", size: "xl", className: "w-[136px] rounded-[68px]" },
 
       // Row A: Elevated button (Level 1 elevation at rest, Level 2 on hover, Level 1 on press)
       {

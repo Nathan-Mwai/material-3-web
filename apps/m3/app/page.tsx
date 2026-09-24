@@ -86,10 +86,10 @@ export default function Page() {
       <div className="w-full max-w-4xl flex justify-between items-center pb-4 border-b border-outline-variant">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">
-            Material 3 Button Smooth Morph & Measurements
+            Material 3 Side Icons & Short Words Morph Test
           </h1>
           <p className="text-xs text-on-surface-variant mt-1">
-            Exact numeric border radii (no 9999px clamping). Press and hold to watch the corners fluidly pull inward to compact radii!
+            Circular side icons now use shape="circle" with exact radii. Short words respect M3 min-width to prevent jitter.
           </p>
         </div>
         <Button
@@ -113,37 +113,36 @@ export default function Page() {
         </div>
 
         <div className="flex items-center justify-center gap-4 w-full">
-          {/* Video Toggle */}
+          {/* 1. Video Toggle: Uses shape="circle" size="md" (56px circle: 28dp -> 12dp smooth morph) */}
           <Button
             variant="outlined"
-            shape="round"
+            shape="circle"
+            size="md"
             selected={videoOn}
-            className="size-14 p-0 rounded-full shrink-0"
             onClick={() => setVideoOn((v) => !v)}
             aria-label="Toggle camera"
           >
             <VideoIcon />
           </Button>
 
-          {/* End Call / Rejoin Call */}
+          {/* 2. End Call / Rejoin Call: 56px height, morphs from 28dp -> 12dp smoothly */}
           <Button
             variant="filled"
             shape="round"
             size="md"
             selected={callActive}
             className="flex-1 px-8 text-base shadow-sm"
-            leadingIcon={<PhoneOffIcon />}
             onClick={() => setCallActive((prev) => !prev)}
           >
-            {callActive ? "End call" : "Rejoin call"}
+            {callActive ? "End call" : "Ask to Join"}
           </Button>
 
-          {/* Mic Toggle */}
+          {/* 3. Mic Toggle: Uses shape="circle" size="md" (56px circle: 28dp -> 12dp smooth morph) */}
           <Button
             variant="outlined"
-            shape="round"
+            shape="circle"
+            size="md"
             selected={micOn}
-            className="size-14 p-0 rounded-full shrink-0"
             onClick={() => setMicOn((m) => !m)}
             aria-label="Toggle microphone"
           >
@@ -152,13 +151,69 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Interactive Morph Tester: Round vs Square Across All 5 Sizes */}
+      {/* Short-Word Buttons Test (Testing M3 min-width to verify no jitter) */}
+      <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
+          Short-Word Buttons Test (M3 Min-Width Protection)
+        </h2>
+        <p className="text-xs text-on-surface-variant">
+          Buttons with 1-3 letter words. Because M3 min-width (48dp/64dp) is applied, corners never collide or jitter during press!
+        </p>
+        <div className="flex flex-wrap items-center gap-4 mt-1">
+          <Button size="sm" shape="round">OK</Button>
+          <Button size="sm" shape="round" variant="tonal">Go</Button>
+          <Button size="sm" shape="square" variant="filled">No</Button>
+          <Button size="md" shape="round" variant="elevated">Yes</Button>
+          <Button size="md" shape="square" variant="outlined">Play</Button>
+          <Button size="md" shape="round" variant="filled">End</Button>
+        </div>
+      </section>
+
+      {/* Circular Icon Buttons Across All 5 Sizes */}
+      <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
+          Side & Circular Icon Buttons (shape="circle" across all sizes)
+        </h2>
+        <p className="text-xs text-on-surface-variant">
+          Press and hold any circle below: notice how it smoothly morphs from circle into a soft rounded square without any snapping!
+        </p>
+        <div className="flex flex-wrap items-center gap-6 mt-1">
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[11px] text-on-surface-variant">XS (32dp)</span>
+            <Button shape="circle" size="xs" variant="tonal">
+              <EditIcon />
+            </Button>
+          </div>
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[11px] text-on-surface-variant">SM (40dp)</span>
+            <Button shape="circle" size="sm" variant="tonal">
+              <EditIcon />
+            </Button>
+          </div>
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[11px] text-on-surface-variant">MD (56dp)</span>
+            <Button shape="circle" size="md" variant="tonal">
+              <EditIcon />
+            </Button>
+          </div>
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[11px] text-on-surface-variant">LG (96dp)</span>
+            <Button shape="circle" size="lg" variant="tonal">
+              <EditIcon />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Precision Morph Test Bench for Standard Buttons */}
       <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col gap-6">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-          Precision Morph Test Bench (Press & Hold to observe fluid corner morph)
+          Standard Buttons Scale (Round vs Square)
         </h2>
 
-        {/* Round (Family A: Half-Height → Compact Family C) */}
         <div className="flex flex-col gap-2">
           <span className="text-xs text-on-surface-variant font-medium">
             Round Buttons (xs: 16→8dp | sm: 20→8dp | md: 28→12dp | lg: 48→16dp | xl: 68→16dp)
@@ -172,7 +227,6 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Square (Family B: Curved → Compact Family C) */}
         <div className="flex flex-col gap-2 mt-4">
           <span className="text-xs text-on-surface-variant font-medium">
             Square Buttons (xs: 12→8dp | sm: 12→8dp | md: 16→12dp | lg: 28→16dp | xl: 28→16dp)
@@ -184,36 +238,6 @@ export default function Page() {
               </Button>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Filled Toggle Switcher */}
-      <section className="w-full max-w-4xl p-6 rounded-2xl bg-surface-container-low border border-outline-variant flex flex-col items-center gap-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-          Filled Toggle Color & Shape Switcher
-        </h2>
-        <div className="flex flex-wrap items-center justify-center gap-6">
-          <Button
-            variant="filled"
-            shape="round"
-            size="md"
-            selected={filledToggle}
-            leadingIcon={<EditIcon />}
-            onClick={() => setFilledToggle((prev) => !prev)}
-          >
-            {filledToggle ? "Round Selected (Primary)" : "Round Unselected (Surface)"}
-          </Button>
-
-          <Button
-            variant="filled"
-            shape="square"
-            size="md"
-            selected={filledToggle}
-            leadingIcon={<EditIcon />}
-            onClick={() => setFilledToggle((prev) => !prev)}
-          >
-            {filledToggle ? "Square Selected (Primary)" : "Square Unselected (Surface)"}
-          </Button>
         </div>
       </section>
     </main>
