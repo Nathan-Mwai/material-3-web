@@ -5,16 +5,17 @@ import * as React from "react";
 
 export const buttonVariants = cva(
   [
-    // Base layout, interactive behavior, accessible touch target, and smooth shape morph transition
+    // Base layout, interactive behavior, and accessible touch target
     "relative inline-flex items-center justify-center shrink-0 select-none",
     "font-medium whitespace-nowrap outline-none cursor-pointer",
-    "transition-[border-radius,box-shadow,background-color,color,opacity] duration-150 ease-out",
+    // Fluid shape morph transition: 500ms release, 300ms press compression
+    "transition-[border-radius,transform,box-shadow,background-color,color,opacity] duration-500 ease-out active:duration-300 active:scale-[0.98]",
     // Accessible touch target (48x48px min)
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
     // Focus indicator
     "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     // Disabled state
-    "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none",
+    "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none disabled:scale-100",
     // Icon base resets
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ],
@@ -28,11 +29,11 @@ export const buttonVariants = cva(
         text: "",
       },
       shape: {
-        round: "rounded-full",
+        round: "",
         square: "",
       },
       size: {
-        // Active states apply M3 compact corner morph (Family C) on press
+        // Size dimensions, padding, icon sizing, and Family C compact pressed morph
         xs: "h-8 px-3 gap-1 text-xs active:rounded-[8px] [&_svg]:size-5 [&_.material-symbols-outlined]:text-[20px] [&_.material-symbols]:text-[20px] [&_.material-icons]:text-[20px]",
         sm: "h-10 px-4 gap-2 text-sm active:rounded-[8px] [&_svg]:size-5 [&_.material-symbols-outlined]:text-[20px] [&_.material-symbols]:text-[20px] [&_.material-icons]:text-[20px]",
         md: "h-14 px-6 gap-2 text-base active:rounded-[12px] [&_svg]:size-6 [&_.material-symbols-outlined]:text-[24px] [&_.material-symbols]:text-[24px] [&_.material-icons]:text-[24px]",
@@ -47,7 +48,14 @@ export const buttonVariants = cva(
     },
 
     compoundVariants: [
-      // Resting Family B subtle corner radii mapped to container height
+      // Family A: Exact half-height resting radii (replaces 9999px so transitions animate without browser clamping)
+      { shape: "round", size: "xs", className: "rounded-[16px]" },
+      { shape: "round", size: "sm", className: "rounded-[20px]" },
+      { shape: "round", size: "md", className: "rounded-[28px]" },
+      { shape: "round", size: "lg", className: "rounded-[48px]" },
+      { shape: "round", size: "xl", className: "rounded-[68px]" },
+
+      // Family B: Square button subtle resting radii mapped to container height
       { shape: "square", size: "xs", className: "rounded-[12px]" },
       { shape: "square", size: "sm", className: "rounded-[12px]" },
       { shape: "square", size: "md", className: "rounded-[16px]" },
