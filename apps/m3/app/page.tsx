@@ -17,37 +17,46 @@ const EditIcon = () => (
   </svg>
 );
 
+const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+const sizeLabels = {
+  xs: "Extra small",
+  sm: "Small",
+  md: "Medium",
+  lg: "Large",
+  xl: "Extra large",
+};
+
 export default function Page() {
-  const [interactiveSelected, setInteractiveSelected] = React.useState(false);
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8 gap-8 bg-background">
-      {/* Visual match to M3 specification diagram */}
-      <div className="flex flex-wrap items-center gap-6">
-        {/* 1. Standard Button */}
-        <Button leadingIcon={<EditIcon />}>Label</Button>
+    <main className="min-h-screen flex flex-col items-center justify-center p-8 gap-12 bg-background">
+      {/* 1. Round shape (Family A: rounded-full) */}
+      <section className="flex flex-col items-center gap-4 w-full">
+        <h2 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider">
+          Round Shape (Family A)
+        </h2>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          {sizes.map((s) => (
+            <Button key={s} size={s} shape="round" leadingIcon={<EditIcon />}>
+              {sizeLabels[s]}
+            </Button>
+          ))}
+        </div>
+      </section>
 
-        {/* 2. Unselected Toggle Button */}
-        <Button selected={false} leadingIcon={<EditIcon />}>
-          Unselected
-        </Button>
-
-        {/* 2. Selected Toggle Button */}
-        <Button selected={true} leadingIcon={<EditIcon />}>
-          Selected
-        </Button>
-      </div>
-
-      {/* Interactive test showing developer useState wiring */}
-      <div className="flex flex-col items-center gap-2">
-        <Button
-          selected={interactiveSelected}
-          leadingIcon={<EditIcon />}
-          onClick={() => setInteractiveSelected((prev) => !prev)}
-        >
-          {interactiveSelected ? "Selected (Click to toggle)" : "Unselected (Click to toggle)"}
-        </Button>
-      </div>
+      {/* 2. Square shape (Family B: compound rounded-[x]dp) */}
+      <section className="flex flex-col items-center gap-4 w-full">
+        <h2 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider">
+          Square Shape (Family B)
+        </h2>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          {sizes.map((s) => (
+            <Button key={s} size={s} shape="square" leadingIcon={<EditIcon />}>
+              {sizeLabels[s]}
+            </Button>
+          ))}
+        </div>
+      </section>
+      <Button >Am I ok</Button>
     </main>
   );
 }
