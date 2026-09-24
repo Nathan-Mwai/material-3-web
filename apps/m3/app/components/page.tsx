@@ -1,82 +1,107 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import Link from "next/link";
-import Button from "@/registry/material-v1/ui/button";
+import * as React from "react"
+import Link from "next/link"
+import Button from "@/registry/material-v1/ui/button"
 
 const ArrowRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4"
+  >
     <path d="M5 12h14M12 5l7 7-7 7" />
   </svg>
-);
+)
 
 const componentsList = [
   {
     name: "Button",
-    description: "Common buttons prompt actions and express what will happen next. Supports 5 variants, 5 sizes, 2 shapes, and press morphing.",
+    description:
+      "Common buttons prompt actions and express what will happen next. Supports 5 variants, 5 sizes, 2 shapes, and press morphing.",
     category: "Actions",
     status: "Ready",
     href: "/components/button",
   },
   {
     name: "Floating Action Button (FAB)",
-    description: "Represents the primary action on a screen. Available in surface, primary, and secondary color treatments.",
+    description:
+      "Represents the primary action on a screen. Available in surface, primary, and secondary color treatments.",
     category: "Actions",
     status: "In Development",
     href: "#",
   },
   {
     name: "Card",
-    description: "Containment surfaces for grouping related content and actions in elevated, filled, and outlined styles.",
+    description:
+      "Containment surfaces for grouping related content and actions in elevated, filled, and outlined styles.",
     category: "Containment",
     status: "In Development",
     href: "#",
   },
   {
     name: "Chip",
-    description: "Compact interactive elements that represent an input, attribute, or action like filtering and suggestion.",
+    description:
+      "Compact interactive elements that represent an input, attribute, or action like filtering and suggestion.",
     category: "Selection",
     status: "In Development",
     href: "#",
   },
   {
     name: "Switch",
-    description: "Toggles the state of a single setting on or off, with optional icon morphing inside the handle.",
+    description:
+      "Toggles the state of a single setting on or off, with optional icon morphing inside the handle.",
     category: "Selection",
     status: "In Development",
     href: "#",
   },
   {
     name: "Text Field",
-    description: "Outlined and filled text inputs with floating labels, supporting text, and validation states.",
+    description:
+      "Outlined and filled text inputs with floating labels, supporting text, and validation states.",
     category: "Inputs",
     status: "In Development",
     href: "#",
   },
   {
     name: "Dialog",
-    description: "Modal surfaces that provide critical information or ask for user decisions before proceeding.",
+    description:
+      "Modal surfaces that provide critical information or ask for user decisions before proceeding.",
     category: "Communication",
     status: "In Development",
     href: "#",
   },
   {
     name: "Navigation Bar",
-    description: "Bottom and top app bars allowing navigation between primary destinations in an application.",
+    description:
+      "Bottom and top app bars allowing navigation between primary destinations in an application.",
     category: "Navigation",
     status: "In Development",
     href: "#",
   },
-];
+]
 
 export default function ComponentsCatalogPage() {
-  const [selectedCategory, setSelectedCategory] = React.useState<string>("All");
+  const [selectedCategory, setSelectedCategory] = React.useState<string>("All")
 
-  const categories = ["All", "Actions", "Containment", "Selection", "Inputs", "Communication", "Navigation"];
+  const categories = [
+    "All",
+    "Actions",
+    "Containment",
+    "Selection",
+    "Inputs",
+    "Communication",
+    "Navigation",
+  ]
 
-  const filteredComponents = selectedCategory === "All"
-    ? componentsList
-    : componentsList.filter((c) => c.category === selectedCategory);
+  const filteredComponents =
+    selectedCategory === "All"
+      ? componentsList
+      : componentsList.filter((c) => c.category === selectedCategory)
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex flex-col gap-10">
@@ -86,7 +111,8 @@ export default function ComponentsCatalogPage() {
           Component Catalog
         </h1>
         <p className="text-base text-on-surface-variant max-w-2xl leading-relaxed">
-          Open-source React components designed according to Google Material 3 guidelines. Copy, paste, and adapt source code into your projects.
+          Open-source React components designed according to Google Material 3
+          guidelines. Copy, paste, and adapt source code into your projects.
         </p>
       </div>
 
@@ -109,7 +135,7 @@ export default function ComponentsCatalogPage() {
       {/* Components Grid (4-up on desktop, 2-up on tablet, 1-up on mobile) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredComponents.map((item) => {
-          const isReady = item.status === "Ready";
+          const isReady = item.status === "Ready"
 
           return (
             <div
@@ -179,9 +205,9 @@ export default function ComponentsCatalogPage() {
                 )}
               </div>
             </div>
-          );
+          )
         })}
       </div>
     </main>
-  );
+  )
 }

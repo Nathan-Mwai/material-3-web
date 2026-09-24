@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 
 export function SiteFooter() {
   return (
@@ -9,15 +9,23 @@ export function SiteFooter() {
             Material 3 Design for Web
           </p>
           <p className="max-w-xl text-on-surface-variant">
-            An independent open-source component library and registry for React & Tailwind CSS. Not affiliated with or endorsed by Google LLC. &ldquo;Material&rdquo; is a trademark of Google LLC.
+            An independent open-source component library and registry for React
+            & Tailwind CSS. Not affiliated with or endorsed by Google LLC.
+            &ldquo;Material&rdquo; is a trademark of Google LLC.
           </p>
         </div>
 
         <div className="flex items-center gap-6 text-on-surface-variant font-medium">
-          <Link href="/components" className="hover:text-primary transition-colors">
+          <Link
+            href="/components"
+            className="hover:text-primary transition-colors"
+          >
             Components
           </Link>
-          <Link href="/components/button" className="hover:text-primary transition-colors">
+          <Link
+            href="/components/button"
+            className="hover:text-primary transition-colors"
+          >
             Button Docs
           </Link>
           <a
@@ -39,5 +47,5 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

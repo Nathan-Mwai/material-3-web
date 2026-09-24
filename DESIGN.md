@@ -360,16 +360,16 @@ components:
 
 ---
 
-
 ## Overview
 
-Material 3 Design is a registry, not a package. Like shadcn/ui, a developer finds a component, sees it working, runs one command, and the source lands in their project as files they own. The hard part of Material 3 on the web today is that its official implementation is difficult to adopt and no longer moving fast, so the site's job is to make the *getting* of a component feel trivial: find, preview, copy or install, done.
+Material 3 Design is a registry, not a package. Like shadcn/ui, a developer finds a component, sees it working, runs one command, and the source lands in their project as files they own. The hard part of Material 3 on the web today is that its official implementation is difficult to adopt and no longer moving fast, so the site's job is to make the _getting_ of a component feel trivial: find, preview, copy or install, done.
 
 The site is built out of the thing it sells. Every button, chip, tab, card, text field and snackbar on the page is a Material 3 Design component, so the site is a live proof of quality. Nothing on the page is decoration that a visitor can't install.
 
 The visual posture is calm. Surfaces are quiet tonal tints of the seed color (`{colors.surface}` `#FEF7FF` in light, `#141218` in dark) stepped through the five `surface-container` roles, never bordered boxes stacked on white. Colour is used for meaning: `{colors.primary}` marks the single most important action on a screen, `{colors.secondary-container}` marks selection, and `{colors.tertiary-container}` is reserved for rare accents. Type is Roboto on the official M3 scale. Shapes are the M3 shape scale: pills for actions, 12–16 px for containers, 28 px for large surfaces.
 
 **Key Characteristics:**
+
 - **Tonal surfaces, not shadows.** Depth comes from moving up the `surface-container-*` ladder. Drop shadows appear only on floating elements (menus, dialogs, snackbars).
 - **One filled button per view.** `button-filled` is the primary action; everything else is tonal, outlined, or text.
 - **State layers everywhere.** Hover, focus, press and drag are semi-transparent overlays of the content colour, never a swap to a different colour.
@@ -382,12 +382,14 @@ The visual posture is calm. Surfaces are quiet tonal tints of the seed color (`{
 The default scheme is the Material 3 baseline generated from seed `#6750A4`. The full role set ships in both light (`colors`) and dark (`colors-dark`); the same role name resolves to a different value per scheme.
 
 ### Brand & Accent
+
 - **Primary** (`{colors.primary}` — `#6750A4` light / `#D0BCFF` dark): The single high-emphasis colour. Filled buttons, active tab indicator, focus rings, links, the seed of the whole scheme.
 - **Primary Container** (`{colors.primary-container}` — `#EADDFF`): Low-drama emphasis fills — hero highlight chips, the selected state of large surfaces, the featured component card.
 - **Secondary / Secondary Container** (`{colors.secondary}` `#625B71`, `{colors.secondary-container}` `#E8DEF8`): Supporting UI. Tonal buttons, selected chips, the active docs-nav item.
 - **Tertiary / Tertiary Container** (`{colors.tertiary}` `#7D5260`, `{colors.tertiary-container}` `#FFD8E4`): A contrasting accent used sparingly — a "New" badge, a highlight in the theme builder. Never for primary actions.
 
 ### Surface
+
 - **Surface** (`{colors.surface}`): The page background.
 - **Surface Containers** (`lowest` → `highest`: `#FFFFFF`, `#F7F2FA`, `#F3EDF7`, `#ECE6F0`, `#E6E0E9` in light): The five-step elevation ladder.
   - `lowest` — preview panes (so components render on the cleanest background).
@@ -398,23 +400,28 @@ The default scheme is the Material 3 baseline generated from seed `#6750A4`. The
 - **Inverse Surface** (`{colors.inverse-surface}`): Snackbars and tooltips.
 
 ### Text & Outline
+
 - **On Surface** (`{colors.on-surface}` — `#1D1B20`): Default text.
 - **On Surface Variant** (`{colors.on-surface-variant}` — `#49454F`): Secondary text, icons, inactive nav.
 - **Outline** (`{colors.outline}` — `#79747E`): Outlined button and text-field borders, chip borders.
 - **Outline Variant** (`{colors.outline-variant}` — `#CAC4D0`): Decorative dividers, table rules, the preview pane border.
 
 ### Semantic
+
 - **Error** (`{colors.error}` `#B3261E`, `{colors.error-container}` `#F9DEDC`): Validation and destructive states, used in component previews. The site chrome itself rarely needs it.
 - There is no dedicated success or warning role in Material 3. Where a component needs one, it's defined as a documented custom extension of the scheme, never an ad-hoc green.
 
 ### Contrast rules
+
 - Text on any `*-container` uses the matching `on-*-container` role. Never mix roles across pairs.
 - Body text on `{colors.surface}` passes WCAG AA (4.5:1) with `on-surface` and `on-surface-variant`; keep this true when users supply a custom seed. The Theme Builder warns when a generated scheme falls below AA.
 
 ## Typography
 
 ### Font Family
+
 Two faces:
+
 1. **Roboto** for every display, headline, title, body and label role. Roboto is the M3 reference face and is freely loadable from Google Fonts. Weights 400 and 500 are the working pair.
 2. **Roboto Mono** for install commands, code blocks and inline code. Weight 400 only.
 
@@ -422,26 +429,27 @@ Google's proprietary brand faces aren't used. Component authors can swap the fam
 
 ### Hierarchy
 
-| Token | Size | Weight | Line Height | Letter Spacing | Use |
-|---|---|---|---|---|---|
-| `{typography.display-large}` | 57px | 400 | 64px | -0.25px | Home hero headline. |
-| `{typography.display-medium}` | 45px | 400 | 52px | 0 | Hero on inner pages. |
-| `{typography.display-small}` | 36px | 400 | 44px | 0 | Large section statements. |
-| `{typography.headline-large}` | 32px | 400 | 40px | 0 | Section headlines. |
-| `{typography.headline-medium}` | 28px | 400 | 36px | 0 | Component page title. |
-| `{typography.headline-small}` | 24px | 400 | 32px | 0 | Sub-section titles. |
-| `{typography.title-large}` | 22px | 400 | 28px | 0 | Top app bar title, card titles. |
-| `{typography.title-medium}` | 16px | 500 | 24px | 0.15px | List and table headers. |
-| `{typography.title-small}` | 14px | 500 | 20px | 0.1px | Tabs. |
-| `{typography.body-large}` | 16px | 400 | 24px | 0.5px | Lead paragraphs, search input. |
-| `{typography.body-medium}` | 14px | 400 | 20px | 0.25px | Default body and docs prose. |
-| `{typography.body-small}` | 12px | 400 | 16px | 0.4px | Captions, footer. |
-| `{typography.label-large}` | 14px | 500 | 20px | 0.1px | Buttons, chips, nav items. |
-| `{typography.label-medium}` | 12px | 500 | 16px | 0.5px | Badges, table column labels. |
-| `{typography.label-small}` | 11px | 500 | 16px | 0.5px | Smallest labels. |
-| `{typography.code}` | 13px | 400 | 20px | 0 | Install command, code blocks. |
+| Token                          | Size | Weight | Line Height | Letter Spacing | Use                             |
+| ------------------------------ | ---- | ------ | ----------- | -------------- | ------------------------------- |
+| `{typography.display-large}`   | 57px | 400    | 64px        | -0.25px        | Home hero headline.             |
+| `{typography.display-medium}`  | 45px | 400    | 52px        | 0              | Hero on inner pages.            |
+| `{typography.display-small}`   | 36px | 400    | 44px        | 0              | Large section statements.       |
+| `{typography.headline-large}`  | 32px | 400    | 40px        | 0              | Section headlines.              |
+| `{typography.headline-medium}` | 28px | 400    | 36px        | 0              | Component page title.           |
+| `{typography.headline-small}`  | 24px | 400    | 32px        | 0              | Sub-section titles.             |
+| `{typography.title-large}`     | 22px | 400    | 28px        | 0              | Top app bar title, card titles. |
+| `{typography.title-medium}`    | 16px | 500    | 24px        | 0.15px         | List and table headers.         |
+| `{typography.title-small}`     | 14px | 500    | 20px        | 0.1px          | Tabs.                           |
+| `{typography.body-large}`      | 16px | 400    | 24px        | 0.5px          | Lead paragraphs, search input.  |
+| `{typography.body-medium}`     | 14px | 400    | 20px        | 0.25px         | Default body and docs prose.    |
+| `{typography.body-small}`      | 12px | 400    | 16px        | 0.4px          | Captions, footer.               |
+| `{typography.label-large}`     | 14px | 500    | 20px        | 0.1px          | Buttons, chips, nav items.      |
+| `{typography.label-medium}`    | 12px | 500    | 16px        | 0.5px          | Badges, table column labels.    |
+| `{typography.label-small}`     | 11px | 500    | 16px        | 0.5px          | Smallest labels.                |
+| `{typography.code}`            | 13px | 400    | 20px        | 0              | Install command, code blocks.   |
 
 ### Principles
+
 - **Use the M3 scale as-is.** Don't invent in-between sizes; the scale is the spec and the components must match it.
 - **Weight carries emphasis, not size jumps.** Display and headline stay at 400; titles and labels step up to 500.
 - **Roboto for narrative, Roboto Mono for anything a user might copy.** If it can be pasted into a terminal or file, it's mono.
@@ -450,12 +458,14 @@ Google's proprietary brand faces aren't used. Component authors can swap the fam
 ## Layout
 
 ### Spacing System
+
 - **Base unit**: 4 px. All spacing and component dimensions sit on the 4 px grid.
 - **Tokens**: `{spacing.xs}` 4 · `{spacing.sm}` 8 · `{spacing.md}` 12 · `{spacing.lg}` 16 · `{spacing.xl}` 24 · `{spacing.2xl}` 32 · `{spacing.3xl}` 48 · `{spacing.4xl}` 64 · `{spacing.5xl}` 96.
 - **Section padding**: hero uses `{spacing.5xl}` vertically on desktop; content bands use `{spacing.4xl}`.
 - **Card interior**: `{spacing.lg}` for component cards; `{spacing.2xl}` inside preview panes so components have room to breathe and their shadows aren't clipped.
 
 ### Grid & Container
+
 - Marketing content centres at roughly 1200 px; docs content column caps at ~720 px for readability.
 - Component index: 4-up grid at desktop, 2-up at tablet, 1-up at mobile, with `{spacing.lg}` gutters.
 - Component detail: preview pane full width on top; install command and code below; on wide screens a sticky right rail shows "On this page" and the props summary.
@@ -463,17 +473,19 @@ Google's proprietary brand faces aren't used. Component authors can swap the fam
 
 ### Responsive Strategy (Material window size classes)
 
-| Class | Width | Key Changes |
-|---|---|---|
-| Compact | < 600px | 1-up grids; modal nav drawer; install command wraps under the title; preview pane goes edge-to-edge. |
-| Medium | 600–839px | 2-up grids; navigation rail replaces the drawer. |
-| Expanded | 840–1199px | 3-up grids; persistent standard drawer. |
-| Large | ≥ 1200px | 4-up grids; drawer + content + right rail. |
+| Class    | Width      | Key Changes                                                                                          |
+| -------- | ---------- | ---------------------------------------------------------------------------------------------------- |
+| Compact  | < 600px    | 1-up grids; modal nav drawer; install command wraps under the title; preview pane goes edge-to-edge. |
+| Medium   | 600–839px  | 2-up grids; navigation rail replaces the drawer.                                                     |
+| Expanded | 840–1199px | 3-up grids; persistent standard drawer.                                                              |
+| Large    | ≥ 1200px   | 4-up grids; drawer + content + right rail.                                                           |
 
 #### Touch Targets
-Every interactive element has at least a 48 × 48 px target. Visually smaller controls (32 px chips, 40 px buttons) add invisible padding to reach it. This applies to the site *and* to every registry component, and is checked in the component contract below.
+
+Every interactive element has at least a 48 × 48 px target. Visually smaller controls (32 px chips, 40 px buttons) add invisible padding to reach it. This applies to the site _and_ to every registry component, and is checked in the component contract below.
 
 #### Collapsing Strategy
+
 - Top app bar: wordmark + nav links + search + theme toggle at Expanded and above; wordmark + search icon + menu at Compact.
 - Filter chips: single wrapping row on desktop; horizontal scroll on Compact, with the selected chip scrolled into view.
 - Props tables: scroll horizontally inside their own container. The page body never scrolls sideways.
@@ -482,16 +494,17 @@ Every interactive element has at least a 48 × 48 px target. Visually smaller co
 
 Elevation is expressed first through **tone** (which `surface-container-*` role a surface uses) and only second through **shadow**.
 
-| Level | Shadow (light scheme) | Use |
-|---|---|---|
-| Level 0 | none | Page surface, docs prose, hero. |
-| Level 1 — 1dp | `0 1px 2px rgb(0 0 0 / .30), 0 1px 3px 1px rgb(0 0 0 / .15)` | Elevated buttons, resting cards when elevated. |
-| Level 2 — 3dp | `0 1px 2px rgb(0 0 0 / .30), 0 2px 6px 2px rgb(0 0 0 / .15)` | Top app bar on scroll, menus. |
-| Level 3 — 6dp | `0 1px 3px rgb(0 0 0 / .30), 0 4px 8px 3px rgb(0 0 0 / .15)` | Snackbar, floating action buttons. |
-| Level 4 — 8dp | `0 2px 3px rgb(0 0 0 / .30), 0 6px 10px 4px rgb(0 0 0 / .15)` | Hover on FAB, dragged cards. |
-| Level 5 — 12dp | `0 4px 4px rgb(0 0 0 / .30), 0 8px 12px 6px rgb(0 0 0 / .15)` | Dialogs, the mobile search overlay. |
+| Level          | Shadow (light scheme)                                         | Use                                            |
+| -------------- | ------------------------------------------------------------- | ---------------------------------------------- |
+| Level 0        | none                                                          | Page surface, docs prose, hero.                |
+| Level 1 — 1dp  | `0 1px 2px rgb(0 0 0 / .30), 0 1px 3px 1px rgb(0 0 0 / .15)`  | Elevated buttons, resting cards when elevated. |
+| Level 2 — 3dp  | `0 1px 2px rgb(0 0 0 / .30), 0 2px 6px 2px rgb(0 0 0 / .15)`  | Top app bar on scroll, menus.                  |
+| Level 3 — 6dp  | `0 1px 3px rgb(0 0 0 / .30), 0 4px 8px 3px rgb(0 0 0 / .15)`  | Snackbar, floating action buttons.             |
+| Level 4 — 8dp  | `0 2px 3px rgb(0 0 0 / .30), 0 6px 10px 4px rgb(0 0 0 / .15)` | Hover on FAB, dragged cards.                   |
+| Level 5 — 12dp | `0 4px 4px rgb(0 0 0 / .30), 0 8px 12px 6px rgb(0 0 0 / .15)` | Dialogs, the mobile search overlay.            |
 
 Rules:
+
 - Default resting surfaces (cards, panes, the code block) use **tone only** with no shadow.
 - The top app bar sits at Level 0 and lifts to Level 2 (and to `surface-container`) only once the page has scrolled.
 - Shadows always use `{colors.shadow}`; in dark scheme, favour tone and reduce shadow opacity, because shadows read poorly on dark surfaces.
@@ -500,20 +513,21 @@ Rules:
 
 ### Shape Scale
 
-| Token | Value | Use |
-|---|---|---|
-| `{rounded.none}` | 0px | Full-bleed bands, divider ends. |
-| `{rounded.xs}` | 4px | Text fields, snackbars, small badges. |
-| `{rounded.sm}` | 8px | Filter chips. |
-| `{rounded.md}` | 12px | Code blocks, tables, small cards. |
-| `{rounded.lg}` | 16px | Component cards, preview panes. |
-| `{rounded.lg-increased}` | 20px | Featured cards. |
-| `{rounded.xl}` | 28px | Theme builder, dialogs, large sheets. |
-| `{rounded.xl-increased}` | 32px | Hero feature surfaces. |
-| `{rounded.2xl}` | 48px | Rare, decorative large surfaces. |
-| `{rounded.full}` | 9999px | Buttons, nav items, search bar, icon buttons, switches. |
+| Token                    | Value  | Use                                                     |
+| ------------------------ | ------ | ------------------------------------------------------- |
+| `{rounded.none}`         | 0px    | Full-bleed bands, divider ends.                         |
+| `{rounded.xs}`           | 4px    | Text fields, snackbars, small badges.                   |
+| `{rounded.sm}`           | 8px    | Filter chips.                                           |
+| `{rounded.md}`           | 12px   | Code blocks, tables, small cards.                       |
+| `{rounded.lg}`           | 16px   | Component cards, preview panes.                         |
+| `{rounded.lg-increased}` | 20px   | Featured cards.                                         |
+| `{rounded.xl}`           | 28px   | Theme builder, dialogs, large sheets.                   |
+| `{rounded.xl-increased}` | 32px   | Hero feature surfaces.                                  |
+| `{rounded.2xl}`          | 48px   | Rare, decorative large surfaces.                        |
+| `{rounded.full}`         | 9999px | Buttons, nav items, search bar, icon buttons, switches. |
 
 ### Principles
+
 - Action = pill. Container = soft rectangle. Don't put a 4 px corner on a button or a full pill on a card.
 - Nested shapes reduce their radius by the padding between them so corners stay concentric (a 16 px card containing a 12 px code block with 4 px between them looks wrong; use matching inner radii).
 - Shape morphing is used deliberately (a toggle button square ↔ pill on selection); it's a motion behaviour, not a decoration.
@@ -521,26 +535,27 @@ Rules:
 ## Motion & State
 
 ### State layers
+
 Interaction is communicated by overlaying the component's content colour on its container at fixed opacities.
 
-| State | Overlay opacity |
-|---|---|
-| Hover | 8% |
-| Focus | 10% (plus a 3 px `{colors.primary}` focus ring on keyboard focus) |
-| Pressed | 10% |
-| Dragged | 16% |
-| Disabled | content 38%, container 12% |
+| State    | Overlay opacity                                                   |
+| -------- | ----------------------------------------------------------------- |
+| Hover    | 8%                                                                |
+| Focus    | 10% (plus a 3 px `{colors.primary}` focus ring on keyboard focus) |
+| Pressed  | 10%                                                               |
+| Dragged  | 16%                                                               |
+| Disabled | content 38%, container 12%                                        |
 
 ### Easing & duration
 
-| Token | Value | Use |
-|---|---|---|
-| `easing-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Most on-screen transitions. |
-| `easing-emphasized-decelerate` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | Elements entering. |
-| `easing-emphasized-accelerate` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | Elements leaving. |
-| `duration-short` | 100–200ms | Ripple, state layers, chips. |
-| `duration-medium` | 250–400ms | Tab indicator, card expand, drawer. |
-| `duration-long` | 450–600ms | Page-level transitions. |
+| Token                          | Value                             | Use                                 |
+| ------------------------------ | --------------------------------- | ----------------------------------- |
+| `easing-standard`              | `cubic-bezier(0.2, 0, 0, 1)`      | Most on-screen transitions.         |
+| `easing-emphasized-decelerate` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | Elements entering.                  |
+| `easing-emphasized-accelerate` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | Elements leaving.                   |
+| `duration-short`               | 100–200ms                         | Ripple, state layers, chips.        |
+| `duration-medium`              | 250–400ms                         | Tab indicator, card expand, drawer. |
+| `duration-long`                | 450–600ms                         | Page-level transitions.             |
 
 - Press feedback uses a ripple that originates at the pointer. On components that support it, selection changes may use a spring-style overshoot (switch handle, toggle button shape) as in M3 Expressive; if the user prefers reduced motion, springs and ripples are replaced with a plain opacity change.
 - Copy confirmation: the install command's copy button swaps its icon to a check for ~1.5 s and a `snackbar` appears at the bottom.
@@ -552,18 +567,23 @@ Every component here is also a registry component. The site does not use bespoke
 ### Buttons
 
 **`button-filled`** — the primary action.
+
 - Background `{colors.primary}`, text `{colors.on-primary}`, `{typography.label-large}`, height 40 px, padding `0 {spacing.xl}`, shape `{rounded.full}`. One per view.
 
 **`button-tonal`** — the secondary action (e.g. "Preview" next to "Install").
+
 - Background `{colors.secondary-container}`, text `{colors.on-secondary-container}`, same geometry.
 
 **`button-outlined`** — medium emphasis.
+
 - Transparent, 1 px `{colors.outline}` border, text `{colors.primary}`.
 
 **`button-text`** — lowest emphasis, used in cards, dialogs and snackbars.
+
 - Transparent, text `{colors.primary}`, horizontal padding `{spacing.md}`.
 
 **`button-elevated`** — for actions that need to sit above a patterned or busy surface.
+
 - Background `{colors.surface-container-low}`, text `{colors.primary}`, Level 1 shadow.
 
 **`icon-button`** — theme toggle, copy, GitHub. 40 px visual size, 48 px target, `{rounded.full}`. Always has an `aria-label`.
@@ -571,69 +591,87 @@ Every component here is also a registry component. The site does not use bespoke
 ### Navigation
 
 **`top-app-bar`** — the sticky header.
+
 - Background `{colors.surface}` (lifts to `{colors.surface-container}` on scroll), height 64 px. Wordmark in `{typography.title-large}`, then `nav-link` items, then `search-bar` (collapsed to an icon at Compact) and the theme-toggle icon button.
 
 **`nav-link`** — header links (Components, Themes, Docs).
+
 - Text `{colors.on-surface-variant}`, `{typography.label-large}`, `{rounded.full}`, height 40 px. Active link uses `{colors.on-surface}` with a `{colors.secondary-container}` background.
 
 **`docs-nav-item` / `docs-nav-item-active`** — the left drawer.
+
 - 56 px tall pills. Active item: `{colors.secondary-container}` fill with `{colors.on-secondary-container}` text. Group headings use `{typography.title-small}` in `{colors.on-surface-variant}`.
 
 **`tabs-primary`** — Preview | Code | Props | Accessibility.
+
 - Text `{typography.title-small}`; active tab text `{colors.primary}` with a 3 px `{colors.primary}` indicator with rounded top corners; inactive `{colors.on-surface-variant}`. 48 px tall, a 1 px `{colors.outline-variant}` divider beneath.
 
 ### Search & Filters
 
 **`search-bar`** — registry search ("Search components…", `/` to focus).
+
 - `{colors.surface-container-high}`, 56 px, `{rounded.full}`, leading search icon, trailing clear icon. Results open in a menu (Level 2) with keyboard navigation.
 
 **`chip-filter` / `chip-filter-selected`** — category and framework filters (All, Actions, Selection, Containment, Navigation, Feedback).
+
 - 32 px tall, `{rounded.sm}`. Unselected: 1 px `{colors.outline}` border. Selected: `{colors.secondary-container}` fill, leading check icon.
 
 ### Cards & Containers
 
 **`component-card`** — one tile per component in the index.
+
 - `{colors.surface-container-low}`, `{rounded.lg}`, no border, `{spacing.lg}` padding. Contains a mini live preview on `{colors.surface-container-lowest}`, the component name in `{typography.title-medium}`, a one-line description in `{typography.body-medium}` / `{colors.on-surface-variant}`, and variant/status badges. Hover adds a state layer and lifts to Level 1.
 
 **`preview-pane`** — where a component runs live.
+
 - `{colors.surface-container-lowest}`, 1 px `{colors.outline-variant}` border, `{rounded.lg}`, `{spacing.2xl}` padding. Toolbar (top right): scheme toggle (light/dark), seed-colour swatches, state toggles (enabled / hover / focus / pressed / disabled). The pane hosts the real component, not a screenshot.
 
 **`code-block`** — source viewer.
+
 - `{colors.surface-container-highest}`, `{rounded.md}`, `{typography.code}`, `{spacing.lg}` padding, a `button-text` "Copy" in the top right, file name as `{typography.label-medium}` label above.
 
 **`install-command`** — the hero of every component page.
+
 - `{colors.surface-container-highest}`, height 48 px, `{rounded.full}`, `{typography.code}`, with a package-manager segmented switch (npm / pnpm / yarn / bun) and a trailing copy `icon-button`.
 
 **`props-table`** — API reference.
+
 - `{typography.body-medium}`, header row in `{typography.title-small}` on `{colors.surface-container}`, 1 px `{colors.outline-variant}` row rules, prop names in `{typography.code}`, wrapped in a `{rounded.md}` container that scrolls horizontally.
 
 ### Inputs & Forms
 
 **`text-field-outlined`** — Theme Builder inputs (seed colour hex, radius, font).
+
 - 56 px, 1 px `{colors.outline}` border, `{rounded.xs}`, floating label in `{typography.body-small}` when active; border becomes 2 px `{colors.primary}` on focus; error state uses `{colors.error}` with supporting text below.
 
 **`theme-builder`** — seed colour in, full scheme out.
+
 - `{colors.surface-container}`, `{rounded.xl}`, `{spacing.xl}` padding. Shows the tonal palette swatches, light/dark previews and a copy-ready CSS variables block (or the equivalent for the registry's theme file).
 
 ### Feedback
 
 **`snackbar`** — "Copied to clipboard", "Added to theme".
+
 - `{colors.inverse-surface}`, `{colors.inverse-on-surface}`, `{rounded.xs}`, height 48 px, Level 3 shadow, bottom-centre on desktop and full-width on Compact, auto-dismiss after 4 s.
 
 ### Signature Components
 
 **`hero-band`** — the home hero.
+
 - `{colors.surface}`, `{spacing.5xl}` vertical padding. Headline in `{typography.display-large}` (57/64) with one word in `{colors.primary}`. Sub-line in `{typography.body-large}` / `{colors.on-surface-variant}`. Below: `install-command` and a row of `button-filled` ("Browse components") + `button-tonal` ("Read the docs"). To the right (or below at Compact), a live cluster of real components (a switch, a slider, a filled button, a chip row) that responds to a seed-colour picker.
 
 **`content-band`** — standard section.
+
 - `{colors.surface}`, `{spacing.4xl}` vertical padding, headline `{typography.headline-large}`.
 
 **`footer`** — closing band.
+
 - `{colors.surface-container}`, `{typography.body-small}`. Must include an unaffiliated notice: Material 3 Design is an independent open-source project, not affiliated with or endorsed by Google; "Material" is a trademark of Google LLC.
 
 ### Component Contract (what every registry component page must show)
 
 Every component in the registry ships and documents the same things, in this order:
+
 1. **Live preview** of every variant and size, with state toggles (enabled, hover, focus, pressed, disabled) and light/dark.
 2. **Install command** for each supported package manager.
 3. **Usage** snippet: the smallest working example.
@@ -645,15 +683,17 @@ Every component in the registry ships and documents the same things, in this ord
 ## Do's and Don'ts
 
 ### Do
+
 - Reference colour **roles** (`{colors.primary}`, `{colors.surface-container-low}`), never raw hex, so every component re-themes and works in dark mode.
 - Use exactly one `button-filled` per view; pair it with tonal, outlined, or text buttons.
 - Show live components in previews and support every state; a screenshot is never acceptable in place of a working component.
-- Use `{colors.secondary-container}` for *selection* (active nav, selected chip), and `{colors.primary}` for the *action*.
+- Use `{colors.secondary-container}` for _selection_ (active nav, selected chip), and `{colors.primary}` for the _action_.
 - Keep the 48 px touch target and visible focus ring on every interactive element.
 - Provide `prefers-reduced-motion` fallbacks for all ripples and springs.
 - Keep component source small, readable and free of hidden abstractions, because users are meant to read and edit it.
 
 ### Don't
+
 - Don't put a drop shadow on a resting card. Use a surface-container step instead.
 - Don't use square-cornered or `{rounded.xs}` buttons; actions are pills.
 - Don't introduce a colour outside the scheme roles (no ad-hoc gradients, no hard-coded brand purple in component code).

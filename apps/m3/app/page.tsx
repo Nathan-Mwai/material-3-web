@@ -1,50 +1,76 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import Link from "next/link";
-import Button from "@/registry/material-v1/ui/button";
+import * as React from "react"
+import Link from "next/link"
+import Button from "@/registry/material-v1/ui/button"
 
 const ArrowRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4"
+  >
     <path d="M5 12h14M12 5l7 7-7 7" />
   </svg>
-);
+)
 
 const CopyIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4"
+  >
     <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
     <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
   </svg>
-);
+)
 
 const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="size-4 text-primary">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4 text-primary"
+  >
     <path d="M20 6 9 17l-5-5" />
   </svg>
-);
+)
 
 const SparkleIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="size-4 text-primary">
     <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" />
   </svg>
-);
+)
 
 export default function HomePage() {
-  const [copied, setCopied] = React.useState(false);
-  const [interactiveSelected, setInteractiveSelected] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState<"pnpm" | "npm" | "bun">("pnpm");
+  const [copied, setCopied] = React.useState(false)
+  const [interactiveSelected, setInteractiveSelected] = React.useState(false)
+  const [activeTab, setActiveTab] = React.useState<"pnpm" | "npm" | "bun">(
+    "pnpm"
+  )
 
   const commands = {
     pnpm: "pnpm dlx @m3/ui add button",
     npm: "npx @m3/ui add button",
     bun: "bunx @m3/ui add button",
-  };
+  }
 
   const copyCommand = () => {
-    navigator.clipboard.writeText(commands[activeTab]);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    navigator.clipboard.writeText(commands[activeTab])
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <main className="flex-1 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-24 max-w-7xl mx-auto w-full">
@@ -62,18 +88,25 @@ export default function HomePage() {
 
           {/* Display-Large Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-[57px] font-normal tracking-tight text-on-surface leading-[1.12]">
-            Material 3 Design for <span className="text-primary font-medium">React</span>
+            Material 3 Design for{" "}
+            <span className="text-primary font-medium">React</span>
           </h1>
 
           {/* Body-Large Lead Paragraph */}
           <p className="text-base sm:text-lg text-on-surface-variant max-w-xl leading-relaxed">
-            A shadcn-style registry where developers preview, copy, and install accessible Material 3 components as source code they own. Zero hardcoded hexes, native state layers, and spring physics.
+            A shadcn-style registry where developers preview, copy, and install
+            accessible Material 3 components as source code they own. Zero
+            hardcoded hexes, native state layers, and spring physics.
           </p>
 
           {/* Hero CTAs */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link href="/components/button">
-              <Button size="md" variant="filled" trailingIcon={<ArrowRightIcon />}>
+              <Button
+                size="md"
+                variant="filled"
+                trailingIcon={<ArrowRightIcon />}
+              >
                 Explore Button Component
               </Button>
             </Link>
@@ -137,7 +170,8 @@ export default function HomePage() {
 
             <div className="flex flex-col gap-4">
               <p className="text-xs text-on-surface-variant">
-                Test the live Button variants, toggle states, and 8dp press morph directly below:
+                Test the live Button variants, toggle states, and 8dp press
+                morph directly below:
               </p>
 
               {/* Variant showcase buttons */}
@@ -178,7 +212,10 @@ export default function HomePage() {
 
             <div className="pt-2 border-t border-outline-variant/30 flex justify-between items-center text-xs text-on-surface-variant">
               <span>Full documentation ready</span>
-              <Link href="/components/button" className="text-primary font-medium hover:underline flex items-center gap-1">
+              <Link
+                href="/components/button"
+                className="text-primary font-medium hover:underline flex items-center gap-1"
+              >
                 View API & Specs <ArrowRightIcon />
               </Link>
             </div>
@@ -186,5 +223,5 @@ export default function HomePage() {
         </div>
       </div>
     </main>
-  );
+  )
 }

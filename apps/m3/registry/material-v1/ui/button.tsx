@@ -1,7 +1,7 @@
-import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "cn";
-import { Slot } from "radix-ui";
-import * as React from "react";
+import { type VariantProps, cva } from "class-variance-authority"
+import { cn } from "cn"
+import { Slot } from "radix-ui"
+import * as React from "react"
 
 export const buttonVariants = cva(
   [
@@ -61,7 +61,11 @@ export const buttonVariants = cva(
       { shape: "square", size: "sm", className: "rounded-[12px] min-w-[48px]" },
       { shape: "square", size: "md", className: "rounded-[16px] min-w-[64px]" },
       { shape: "square", size: "lg", className: "rounded-[28px] min-w-[96px]" },
-      { shape: "square", size: "xl", className: "rounded-[28px] min-w-[128px]" },
+      {
+        shape: "square",
+        size: "xl",
+        className: "rounded-[28px] min-w-[128px]",
+      },
 
       // Circle shape: Exact half-dimension radii for circular icon buttons
       { shape: "circle", size: "xs", className: "w-8 rounded-[16px]" },
@@ -165,16 +169,17 @@ export const buttonVariants = cva(
       toggle: "none",
     },
   }
-);
+)
 
 export interface ButtonProps
-  extends React.ComponentProps<"button">,
+  extends
+    React.ComponentProps<"button">,
     Omit<VariantProps<typeof buttonVariants>, "toggle"> {
-  asChild?: boolean;
-  leadingIcon?: React.ReactNode;
-  trailingIcon?: React.ReactNode;
-  selected?: boolean;
-  morphWidth?: boolean;
+  asChild?: boolean
+  leadingIcon?: React.ReactNode
+  trailingIcon?: React.ReactNode
+  selected?: boolean
+  morphWidth?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -195,49 +200,53 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Comp = asChild ? Slot.Root : "button";
-    const buttonRef = React.useRef<HTMLButtonElement>(null);
-    const innerRef = React.useRef<HTMLSpanElement>(null);
-    const [measuredWidth, setMeasuredWidth] = React.useState<number | undefined>(undefined);
-
-    const hasLeading = Boolean(leadingIcon);
-    const hasTrailing = Boolean(trailingIcon);
-    const isToggle = typeof selected === "boolean";
-    const toggleState = isToggle ? (selected ? "selected" : "unselected") : "none";
+    const Comp = asChild ? Slot.Root : "button"
+    const buttonRef = React.useRef<HTMLButtonElement>(null)
+    const innerRef = React.useRef<HTMLSpanElement>(null)
+    const [measuredWidth, setMeasuredWidth] = React.useState<
+      number | undefined
+    >(undefined)
+    const isToggle = typeof selected === "boolean"
+    const toggleState = isToggle
+      ? selected
+        ? "selected"
+        : "unselected"
+      : "none"
 
     // Synchronize forwarded ref and local buttonRef
     const setButtonRef = React.useCallback(
       (node: HTMLButtonElement | null) => {
-        buttonRef.current = node;
+        buttonRef.current = node
         if (typeof ref === "function") {
-          ref(node);
+          ref(node)
         } else if (ref) {
-          (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+          ;(ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+            node
         }
       },
       [ref]
-    );
+    )
 
     // Measure intrinsic content width + padding for smooth CSS width interpolation
     React.useLayoutEffect(() => {
-      if (!morphWidth || !buttonRef.current || !innerRef.current) return;
+      if (!morphWidth || !buttonRef.current || !innerRef.current) return
 
       const measure = () => {
-        if (!buttonRef.current || !innerRef.current) return;
-        const computed = window.getComputedStyle(buttonRef.current);
-        const pl = parseFloat(computed.paddingLeft) || 0;
-        const pr = parseFloat(computed.paddingRight) || 0;
-        const contentW = innerRef.current.scrollWidth;
-        const newWidth = Math.ceil(contentW + pl + pr);
-        setMeasuredWidth(newWidth);
-      };
+        if (!buttonRef.current || !innerRef.current) return
+        const computed = window.getComputedStyle(buttonRef.current)
+        const pl = parseFloat(computed.paddingLeft) || 0
+        const pr = parseFloat(computed.paddingRight) || 0
+        const contentW = innerRef.current.scrollWidth
+        const newWidth = Math.ceil(contentW + pl + pr)
+        setMeasuredWidth(newWidth)
+      }
 
-      measure();
+      measure()
 
-      const observer = new ResizeObserver(measure);
-      observer.observe(innerRef.current);
-      return () => observer.disconnect();
-    }, [morphWidth, children, leadingIcon, trailingIcon, size]);
+      const observer = new ResizeObserver(measure)
+      observer.observe(innerRef.current)
+      return () => observer.disconnect()
+    }, [morphWidth, children, leadingIcon, trailingIcon, size])
 
     return (
       <Comp
@@ -250,7 +259,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         data-selected={isToggle ? selected : undefined}
         data-state={isToggle ? (selected ? "on" : "off") : undefined}
         style={{
-          ...(morphWidth && measuredWidth ? { width: `${measuredWidth}px` } : {}),
+          ...(morphWidth && measuredWidth
+            ? { width: `${measuredWidth}px` }
+            : {}),
           ...style,
         }}
         className={cn(
@@ -281,10 +292,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </>
         )}
       </Comp>
-    );
+    )
   }
-);
+)
 
-Button.displayName = "Button";
+Button.displayName = "Button"
 
-export default Button;
+export default Button

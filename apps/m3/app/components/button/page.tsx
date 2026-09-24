@@ -1,51 +1,77 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import Button from "@/registry/material-v1/ui/button";
+import * as React from "react"
+import Button from "@/registry/material-v1/ui/button"
 
 const CopyIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4"
+  >
     <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
     <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
   </svg>
-);
+)
 
 const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="size-4 text-primary">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4 text-primary"
+  >
     <path d="M20 6 9 17l-5-5" />
   </svg>
-);
+)
 
 const PlusIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M12 5v14M5 12h14" />
   </svg>
-);
+)
 
-type VariantKey = "filled" | "elevated" | "tonal" | "outlined" | "text";
-type SizeKey = "xs" | "sm" | "md" | "lg" | "xl";
-type ShapeKey = "round" | "square";
+type VariantKey = "filled" | "elevated" | "tonal" | "outlined" | "text"
+type SizeKey = "xs" | "sm" | "md" | "lg" | "xl"
+type ShapeKey = "round" | "square"
 
 export default function ButtonDocsPage() {
-  const [selectedVariant, setSelectedVariant] = React.useState<VariantKey>("filled");
-  const [selectedSize, setSelectedSize] = React.useState<SizeKey>("md");
-  const [selectedShape, setSelectedShape] = React.useState<ShapeKey>("round");
-  const [hasIcon, setHasIcon] = React.useState(true);
-  const [isToggle, setIsToggle] = React.useState(false);
-  const [isSelected, setIsSelected] = React.useState(false);
-  const [useMorphWidth, setUseMorphWidth] = React.useState(true);
-  const [isDisabled, setIsDisabled] = React.useState(false);
+  const [selectedVariant, setSelectedVariant] =
+    React.useState<VariantKey>("filled")
+  const [selectedSize, setSelectedSize] = React.useState<SizeKey>("md")
+  const [selectedShape, setSelectedShape] = React.useState<ShapeKey>("round")
+  const [hasIcon, setHasIcon] = React.useState(true)
+  const [isToggle, setIsToggle] = React.useState(false)
+  const [isSelected, setIsSelected] = React.useState(false)
+  const [useMorphWidth, setUseMorphWidth] = React.useState(true)
+  const [isDisabled, setIsDisabled] = React.useState(false)
 
-  const [copiedInstall, setCopiedInstall] = React.useState(false);
-  const [copiedUsage, setCopiedUsage] = React.useState(false);
-  const [copiedCode, setCopiedCode] = React.useState(false);
-  const [packageManager, setPackageManager] = React.useState<"pnpm" | "npm" | "bun">("pnpm");
+  const [copiedInstall, setCopiedInstall] = React.useState(false)
+  const [copiedUsage, setCopiedUsage] = React.useState(false)
+  const [copiedCode, setCopiedCode] = React.useState(false)
+  const [packageManager, setPackageManager] = React.useState<
+    "pnpm" | "npm" | "bun"
+  >("pnpm")
 
   const installCommands = {
     pnpm: "pnpm dlx @m3/ui add button",
     npm: "npx @m3/ui add button",
     bun: "bunx @m3/ui add button",
-  };
+  }
 
   const usageSnippet = `import Button from "@/registry/material-v1/ui/button";
 
@@ -59,7 +85,7 @@ export function Demo() {
       ${isToggle ? (isSelected ? "Selected Button" : "Unselected Button") : "Button Action"}
     </Button>
   );
-}`;
+}`
 
   const buttonSourceCode = `import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "cn";
@@ -140,7 +166,7 @@ export const buttonVariants = cva(
       toggle: "none",
     },
   }
-);`;
+);`
 
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex flex-col gap-12">
@@ -159,7 +185,9 @@ export const buttonVariants = cva(
           Button
         </h1>
         <p className="text-base text-on-surface-variant max-w-2xl leading-relaxed">
-          Material 3 common buttons prompt actions and express what will happen next. Supports 5 visual variants, 5 proportional sizes, 2 geometric shapes, toggle selection, and real physical press morphing.
+          Material 3 common buttons prompt actions and express what will happen
+          next. Supports 5 visual variants, 5 proportional sizes, 2 geometric
+          shapes, toggle selection, and real physical press morphing.
         </p>
       </div>
 
@@ -182,7 +210,9 @@ export const buttonVariants = cva(
               <span className="text-on-surface-variant">Variant:</span>
               <select
                 value={selectedVariant}
-                onChange={(e) => setSelectedVariant(e.target.value as VariantKey)}
+                onChange={(e) =>
+                  setSelectedVariant(e.target.value as VariantKey)
+                }
                 className="bg-surface-container-highest text-on-surface px-2.5 py-1 rounded-lg border border-outline-variant/40 outline-none text-xs"
               >
                 <option value="filled">Filled (Primary)</option>
@@ -275,7 +305,7 @@ export const buttonVariants = cva(
               disabled={isDisabled}
               leadingIcon={hasIcon ? <PlusIcon /> : undefined}
               onClick={() => {
-                if (isToggle) setIsSelected((prev) => !prev);
+                if (isToggle) setIsSelected((prev) => !prev)
               }}
             >
               {isToggle
@@ -316,9 +346,9 @@ export const buttonVariants = cva(
               size="xs"
               variant="text"
               onClick={() => {
-                navigator.clipboard.writeText(installCommands[packageManager]);
-                setCopiedInstall(true);
-                setTimeout(() => setCopiedInstall(false), 2000);
+                navigator.clipboard.writeText(installCommands[packageManager])
+                setCopiedInstall(true)
+                setTimeout(() => setCopiedInstall(false), 2000)
               }}
               aria-label="Copy install command"
             >
@@ -338,9 +368,9 @@ export const buttonVariants = cva(
               size="xs"
               variant="text"
               onClick={() => {
-                navigator.clipboard.writeText(usageSnippet);
-                setCopiedUsage(true);
-                setTimeout(() => setCopiedUsage(false), 2000);
+                navigator.clipboard.writeText(usageSnippet)
+                setCopiedUsage(true)
+                setTimeout(() => setCopiedUsage(false), 2000)
               }}
               aria-label="Copy usage code"
             >
@@ -357,18 +387,23 @@ export const buttonVariants = cva(
       <section className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-medium text-on-surface">Component Source Code</h2>
+            <h2 className="text-lg font-medium text-on-surface">
+              Component Source Code
+            </h2>
             <p className="text-xs text-on-surface-variant">
-              Paste directly into <code className="font-mono text-primary">registry/material-v1/ui/button.tsx</code>
+              Paste directly into{" "}
+              <code className="font-mono text-primary">
+                registry/material-v1/ui/button.tsx
+              </code>
             </p>
           </div>
           <Button
             size="xs"
             variant="tonal"
             onClick={() => {
-              navigator.clipboard.writeText(buttonSourceCode);
-              setCopiedCode(true);
-              setTimeout(() => setCopiedCode(false), 2000);
+              navigator.clipboard.writeText(buttonSourceCode)
+              setCopiedCode(true)
+              setTimeout(() => setCopiedCode(false), 2000)
             }}
           >
             {copiedCode ? "Copied!" : "Copy Source"}
@@ -384,7 +419,9 @@ export const buttonVariants = cva(
 
       {/* 5. Props & API Reference Table per DESIGN.md */}
       <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-medium text-on-surface">Props & API Reference</h2>
+        <h2 className="text-lg font-medium text-on-surface">
+          Props & API Reference
+        </h2>
         <div className="overflow-x-auto rounded-xl border border-outline-variant/40 bg-surface">
           <table className="w-full text-left text-sm border-collapse">
             <thead>
@@ -397,52 +434,110 @@ export const buttonVariants = cva(
             </thead>
             <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">variant</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">&quot;filled&quot; | &quot;elevated&quot; | &quot;tonal&quot; | &quot;outlined&quot; | &quot;text&quot;</td>
-                <td className="py-3 px-4 font-mono text-xs">&quot;filled&quot;</td>
-                <td className="py-3 px-4 text-on-surface-variant">The Material 3 elevation and color container treatment.</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  variant
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  &quot;filled&quot; | &quot;elevated&quot; | &quot;tonal&quot;
+                  | &quot;outlined&quot; | &quot;text&quot;
+                </td>
+                <td className="py-3 px-4 font-mono text-xs">
+                  &quot;filled&quot;
+                </td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  The Material 3 elevation and color container treatment.
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">size</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">&quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot;</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  size
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  &quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; |
+                  &quot;lg&quot; | &quot;xl&quot;
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">&quot;sm&quot;</td>
-                <td className="py-3 px-4 text-on-surface-variant">Height (32dp to 136dp) and proportional padding/typography.</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Height (32dp to 136dp) and proportional padding/typography.
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">shape</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">&quot;round&quot; | &quot;square&quot; | &quot;circle&quot;</td>
-                <td className="py-3 px-4 font-mono text-xs">&quot;round&quot;</td>
-                <td className="py-3 px-4 text-on-surface-variant">Round (Family A pill), Square (Family B curved), or Circle (icon button).</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  shape
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  &quot;round&quot; | &quot;square&quot; | &quot;circle&quot;
+                </td>
+                <td className="py-3 px-4 font-mono text-xs">
+                  &quot;round&quot;
+                </td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Round (Family A pill), Square (Family B curved), or Circle
+                  (icon button).
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">selected</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">boolean | undefined</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  selected
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  boolean | undefined
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">undefined</td>
-                <td className="py-3 px-4 text-on-surface-variant">Activates toggle mode with aria-pressed and M3 active container colors.</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Activates toggle mode with aria-pressed and M3 active
+                  container colors.
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">morphWidth</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">boolean</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  morphWidth
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  boolean
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">false</td>
-                <td className="py-3 px-4 text-on-surface-variant">Animates width smoothly across text changes so siblings glide with inertia.</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Animates width smoothly across text changes so siblings glide
+                  with inertia.
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">leadingIcon</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">React.ReactNode</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  leadingIcon
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  React.ReactNode
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">undefined</td>
-                <td className="py-3 px-4 text-on-surface-variant">Leading icon slot (auto-scales 20dp–40dp with size).</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Leading icon slot (auto-scales 20dp–40dp with size).
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">trailingIcon</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">React.ReactNode</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  trailingIcon
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  React.ReactNode
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">undefined</td>
-                <td className="py-3 px-4 text-on-surface-variant">Trailing icon slot.</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Trailing icon slot.
+                </td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono font-medium text-primary">asChild</td>
-                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">boolean</td>
+                <td className="py-3 px-4 font-mono font-medium text-primary">
+                  asChild
+                </td>
+                <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">
+                  boolean
+                </td>
                 <td className="py-3 px-4 font-mono text-xs">false</td>
-                <td className="py-3 px-4 text-on-surface-variant">Radix UI Slot polymorphism to render custom elements (e.g. Next.js Link).</td>
+                <td className="py-3 px-4 text-on-surface-variant">
+                  Radix UI Slot polymorphism to render custom elements (e.g.
+                  Next.js Link).
+                </td>
               </tr>
             </tbody>
           </table>
@@ -451,26 +546,66 @@ export const buttonVariants = cva(
 
       {/* 6. Accessibility & Motion Guarantee per DESIGN.md */}
       <section className="flex flex-col gap-4 p-6 rounded-2xl bg-surface-container-low border border-outline-variant/40">
-        <h2 className="text-lg font-medium text-on-surface">Accessibility & Motion Contract</h2>
+        <h2 className="text-lg font-medium text-on-surface">
+          Accessibility & Motion Contract
+        </h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-on-surface-variant">
           <li className="flex flex-col gap-1">
-            <strong className="text-on-surface font-semibold">48 × 48 px Minimum Touch Target</strong>
-            <span>Guaranteed across all visual sizes (even 32dp xs) via absolute pseudo-element expansion (<code className="font-mono text-primary text-xs">after:min-h-[48px]</code>).</span>
+            <strong className="text-on-surface font-semibold">
+              48 × 48 px Minimum Touch Target
+            </strong>
+            <span>
+              Guaranteed across all visual sizes (even 32dp xs) via absolute
+              pseudo-element expansion (
+              <code className="font-mono text-primary text-xs">
+                after:min-h-[48px]
+              </code>
+              ).
+            </span>
           </li>
           <li className="flex flex-col gap-1">
-            <strong className="text-on-surface font-semibold">W3C WAI-ARIA Toggle Conformance</strong>
-            <span>Sets <code className="font-mono text-primary text-xs">aria-pressed=&quot;true | false&quot;</code> and <code className="font-mono text-primary text-xs">data-state</code> automatically when <code className="font-mono text-primary text-xs">selected</code> is supplied.</span>
+            <strong className="text-on-surface font-semibold">
+              W3C WAI-ARIA Toggle Conformance
+            </strong>
+            <span>
+              Sets{" "}
+              <code className="font-mono text-primary text-xs">
+                aria-pressed=&quot;true | false&quot;
+              </code>{" "}
+              and{" "}
+              <code className="font-mono text-primary text-xs">data-state</code>{" "}
+              automatically when{" "}
+              <code className="font-mono text-primary text-xs">selected</code>{" "}
+              is supplied.
+            </span>
           </li>
           <li className="flex flex-col gap-1">
-            <strong className="text-on-surface font-semibold">High-Contrast Focus Indicator</strong>
-            <span>2px offset focus ring (<code className="font-mono text-primary text-xs">focus-visible:ring-2 focus-visible:ring-primary</code>) visible during keyboard navigation.</span>
+            <strong className="text-on-surface font-semibold">
+              High-Contrast Focus Indicator
+            </strong>
+            <span>
+              2px offset focus ring (
+              <code className="font-mono text-primary text-xs">
+                focus-visible:ring-2 focus-visible:ring-primary
+              </code>
+              ) visible during keyboard navigation.
+            </span>
           </li>
           <li className="flex flex-col gap-1">
-            <strong className="text-on-surface font-semibold">M3 Physics & Corner Morphing</strong>
-            <span>Active press scales down by 2% and pulls corners inward to Family C compact radii (<code className="font-mono text-primary text-xs">8dp / 12dp / 16dp</code>) with spring easing.</span>
+            <strong className="text-on-surface font-semibold">
+              M3 Physics & Corner Morphing
+            </strong>
+            <span>
+              Active press scales down by 2% and pulls corners inward to Family
+              C compact radii (
+              <code className="font-mono text-primary text-xs">
+                8dp / 12dp / 16dp
+              </code>
+              ) with spring easing.
+            </span>
           </li>
         </ul>
       </section>
     </main>
-  );
+  )
 }
