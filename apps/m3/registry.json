@@ -5,12 +5,19 @@
     {
       "name":"button",
       "type": "registry:ui",
-      "dependencies":["@radix-ui/react-slot"],
+      "dependencies":[
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+    ],
+    "registryDependencies": [
+    "cn" 
+  ],
       "files":[
         {
-          "path":"registry/material-v1/ui/button.tsx",
-          "type": "registry:ui"
-        }
+          "path":"ui/button.tsx",
+          "type": "registry:ui",
+          "content": "import { type VariantProps, cva } from \"class-variance-authority\"\nimport { cn } from \"cn\"\nimport { Slot } from \"radix-ui\"\nimport * as React from \"react\"\n\nexport const buttonVariants = cva(\n  [\n    // Base layout, interactive behavior, GPU compositing, and accessible touch target\n..." 
+    }
       ]
     },
     {}
