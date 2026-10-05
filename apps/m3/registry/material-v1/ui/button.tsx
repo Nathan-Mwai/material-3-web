@@ -2,6 +2,7 @@ import {cva, type VariantProps} from "class-variance-authority"
 import * as React from "react"
 import {Slot} from "radix-ui"
 import { cn } from "cn"
+import { Slottable } from "radix-ui/slot"
 const buttonVariants = cva(
     [
     // Base layout, interactive behavior, GPU compositing, and accessible touch target
@@ -102,7 +103,15 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
+        /** 
+   * Wraps the button in a Radix Slot. 
+   * Useful when wrapping a Next.js `<Link>` or `<a href>` tag to inherit button styles. 
+   */
   asChild?: boolean
+  /** Element placed before the button text (e.g., an SVG or Icon component) */
+  leadingIcon?:React.ReactNode
+  /** Element placed after the button text */
+  trailingIcon?:React.ReactNode
 }
 
 
@@ -111,6 +120,11 @@ function Button({
     variant="filled",
     size="sm",
     asChild = false,
+    shape="round",
+    toggle="none",
+    leadingIcon,
+    trailingIcon,
+    children,
     ...props
 }: ButtonProps) {
     const Comp = asChild ? Slot.Root : "button"
@@ -119,9 +133,19 @@ function Button({
         data-slot="button"
         data-variant={variant}
         data-size={size}
-        className={cn(buttonVariants({variant, size, className}))}
+        data-shape={shape}
+        data-toggle={toggle}
+        className={cn(buttonVariants({variant, size, shape, toggle}), className)}
         {...props}
-    />
+    >
+        {/* 
+        Radix Slottable allows us to use `asChild` while still safely injecting 
+        our leading and trailing icons alongside the consumer's child element.
+      */}
+        {leadingIcon && <span className="flex-shrink-0">{leadingIcon}</span>}
+        {asChild ?  <Slottable>{children}</Slottable>: children}
+        {trailingIcon && <span className="flex-shrink-0">{trailingIcon}</span>}
+    </Comp>
   )
 }
 
