@@ -17,7 +17,20 @@ const ArrowRightIcon = () => (
 const page = () => {
   return (
     <div className='min-h-screen min-w-screen flex items-center justify-center'>
-      <Button size={"md"} shape={"circle"} leadingIcon={<ArrowRightIcon/>}/>
+      <div className='flex flex-wrap items-center gap-3'>
+      <Button variant="filled" size="sm">
+                  Filled (Primary)
+                </Button>
+                <Button variant="tonal" size="sm">
+                  Tonal
+                </Button>
+                <Button variant="elevated" size="sm">
+                  Elevated
+                </Button>
+                <Button variant="outlined" size="sm">
+                  Outlined
+                </Button>
+      </div>
     </div>
   )
 }
