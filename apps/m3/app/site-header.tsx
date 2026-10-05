@@ -111,7 +111,7 @@ export function SiteHeader() {
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             <Link href="/components">
-              <Button
+              {/* <Button
                 variant={pathname === "/components" ? "tonal" : "text"}
                 size="sm"
                 className="text-sm font-medium"
@@ -128,7 +128,7 @@ export function SiteHeader() {
                 className="text-sm font-medium"
               >
                 Button Docs
-              </Button>
+              </Button> */}
             </Link>
           </nav>
 
@@ -140,12 +140,12 @@ export function SiteHeader() {
               rel="noreferrer"
               aria-label="GitHub Repository"
             >
-              <Button shape="circle" size="sm" variant="text">
+              {/* <Button shape="circle" size="sm" variant="text">
                 <GitHubIcon />
-              </Button>
+              </Button> */}
             </a>
 
-            <Button
+            {/* <Button
               shape="circle"
               size="sm"
               variant="text"
@@ -155,12 +155,12 @@ export function SiteHeader() {
               }
             >
               {isDark ? <SunIcon /> : <MoonIcon />}
-            </Button>
+            </Button> */}
 
             <Link href="/components/button" className="hidden sm:inline-flex">
-              <Button variant="filled" size="sm">
+              {/* <Button variant="filled" size="sm">
                 Get Started
-              </Button>
+              </Button> */}
             </Link>
           </div>
         </div>
