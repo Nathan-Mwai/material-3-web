@@ -392,26 +392,26 @@ export default MorphButton`
     <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col gap-8">
       {/* Breadcrumb & Header */}
       <section className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
-          <Link href="/" className="hover:text-primary transition-colors">
+        <div className="flex items-center gap-2 text-xs font-medium text-m3-on-surface-variant">
+          <Link href="/" className="hover:text-m3-primary transition-colors">
             Components
           </Link>
           <span>/</span>
-          <span className="text-on-surface">MorphButton</span>
+          <span className="text-m3-on-surface">MorphButton</span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-on-surface">
+            <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-m3-on-surface">
               MorphButton
             </h1>
-            <p className="text-base text-on-surface-variant mt-1.5 max-w-2xl leading-relaxed">
+            <p className="text-base text-m3-on-surface-variant mt-1.5 max-w-2xl leading-relaxed">
               An interactive button that calculates its intrinsic width via a ResizeObserver and smoothly interpolates dimensions during content, icon, and state changes.
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-m3-secondary-container text-m3-on-secondary-container">
               Component #2
             </span>
           </div>
@@ -419,12 +419,12 @@ export default MorphButton`
       </section>
 
       {/* Development Status Callout */}
-      <section className="rounded-xl border border-outline-variant/60 bg-surface-container-low p-4 sm:p-5 flex items-start gap-3.5">
-        <div className="text-primary mt-0.5 shrink-0">
+      <section className="rounded-xl border border-m3-outline-variant/60 bg-m3-surface-container-low p-4 sm:p-5 flex items-start gap-3.5">
+        <div className="text-m3-primary mt-0.5 shrink-0">
           <InfoIcon className="size-5" />
         </div>
-        <div className="flex flex-col gap-1 text-sm text-on-surface-variant">
-          <p className="font-semibold text-on-surface">
+        <div className="flex flex-col gap-1 text-sm text-m3-on-surface-variant">
+          <p className="font-semibold text-m3-on-surface">
             Active Development Candidate
           </p>
           <p className="leading-relaxed">
@@ -435,19 +435,19 @@ export default MorphButton`
 
       {/* Phase Navigation Tabs */}
       <section className="flex flex-col gap-6">
-        <div className="flex border-b border-outline-variant/40 gap-2">
+        <div className="flex border-b border-m3-outline-variant/40 gap-2">
           <button
             type="button"
             onClick={() => setActiveTab("interactive")}
             className={`pb-3 px-4 text-sm font-medium transition-colors relative cursor-pointer ${
               activeTab === "interactive"
-                ? "text-primary"
-                : "text-on-surface-variant hover:text-on-surface"
+                ? "text-m3-primary"
+                : "text-m3-on-surface-variant hover:text-m3-on-surface"
             }`}
           >
             Interactive Playground (Cluster Morph)
             {activeTab === "interactive" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-m3-primary rounded-t-full" />
             )}
           </button>
 
@@ -456,13 +456,13 @@ export default MorphButton`
             onClick={() => setActiveTab("code")}
             className={`pb-3 px-4 text-sm font-medium transition-colors relative cursor-pointer ${
               activeTab === "code"
-                ? "text-primary"
-                : "text-on-surface-variant hover:text-on-surface"
+                ? "text-m3-primary"
+                : "text-m3-on-surface-variant hover:text-m3-on-surface"
             }`}
           >
             Code & Installation
             {activeTab === "code" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-m3-primary rounded-t-full" />
             )}
           </button>
         </div>
@@ -473,14 +473,14 @@ export default MorphButton`
             {/* Live Canvas (Left Column) */}
             <div className="w-full lg:col-span-7 flex flex-col gap-6">
               {/* Dynamic Cluster Canvas */}
-              <div className="w-full rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 sm:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden transition-all shadow-xs">
+              <div className="w-full rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-lowest p-6 sm:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden transition-all shadow-xs">
                 {/* Canvas Controls Header */}
-                <div className="w-full flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant/30 pb-4">
+                <div className="w-full flex flex-wrap items-center justify-between gap-3 border-b border-m3-outline-variant/30 pb-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-on-surface uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-m3-on-surface uppercase tracking-wider">
                       Interactive Button Row
                     </span>
-                    <span className="text-xs text-on-surface-variant">
+                    <span className="text-xs text-m3-on-surface-variant">
                       ({buttons.length} buttons in flex layout)
                     </span>
                   </div>
@@ -489,7 +489,7 @@ export default MorphButton`
                     <button
                       type="button"
                       onClick={addButtonToCluster}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full font-medium bg-primary text-on-primary hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full font-medium bg-m3-primary text-m3-on-primary hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
                     >
                       <AddIcon className="size-3.5" />
                       <span>Add Button</span>
@@ -509,7 +509,7 @@ export default MorphButton`
                         trailingIcon={renderIconByName(btn.trailingIconName)}
                         onClick={() => toggleButtonExpansion(btn.id)}
                         className={`transition-all ${
-                          selectedButtonId === btn.id ? "ring-2 ring-primary ring-offset-2 ring-offset-surface" : ""
+                          selectedButtonId === btn.id ? "ring-2 ring-m3-primary ring-offset-2 ring-offset-m3-surface" : ""
                         }`}
                       >
                         {btn.label}
@@ -522,7 +522,7 @@ export default MorphButton`
                           e.stopPropagation()
                           setSelectedButtonId(btn.id)
                         }}
-                        className="absolute -top-2 -right-2 size-5 rounded-full bg-surface-container-highest text-on-surface border border-outline-variant/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-[10px] cursor-pointer"
+                        className="absolute -top-2 -right-2 size-5 rounded-full bg-m3-surface-container-highest text-m3-on-surface border border-m3-outline-variant/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-[10px] cursor-pointer"
                         title="Configure this button"
                       >
                         ⚙
@@ -532,9 +532,9 @@ export default MorphButton`
                 </div>
 
                 {/* Hint banner */}
-                <div className="w-full rounded-xl bg-surface-container-low/70 border border-outline-variant/30 p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-on-surface-variant">
+                <div className="w-full rounded-xl bg-m3-surface-container-low/70 border border-m3-outline-variant/30 p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-m3-on-surface-variant">
                   <span className="flex items-center gap-1.5">
-                    <span className="size-2 rounded-full bg-primary animate-pulse" />
+                    <span className="size-2 rounded-full bg-m3-primary animate-pulse" />
                     Click any button above to toggle its label and watch sibling buttons glide together!
                   </span>
 
@@ -542,7 +542,7 @@ export default MorphButton`
                     <button
                       type="button"
                       onClick={() => removeButtonFromCluster(selectedButtonId)}
-                      className="text-error hover:underline cursor-pointer flex items-center gap-1 font-medium"
+                      className="text-m3-error hover:underline cursor-pointer flex items-center gap-1 font-medium"
                     >
                       <TrashIcon className="size-3.5" />
                       <span>Remove Selected</span>
@@ -552,15 +552,15 @@ export default MorphButton`
               </div>
 
               {/* Dynamic Code Preview Snippet */}
-              <div className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-highest p-4 flex flex-col gap-2">
+              <div className="w-full rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-highest p-4 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-on-surface-variant uppercase tracking-wider">
+                  <span className="text-xs font-mono text-m3-on-surface-variant uppercase tracking-wider">
                     Selected Button Code Snippet
                   </span>
                   <button
                     type="button"
                     onClick={() => handleCopy(generateDynamicSnippet(), "dynamic-snippet")}
-                    className="flex items-center gap-1.5 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer"
                   >
                     {copiedKey === "dynamic-snippet" ? (
                       <>
@@ -575,18 +575,18 @@ export default MorphButton`
                     )}
                   </button>
                 </div>
-                <pre className="font-mono text-xs sm:text-sm text-on-surface overflow-x-auto p-2 bg-surface-container/60 rounded-md">
+                <pre className="font-mono text-xs sm:text-sm text-m3-on-surface overflow-x-auto p-2 bg-m3-surface-container/60 rounded-md">
                   <code>{generateDynamicSnippet()}</code>
                 </pre>
               </div>
 
               {/* Quick Scenarios Panel */}
-              <div className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+              <div className="w-full rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-sm font-semibold text-on-surface">
+                  <h3 className="text-sm font-semibold text-m3-on-surface">
                     Preset Morph Scenarios
                   </h3>
-                  <p className="text-xs text-on-surface-variant">
+                  <p className="text-xs text-m3-on-surface-variant">
                     Load pre-configured multi-button workflows to observe how width shifts dynamically affect sibling layout density.
                   </p>
                 </div>
@@ -595,21 +595,21 @@ export default MorphButton`
                   <button
                     type="button"
                     onClick={() => loadScenario("file")}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface text-on-surface border border-outline-variant/60 hover:bg-surface-container-high transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-m3-surface text-m3-on-surface border border-m3-outline-variant/60 hover:bg-m3-surface-container-high transition-colors cursor-pointer"
                   >
                     File Download & Share
                   </button>
                   <button
                     type="button"
                     onClick={() => loadScenario("cart")}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface text-on-surface border border-outline-variant/60 hover:bg-surface-container-high transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-m3-surface text-m3-on-surface border border-m3-outline-variant/60 hover:bg-m3-surface-container-high transition-colors cursor-pointer"
                   >
                     Shopping Cart Flow
                   </button>
                   <button
                     type="button"
                     onClick={() => loadScenario("form")}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface text-on-surface border border-outline-variant/60 hover:bg-surface-container-high transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-m3-surface text-m3-on-surface border border-m3-outline-variant/60 hover:bg-m3-surface-container-high transition-colors cursor-pointer"
                   >
                     Form Publishing State
                   </button>
@@ -618,19 +618,19 @@ export default MorphButton`
             </div>
 
             {/* Inspector & Controls Panel (Right Column) */}
-            <div className="w-full lg:col-span-5 rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-6">
-              <div className="flex items-center justify-between border-b border-outline-variant/40 pb-3">
-                <h2 className="text-base font-semibold text-on-surface">
+            <div className="w-full lg:col-span-5 rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-6">
+              <div className="flex items-center justify-between border-b border-m3-outline-variant/40 pb-3">
+                <h2 className="text-base font-semibold text-m3-on-surface">
                   Cluster Controls
                 </h2>
-                <span className="text-xs font-mono text-primary bg-primary-container px-2 py-0.5 rounded-full font-medium">
+                <span className="text-xs font-mono text-m3-primary bg-m3-primary-container px-2 py-0.5 rounded-full font-medium">
                   Active: {selectedButton.label.slice(0, 15)}
                 </span>
               </div>
 
               {/* Global Size Selector */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Cluster Size Scale
                 </label>
                 <div className="grid grid-cols-5 gap-1.5">
@@ -641,8 +641,8 @@ export default MorphButton`
                       onClick={() => setGlobalSize(sz)}
                       className={`py-2 text-xs rounded-lg font-medium uppercase transition-all cursor-pointer ${
                         globalSize === sz
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {sz}
@@ -653,7 +653,7 @@ export default MorphButton`
 
               {/* Selected Button Variant */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Selected Button Variant
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -664,8 +664,8 @@ export default MorphButton`
                       onClick={() => updateSelectedButton({ variant: v })}
                       className={`px-3 py-2 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         selectedButton.variant === v
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {v}
@@ -676,7 +676,7 @@ export default MorphButton`
 
               {/* Selected Button Shape */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Selected Button Shape
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -687,8 +687,8 @@ export default MorphButton`
                       onClick={() => updateSelectedButton({ shape: s })}
                       className={`px-3 py-2 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         selectedButton.shape === s
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {s}
@@ -699,7 +699,7 @@ export default MorphButton`
 
               {/* Preloaded Icon Selectors from icons.tsx */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Preloaded Leading Icon (from icons.tsx)
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
@@ -715,8 +715,8 @@ export default MorphButton`
                       className={`px-2 py-1.5 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         (iconKey === "none" && !selectedButton.leadingIconName) ||
                         selectedButton.leadingIconName === iconKey
-                          ? "bg-secondary-container text-on-secondary-container font-semibold"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {iconKey}
@@ -727,7 +727,7 @@ export default MorphButton`
 
               {/* Text Length Morphing Test Input */}
               <div className="flex flex-col gap-2">
-                <label htmlFor="morph-short-label" className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label htmlFor="morph-short-label" className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Compact Text
                 </label>
                 <input
@@ -741,12 +741,12 @@ export default MorphButton`
                       label: selectedButton.isExpanded ? selectedButton.expandedLabel : val,
                     })
                   }}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-surface border border-outline-variant/80 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-m3-surface border border-m3-outline-variant/80 text-m3-on-surface focus:outline-none focus:ring-2 focus:ring-m3-primary"
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="morph-expanded-label" className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label htmlFor="morph-expanded-label" className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Expanded Text (Triggered on Click)
                 </label>
                 <input
@@ -760,7 +760,7 @@ export default MorphButton`
                       label: selectedButton.isExpanded ? val : selectedButton.shortLabel,
                     })
                   }}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-surface border border-outline-variant/80 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-m3-surface border border-m3-outline-variant/80 text-m3-on-surface focus:outline-none focus:ring-2 focus:ring-m3-primary"
                 />
               </div>
             </div>
@@ -771,18 +771,18 @@ export default MorphButton`
         {activeTab === "code" && (
           <div className="flex flex-col gap-8">
             {/* CLI Installation Step */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h2 className="text-lg font-semibold text-on-surface">
+                <h2 className="text-lg font-semibold text-m3-on-surface">
                   1. Install via M3 CLI
                 </h2>
-                <p className="text-sm text-on-surface-variant">
+                <p className="text-sm text-m3-on-surface-variant">
                   Run the CLI command to download MorphButton into your components directory.
                 </p>
               </div>
 
               {/* Package Manager Selector */}
-              <div className="flex items-center gap-1.5 border-b border-outline-variant/40 pb-2">
+              <div className="flex items-center gap-1.5 border-b border-m3-outline-variant/40 pb-2">
                 {(["pnpm", "npm", "yarn", "bun"] as PackageManager[]).map((pm) => (
                   <button
                     key={pm}
@@ -790,8 +790,8 @@ export default MorphButton`
                     onClick={() => setPackageManager(pm)}
                     className={`px-3 py-1 text-xs font-medium rounded-full cursor-pointer transition-colors ${
                       packageManager === pm
-                        ? "bg-secondary-container text-on-secondary-container font-semibold"
-                        : "text-on-surface-variant hover:text-on-surface"
+                        ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                        : "text-m3-on-surface-variant hover:text-m3-on-surface"
                     }`}
                   >
                     {pm}
@@ -800,12 +800,12 @@ export default MorphButton`
               </div>
 
               {/* Command Box */}
-              <div className="flex items-center justify-between rounded-xl bg-surface-container-highest px-4 py-3 font-mono text-sm text-on-surface border border-outline-variant/40">
+              <div className="flex items-center justify-between rounded-xl bg-m3-surface-container-highest px-4 py-3 font-mono text-sm text-m3-on-surface border border-m3-outline-variant/40">
                 <span className="overflow-x-auto select-all">{getInstallCommand(packageManager)}</span>
                 <button
                   type="button"
                   onClick={() => handleCopy(getInstallCommand(packageManager), "cli-cmd")}
-                  className="ml-3 flex items-center gap-1 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
+                  className="ml-3 flex items-center gap-1 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
                   aria-label="Copy CLI Command"
                 >
                   {copiedKey === "cli-cmd" ? (
@@ -824,17 +824,17 @@ export default MorphButton`
             </div>
 
             {/* Icons Dependency */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h2 className="text-lg font-semibold text-on-surface">
+                <h2 className="text-lg font-semibold text-m3-on-surface">
                   2. Icons Component
                 </h2>
-                <p className="text-sm text-on-surface-variant">
+                <p className="text-sm text-m3-on-surface-variant">
                   MorphButton utilizes standardized SVGs from the centralized Material Symbols library.
                 </p>
               </div>
 
-              <div className="flex items-center justify-between rounded-xl bg-surface-container-highest px-4 py-3 font-mono text-sm text-on-surface border border-outline-variant/40">
+              <div className="flex items-center justify-between rounded-xl bg-m3-surface-container-highest px-4 py-3 font-mono text-sm text-m3-on-surface border border-m3-outline-variant/40">
                 <span className="overflow-x-auto select-all">
                   {packageManager === "pnpm"
                     ? "pnpm dlx m3-ui add icons"
@@ -850,7 +850,7 @@ export default MorphButton`
                       "icons-cmd"
                     )
                   }
-                  className="ml-3 flex items-center gap-1 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
+                  className="ml-3 flex items-center gap-1 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
                 >
                   {copiedKey === "icons-cmd" ? (
                     <>
@@ -868,20 +868,20 @@ export default MorphButton`
             </div>
 
             {/* Component Source Code */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-on-surface">
+                  <h2 className="text-lg font-semibold text-m3-on-surface">
                     3. Component Source Code
                   </h2>
-                  <p className="text-xs font-mono text-on-surface-variant mt-0.5">
+                  <p className="text-xs font-mono text-m3-on-surface-variant mt-0.5">
                     registry/material-v1/ui/morph-button.tsx
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleCopy(rawMorphButtonSource, "raw-source")}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-m3-surface-container text-m3-primary hover:bg-m3-surface-container-high transition-colors cursor-pointer"
                 >
                   {copiedKey === "raw-source" ? (
                     <>
@@ -897,23 +897,23 @@ export default MorphButton`
                 </button>
               </div>
 
-              <div className="rounded-xl border border-outline-variant/40 bg-surface-container-highest p-4 max-h-[460px] overflow-y-auto">
-                <pre className="font-mono text-xs text-on-surface leading-relaxed">
+              <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-highest p-4 max-h-[460px] overflow-y-auto">
+                <pre className="font-mono text-xs text-m3-on-surface leading-relaxed">
                   <code>{rawMorphButtonSource}</code>
                 </pre>
               </div>
             </div>
 
             {/* How It Works Architecture Note */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-3">
-              <h2 className="text-lg font-semibold text-on-surface">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-3">
+              <h2 className="text-lg font-semibold text-m3-on-surface">
                 4. Architecture: ResizeObserver Width Interpolation
               </h2>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                Standard CSS transitions cannot animate between <code className="text-xs bg-surface-container-highest px-1 py-0.5 rounded">width: auto</code> states without hardcoded widths. MorphButton addresses this by measuring the inner content <code className="text-xs bg-surface-container-highest px-1 py-0.5 rounded">scrollWidth</code> plus container padding via <code className="text-xs bg-surface-container-highest px-1 py-0.5 rounded">getComputedStyle</code> inside a <code className="text-xs bg-surface-container-highest px-1 py-0.5 rounded">ResizeObserver</code>.
+              <p className="text-sm text-m3-on-surface-variant leading-relaxed">
+                Standard CSS transitions cannot animate between <code className="text-xs bg-m3-surface-container-highest px-1 py-0.5 rounded">width: auto</code> states without hardcoded widths. MorphButton addresses this by measuring the inner content <code className="text-xs bg-m3-surface-container-highest px-1 py-0.5 rounded">scrollWidth</code> plus container padding via <code className="text-xs bg-m3-surface-container-highest px-1 py-0.5 rounded">getComputedStyle</code> inside a <code className="text-xs bg-m3-surface-container-highest px-1 py-0.5 rounded">ResizeObserver</code>.
               </p>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                When content length expands or contracts, an inline pixel width is smoothly calculated and applied, allowing CSS <code className="text-xs bg-surface-container-highest px-1 py-0.5 rounded">cubic-bezier(0.2, 0, 0, 1)</code> curves to smoothly interpolate dimensions without layout pops.
+              <p className="text-sm text-m3-on-surface-variant leading-relaxed">
+                When content length expands or contracts, an inline pixel width is smoothly calculated and applied, allowing CSS <code className="text-xs bg-m3-surface-container-highest px-1 py-0.5 rounded">cubic-bezier(0.2, 0, 0, 1)</code> curves to smoothly interpolate dimensions without layout pops.
               </p>
             </div>
           </div>

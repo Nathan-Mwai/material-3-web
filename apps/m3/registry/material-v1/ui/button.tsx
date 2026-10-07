@@ -13,7 +13,7 @@ const buttonVariants = cva(
     // Accessible touch target (48x48px min)
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
     // Focus indicator
-    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+    "focus-visible:ring-2 focus-visible:ring-m3-primary focus-visible:ring-offset-2 focus-visible:ring-offset-m3-surface",
     // Disabled state
     "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none disabled:scale-100",
     // Icon base resets
@@ -69,27 +69,27 @@ const buttonVariants = cva(
       { shape: "circle", size: "xl", className: "w-[136px] rounded-[68px]" },
 
       // Row A: Elevated
-      { variant: "elevated", toggle: "none", className: "bg-surface-container-low text-primary shadow-xs hover:shadow-md active:shadow-xs" },
-      { variant: "elevated", toggle: "unselected", className: "bg-surface-container-low text-primary border border-outline-variant shadow-none hover:bg-surface-container active:bg-surface-container-high" },
-      { variant: "elevated", toggle: "selected", className: "bg-primary text-on-primary shadow-xs hover:shadow-md active:shadow-xs" },
+      { variant: "elevated", toggle: "none", className: "bg-m3-surface-container-low text-m3-primary shadow-xs hover:shadow-md active:shadow-xs" },
+      { variant: "elevated", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-primary border border-m3-outline-variant shadow-none hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "elevated", toggle: "selected", className: "bg-m3-primary text-m3-on-primary shadow-xs hover:shadow-md active:shadow-xs" },
 
       // Row B: Filled
-      { variant: "filled", toggle: "none", className: "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
-      { variant: "filled", toggle: "unselected", className: "bg-surface-container text-on-surface hover:bg-surface-container-high active:bg-surface-container-highest" },
-      { variant: "filled", toggle: "selected", className: "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "filled", toggle: "none", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "filled", toggle: "unselected", className: "bg-m3-surface-container text-m3-on-surface hover:bg-m3-surface-container-high active:bg-m3-surface-container-highest" },
+      { variant: "filled", toggle: "selected", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
       // Row C: Tonal
-      { variant: "tonal", toggle: "none", className: "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
-      { variant: "tonal", toggle: "unselected", className: "bg-surface-container-low text-on-surface-variant hover:bg-surface-container active:bg-surface-container-high" },
-      { variant: "tonal", toggle: "selected", className: "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "tonal", toggle: "none", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "tonal", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-on-surface-variant hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "tonal", toggle: "selected", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
       // Row D: Outlined
-      { variant: "outlined", toggle: "none", className: "bg-transparent text-primary border border-outline hover:bg-primary/8 active:bg-primary/12" },
-      { variant: "outlined", toggle: "unselected", className: "bg-transparent text-on-surface border border-outline hover:bg-on-surface/8 active:bg-on-surface/12" },
-      { variant: "outlined", toggle: "selected", className: "bg-inverse-surface text-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90" },
+      { variant: "outlined", toggle: "none", className: "bg-transparent text-m3-primary border border-m3-outline hover:bg-m3-primary/8 active:bg-m3-primary/12" },
+      { variant: "outlined", toggle: "unselected", className: "bg-transparent text-m3-on-surface border border-m3-outline hover:bg-m3-on-surface/8 active:bg-m3-on-surface/12" },
+      { variant: "outlined", toggle: "selected", className: "bg-m3-inverse-surface text-m3-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90" },
 
       // Row E: Text
-      { variant: "text", className: "bg-transparent text-primary hover:bg-primary/8 active:bg-primary/12" },
+      { variant: "text", className: "bg-transparent text-m3-primary hover:bg-m3-primary/8 active:bg-m3-primary/12" },
     ],
         defaultVariants:{
             variant:"filled",

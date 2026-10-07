@@ -186,7 +186,7 @@ const buttonVariants = cva(
     "font-medium whitespace-nowrap outline-none cursor-pointer transform-gpu",
     "transition-[border-radius,width,transform,box-shadow,background-color,color,opacity] duration-500 ease-[cubic-bezier(0.2,0,0,1)] active:duration-300 active:scale-[0.98]",
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
-    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "focus-visible:ring-2 focus-visible:ring-m3-primary focus-visible:ring-offset-2 focus-visible:ring-offset-m3-surface",
     "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none disabled:scale-100",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ],
@@ -236,23 +236,23 @@ const buttonVariants = cva(
       { shape: "circle", size: "lg", className: "w-24 rounded-[48px]" },
       { shape: "circle", size: "xl", className: "w-[136px] rounded-[68px]" },
 
-      { variant: "elevated", toggle: "none", className: "bg-surface-container-low text-primary shadow-xs hover:shadow-md active:shadow-xs" },
-      { variant: "elevated", toggle: "unselected", className: "bg-surface-container-low text-primary border border-outline-variant shadow-none hover:bg-surface-container active:bg-surface-container-high" },
-      { variant: "elevated", toggle: "selected", className: "bg-primary text-on-primary shadow-xs hover:shadow-md active:shadow-xs" },
+      { variant: "elevated", toggle: "none", className: "bg-m3-surface-container-low text-m3-primary shadow-xs hover:shadow-md active:shadow-xs" },
+      { variant: "elevated", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-primary border border-m3-outline-variant shadow-none hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "elevated", toggle: "selected", className: "bg-m3-primary text-m3-on-primary shadow-xs hover:shadow-md active:shadow-xs" },
 
-      { variant: "filled", toggle: "none", className: "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
-      { variant: "filled", toggle: "unselected", className: "bg-surface-container text-on-surface hover:bg-surface-container-high active:bg-surface-container-highest" },
-      { variant: "filled", toggle: "selected", className: "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "filled", toggle: "none", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "filled", toggle: "unselected", className: "bg-m3-surface-container text-m3-on-surface hover:bg-m3-surface-container-high active:bg-m3-surface-container-highest" },
+      { variant: "filled", toggle: "selected", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
-      { variant: "tonal", toggle: "none", className: "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
-      { variant: "tonal", toggle: "unselected", className: "bg-surface-container-low text-on-surface-variant hover:bg-surface-container active:bg-surface-container-high" },
-      { variant: "tonal", toggle: "selected", className: "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "tonal", toggle: "none", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "tonal", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-on-surface-variant hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "tonal", toggle: "selected", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
-      { variant: "outlined", toggle: "none", className: "bg-transparent text-primary border border-outline hover:bg-primary/8 active:bg-primary/12" },
-      { variant: "outlined", toggle: "unselected", className: "bg-transparent text-on-surface border border-outline hover:bg-on-surface/8 active:bg-on-surface/12" },
-      { variant: "outlined", toggle: "selected", className: "bg-inverse-surface text-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90" },
+      { variant: "outlined", toggle: "none", className: "bg-transparent text-m3-primary border border-m3-outline hover:bg-m3-primary/8 active:bg-m3-primary/12" },
+      { variant: "outlined", toggle: "unselected", className: "bg-transparent text-m3-on-surface border border-m3-outline hover:bg-m3-on-surface/8 active:bg-m3-on-surface/12" },
+      { variant: "outlined", toggle: "selected", className: "bg-m3-inverse-surface text-m3-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90" },
 
-      { variant: "text", className: "bg-transparent text-primary hover:bg-primary/8 active:bg-primary/12" },
+      { variant: "text", className: "bg-transparent text-m3-primary hover:bg-m3-primary/8 active:bg-m3-primary/12" },
     ],
     defaultVariants: {
       variant: "filled",
@@ -308,26 +308,26 @@ export default Button`
     <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col gap-8">
       {/* Breadcrumb & Header Title */}
       <section className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
-          <Link href="/" className="hover:text-primary transition-colors">
+        <div className="flex items-center gap-2 text-xs font-medium text-m3-on-surface-variant">
+          <Link href="/" className="hover:text-m3-primary transition-colors">
             Components
           </Link>
           <span>/</span>
-          <span className="text-on-surface">Button</span>
+          <span className="text-m3-on-surface">Button</span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-on-surface">
+            <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-m3-on-surface">
               Button
             </h1>
-            <p className="text-base text-on-surface-variant mt-1.5 max-w-2xl">
+            <p className="text-base text-m3-on-surface-variant mt-1.5 max-w-2xl">
               Buttons enable people to initiate actions, make choices, and trigger state transitions. Material 3 defines five distinct emphasis levels with fluid shape-morphing states.
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-tertiary-container text-on-tertiary-container">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-m3-tertiary-container text-m3-on-tertiary-container">
               Alpha Component
             </span>
           </div>
@@ -335,12 +335,12 @@ export default Button`
       </section>
 
       {/* Alpha Development Notice Callout */}
-      <section className="rounded-xl border border-outline-variant/60 bg-surface-container-low p-4 sm:p-5 flex items-start gap-3.5">
-        <div className="text-primary mt-0.5 shrink-0">
+      <section className="rounded-xl border border-m3-outline-variant/60 bg-m3-surface-container-low p-4 sm:p-5 flex items-start gap-3.5">
+        <div className="text-m3-primary mt-0.5 shrink-0">
           <InfoIcon className="size-5" />
         </div>
-        <div className="flex flex-col gap-1 text-sm text-on-surface-variant">
-          <p className="font-semibold text-on-surface">
+        <div className="flex flex-col gap-1 text-sm text-m3-on-surface-variant">
+          <p className="font-semibold text-m3-on-surface">
             Active Development Notice
           </p>
           <p className="leading-relaxed">
@@ -351,19 +351,19 @@ export default Button`
 
       {/* Phase Navigation Tabs (Interactive Preview vs Code & Installation) */}
       <section className="flex flex-col gap-6">
-        <div className="flex border-b border-outline-variant/40 gap-2">
+        <div className="flex border-b border-m3-outline-variant/40 gap-2">
           <button
             type="button"
             onClick={() => setActiveTab("interactive")}
             className={`pb-3 px-4 text-sm font-medium transition-colors relative cursor-pointer ${
               activeTab === "interactive"
-                ? "text-primary"
-                : "text-on-surface-variant hover:text-on-surface"
+                ? "text-m3-primary"
+                : "text-m3-on-surface-variant hover:text-m3-on-surface"
             }`}
           >
             Interactive Playground
             {activeTab === "interactive" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-m3-primary rounded-t-full" />
             )}
           </button>
 
@@ -372,13 +372,13 @@ export default Button`
             onClick={() => setActiveTab("code")}
             className={`pb-3 px-4 text-sm font-medium transition-colors relative cursor-pointer ${
               activeTab === "code"
-                ? "text-primary"
-                : "text-on-surface-variant hover:text-on-surface"
+                ? "text-m3-primary"
+                : "text-m3-on-surface-variant hover:text-m3-on-surface"
             }`}
           >
             Code & Installation
             {activeTab === "code" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-m3-primary rounded-t-full" />
             )}
           </button>
         </div>
@@ -389,9 +389,9 @@ export default Button`
             {/* Live Canvas (Left Column) */}
             <div className="w-full lg:col-span-7 flex flex-col gap-6">
               {/* Canvas Card */}
-              <div className="w-full rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-8 sm:p-12 min-h-[340px] flex flex-col items-center justify-center relative overflow-hidden transition-all shadow-xs">
+              <div className="w-full rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-lowest p-8 sm:p-12 min-h-[340px] flex flex-col items-center justify-center relative overflow-hidden transition-all shadow-xs">
                 {/* Canvas background subtle pattern */}
-                <div className="absolute inset-0 bg-radial from-surface-container-low/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-radial from-m3-surface-container-low/50 to-transparent pointer-events-none" />
 
                 {/* The Live Button */}
                 <div className="z-10 flex flex-col items-center gap-3">
@@ -415,22 +415,22 @@ export default Button`
                     )}
                   </Button>
 
-                  <span className="text-xs text-on-surface-variant/70 font-mono mt-4">
+                  <span className="text-xs text-m3-on-surface-variant/70 font-mono mt-4">
                     variant: &ldquo;{variant}&rdquo; | shape: &ldquo;{shape}&rdquo; | size: &ldquo;{size}&rdquo;
                   </span>
                 </div>
               </div>
 
               {/* Dynamic Quick Code Output */}
-              <div className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-highest p-4 flex flex-col gap-2">
+              <div className="w-full rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-highest p-4 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-on-surface-variant uppercase tracking-wider">
+                  <span className="text-xs font-mono text-m3-on-surface-variant uppercase tracking-wider">
                     Live Component Snippet
                   </span>
                   <button
                     type="button"
                     onClick={() => handleCopy(generateDynamicCode(), "dynamic-snippet")}
-                    className="flex items-center gap-1.5 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer"
                   >
                     {copiedKey === "dynamic-snippet" ? (
                       <>
@@ -445,18 +445,18 @@ export default Button`
                     )}
                   </button>
                 </div>
-                <pre className="font-mono text-xs sm:text-sm text-on-surface overflow-x-auto p-2 bg-surface-container/60 rounded-md">
+                <pre className="font-mono text-xs sm:text-sm text-m3-on-surface overflow-x-auto p-2 bg-m3-surface-container/60 rounded-md">
                   <code>{generateDynamicCode()}</code>
                 </pre>
               </div>
 
               {/* Interactive Toggle Button Feature Demo */}
-              <div className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+              <div className="w-full rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-sm font-semibold text-on-surface">
+                  <h3 className="text-sm font-semibold text-m3-on-surface">
                     Interactive Toggle Morphing Demo
                   </h3>
-                  <p className="text-xs text-on-surface-variant">
+                  <p className="text-xs text-m3-on-surface-variant">
                     Click to observe Material 3 shape compression and tonal color shift between selected and unselected states.
                   </p>
                 </div>
@@ -472,7 +472,7 @@ export default Button`
                     {isDemoSelected ? "Favorited" : "Add to favorites"}
                   </Button>
 
-                  <span className="text-xs text-on-surface-variant font-mono">
+                  <span className="text-xs text-m3-on-surface-variant font-mono">
                     toggle: &ldquo;{isDemoSelected ? "selected" : "unselected"}&rdquo;
                   </span>
                 </div>
@@ -480,14 +480,14 @@ export default Button`
             </div>
 
             {/* Playground Controls Panel (Right Column) */}
-            <div className="w-full lg:col-span-5 rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-6">
-              <h2 className="text-base font-semibold text-on-surface border-b border-outline-variant/40 pb-3">
+            <div className="w-full lg:col-span-5 rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-6">
+              <h2 className="text-base font-semibold text-m3-on-surface border-b border-m3-outline-variant/40 pb-3">
                 Playground Controls
               </h2>
 
               {/* Variant Selector */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Variant
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -498,8 +498,8 @@ export default Button`
                       onClick={() => setVariant(v)}
                       className={`px-3 py-2 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         variant === v
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {v}
@@ -510,7 +510,7 @@ export default Button`
 
               {/* Shape Selector */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Shape
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -521,8 +521,8 @@ export default Button`
                       onClick={() => setShape(s)}
                       className={`px-3 py-2 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         shape === s
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {s}
@@ -533,7 +533,7 @@ export default Button`
 
               {/* Size Selector */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Size
                 </label>
                 <div className="grid grid-cols-5 gap-1.5">
@@ -544,8 +544,8 @@ export default Button`
                       onClick={() => setSize(sz)}
                       className={`py-2 text-xs rounded-lg font-medium uppercase transition-all cursor-pointer ${
                         size === sz
-                          ? "bg-primary text-on-primary shadow-xs"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-primary text-m3-on-primary shadow-xs"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {sz}
@@ -556,7 +556,7 @@ export default Button`
 
               {/* Preloaded Leading Icon */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Leading Icon
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -567,8 +567,8 @@ export default Button`
                       onClick={() => setLeadingIconChoice(icon)}
                       className={`px-2.5 py-1.5 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         leadingIconChoice === icon
-                          ? "bg-secondary-container text-on-secondary-container font-semibold"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {icon}
@@ -579,7 +579,7 @@ export default Button`
 
               {/* Preloaded Trailing Icon */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Trailing Icon
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -590,8 +590,8 @@ export default Button`
                       onClick={() => setTrailingIconChoice(icon)}
                       className={`px-2.5 py-1.5 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         trailingIconChoice === icon
-                          ? "bg-secondary-container text-on-secondary-container font-semibold"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {icon}
@@ -602,7 +602,7 @@ export default Button`
 
               {/* Toggle Mode Selector */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                <label className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                   Toggle Mode
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -613,8 +613,8 @@ export default Button`
                       onClick={() => setToggle(t)}
                       className={`px-2 py-1.5 text-xs rounded-lg font-medium capitalize transition-all cursor-pointer ${
                         toggle === t
-                          ? "bg-secondary-container text-on-secondary-container font-semibold"
-                          : "bg-surface text-on-surface-variant hover:bg-surface-container-high"
+                          ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                          : "bg-m3-surface text-m3-on-surface-variant hover:bg-m3-surface-container-high"
                       }`}
                     >
                       {t}
@@ -626,7 +626,7 @@ export default Button`
               {/* Label Text Input */}
               {shape !== "circle" && (
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="button-label-input" className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                  <label htmlFor="button-label-input" className="text-xs font-semibold text-m3-on-surface-variant uppercase tracking-wider">
                     Label Text
                   </label>
                   <input
@@ -634,25 +634,25 @@ export default Button`
                     type="text"
                     value={buttonText}
                     onChange={(e) => setButtonText(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-surface border border-outline-variant/80 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-m3-surface border border-m3-outline-variant/80 text-m3-on-surface focus:outline-none focus:ring-2 focus:ring-m3-primary"
                   />
                 </div>
               )}
 
               {/* Disabled State Toggle */}
-              <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30">
-                <span className="text-sm font-medium text-on-surface">Disabled State</span>
+              <div className="flex items-center justify-between pt-2 border-t border-m3-outline-variant/30">
+                <span className="text-sm font-medium text-m3-on-surface">Disabled State</span>
                 <button
                   type="button"
                   onClick={() => setDisabled(!disabled)}
                   className={`w-12 h-6 rounded-full p-0.5 transition-colors cursor-pointer ${
-                    disabled ? "bg-primary" : "bg-outline-variant/60"
+                    disabled ? "bg-m3-primary" : "bg-m3-outline-variant/60"
                   }`}
                   aria-pressed={disabled}
                 >
                   <div
-                    className={`size-5 rounded-full bg-surface shadow-xs transition-transform ${
-                      disabled ? "translate-x-6 bg-on-primary" : "translate-x-0"
+                    className={`size-5 rounded-full bg-m3-surface shadow-xs transition-transform ${
+                      disabled ? "translate-x-6 bg-m3-on-primary" : "translate-x-0"
                     }`}
                   />
                 </button>
@@ -665,18 +665,18 @@ export default Button`
         {activeTab === "code" && (
           <div className="flex flex-col gap-8">
             {/* CLI Installation Step */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h2 className="text-lg font-semibold text-on-surface">
+                <h2 className="text-lg font-semibold text-m3-on-surface">
                   1. Install via M3 CLI
                 </h2>
-                <p className="text-sm text-on-surface-variant">
+                <p className="text-sm text-m3-on-surface-variant">
                   Run the M3 CLI command to download the Button component source directly into your components folder.
                 </p>
               </div>
 
               {/* Package Manager Selector */}
-              <div className="flex items-center gap-1.5 border-b border-outline-variant/40 pb-2">
+              <div className="flex items-center gap-1.5 border-b border-m3-outline-variant/40 pb-2">
                 {(["pnpm", "npm", "yarn", "bun"] as PackageManager[]).map((pm) => (
                   <button
                     key={pm}
@@ -684,8 +684,8 @@ export default Button`
                     onClick={() => setPackageManager(pm)}
                     className={`px-3 py-1 text-xs font-medium rounded-full cursor-pointer transition-colors ${
                       packageManager === pm
-                        ? "bg-secondary-container text-on-secondary-container font-semibold"
-                        : "text-on-surface-variant hover:text-on-surface"
+                        ? "bg-m3-secondary-container text-m3-on-secondary-container font-semibold"
+                        : "text-m3-on-surface-variant hover:text-m3-on-surface"
                     }`}
                   >
                     {pm}
@@ -694,12 +694,12 @@ export default Button`
               </div>
 
               {/* Command Box */}
-              <div className="flex items-center justify-between rounded-xl bg-surface-container-highest px-4 py-3 font-mono text-sm text-on-surface border border-outline-variant/40">
+              <div className="flex items-center justify-between rounded-xl bg-m3-surface-container-highest px-4 py-3 font-mono text-sm text-m3-on-surface border border-m3-outline-variant/40">
                 <span className="overflow-x-auto select-all">{getInstallCommand(packageManager)}</span>
                 <button
                   type="button"
                   onClick={() => handleCopy(getInstallCommand(packageManager), "cli-cmd")}
-                  className="ml-3 flex items-center gap-1 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
+                  className="ml-3 flex items-center gap-1 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
                   aria-label="Copy CLI Command"
                 >
                   {copiedKey === "cli-cmd" ? (
@@ -718,17 +718,17 @@ export default Button`
             </div>
 
             {/* Manual Installation & Dependencies */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h2 className="text-lg font-semibold text-on-surface">
+                <h2 className="text-lg font-semibold text-m3-on-surface">
                   2. Required Dependencies
                 </h2>
-                <p className="text-sm text-on-surface-variant">
+                <p className="text-sm text-m3-on-surface-variant">
                   If installing manually, ensure the following core libraries are added to your project:
                 </p>
               </div>
 
-              <div className="flex items-center justify-between rounded-xl bg-surface-container-highest px-4 py-3 font-mono text-sm text-on-surface border border-outline-variant/40">
+              <div className="flex items-center justify-between rounded-xl bg-m3-surface-container-highest px-4 py-3 font-mono text-sm text-m3-on-surface border border-m3-outline-variant/40">
                 <span className="overflow-x-auto select-all">
                   {packageManager === "pnpm"
                     ? "pnpm add class-variance-authority radix-ui cn"
@@ -748,7 +748,7 @@ export default Button`
                       "deps-cmd"
                     )
                   }
-                  className="ml-3 flex items-center gap-1 text-xs text-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
+                  className="ml-3 flex items-center gap-1 text-xs text-m3-primary font-medium hover:opacity-80 transition-opacity cursor-pointer shrink-0"
                 >
                   {copiedKey === "deps-cmd" ? (
                     <>
@@ -766,20 +766,20 @@ export default Button`
             </div>
 
             {/* Full Component Source Code */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-on-surface">
+                  <h2 className="text-lg font-semibold text-m3-on-surface">
                     3. Component Source Code
                   </h2>
-                  <p className="text-xs font-mono text-on-surface-variant mt-0.5">
+                  <p className="text-xs font-mono text-m3-on-surface-variant mt-0.5">
                     registry/material-v1/ui/button.tsx
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleCopy(rawButtonSource, "raw-source")}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-m3-surface-container text-m3-primary hover:bg-m3-surface-container-high transition-colors cursor-pointer"
                 >
                   {copiedKey === "raw-source" ? (
                     <>
@@ -795,73 +795,73 @@ export default Button`
                 </button>
               </div>
 
-              <div className="rounded-xl border border-outline-variant/40 bg-surface-container-highest p-4 max-h-[460px] overflow-y-auto">
-                <pre className="font-mono text-xs text-on-surface leading-relaxed">
+              <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-highest p-4 max-h-[460px] overflow-y-auto">
+                <pre className="font-mono text-xs text-m3-on-surface leading-relaxed">
                   <code>{rawButtonSource}</code>
                 </pre>
               </div>
             </div>
 
             {/* Component Props Specification */}
-            <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 flex flex-col gap-4">
-              <h2 className="text-lg font-semibold text-on-surface">
+            <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-low p-6 flex flex-col gap-4">
+              <h2 className="text-lg font-semibold text-m3-on-surface">
                 4. Props Specification
               </h2>
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-on-surface-variant border-collapse">
+                <table className="w-full text-left text-sm text-m3-on-surface-variant border-collapse">
                   <thead>
-                    <tr className="border-b border-outline-variant/50 text-xs font-semibold text-on-surface uppercase tracking-wider">
+                    <tr className="border-b border-m3-outline-variant/50 text-xs font-semibold text-m3-on-surface uppercase tracking-wider">
                       <th className="py-3 px-4">Prop</th>
                       <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4">Default</th>
                       <th className="py-3 px-4">Description</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-outline-variant/30 text-xs sm:text-sm">
+                  <tbody className="divide-y divide-m3-outline-variant/30 text-xs sm:text-sm">
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">variant</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">variant</td>
                       <td className="py-3 px-4 font-mono">&ldquo;filled&rdquo; | &ldquo;tonal&rdquo; | &ldquo;elevated&rdquo; | &ldquo;outlined&rdquo; | &ldquo;text&rdquo;</td>
                       <td className="py-3 px-4 font-mono">&ldquo;filled&rdquo;</td>
                       <td className="py-3 px-4">Visual emphasis tier following Material 3 specification.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">shape</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">shape</td>
                       <td className="py-3 px-4 font-mono">&ldquo;round&rdquo; | &ldquo;square&rdquo; | &ldquo;circle&rdquo;</td>
                       <td className="py-3 px-4 font-mono">&ldquo;round&rdquo;</td>
                       <td className="py-3 px-4">Corner geometry family. Round applies standard M3 pill radius.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">size</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">size</td>
                       <td className="py-3 px-4 font-mono">&ldquo;xs&rdquo; | &ldquo;sm&rdquo; | &ldquo;md&rdquo; | &ldquo;lg&rdquo; | &ldquo;xl&rdquo;</td>
                       <td className="py-3 px-4 font-mono">&ldquo;sm&rdquo;</td>
                       <td className="py-3 px-4">Height, padding, typography, and icon size scale.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">toggle</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">toggle</td>
                       <td className="py-3 px-4 font-mono">&ldquo;none&rdquo; | &ldquo;selected&rdquo; | &ldquo;unselected&rdquo;</td>
                       <td className="py-3 px-4 font-mono">&ldquo;none&rdquo;</td>
                       <td className="py-3 px-4">Toggle state mode for segmented or toggle button patterns.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">leadingIcon</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">leadingIcon</td>
                       <td className="py-3 px-4 font-mono">React.ReactNode</td>
                       <td className="py-3 px-4 font-mono">undefined</td>
                       <td className="py-3 px-4">Element placed prior to button label text with auto spacing.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">trailingIcon</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">trailingIcon</td>
                       <td className="py-3 px-4 font-mono">React.ReactNode</td>
                       <td className="py-3 px-4 font-mono">undefined</td>
                       <td className="py-3 px-4">Element placed after button label text with auto spacing.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">asChild</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">asChild</td>
                       <td className="py-3 px-4 font-mono">boolean</td>
                       <td className="py-3 px-4 font-mono">false</td>
                       <td className="py-3 px-4">Wraps child in Radix Slot, allowing Next.js Link or anchor tags.</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-mono text-primary font-medium">disabled</td>
+                      <td className="py-3 px-4 font-mono text-m3-primary font-medium">disabled</td>
                       <td className="py-3 px-4 font-mono">boolean</td>
                       <td className="py-3 px-4 font-mono">false</td>
                       <td className="py-3 px-4">Deactivates click events and sets 38% M3 disabled opacity.</td>
@@ -875,109 +875,109 @@ export default Button`
       </section>
 
       {/* Preset Variant Showcase Gallery */}
-      <section className="flex flex-col gap-6 pt-6 border-t border-outline-variant/40">
+      <section className="flex flex-col gap-6 pt-6 border-t border-m3-outline-variant/40">
         <div>
-          <h2 className="text-xl sm:text-2xl font-normal text-on-surface">
+          <h2 className="text-xl sm:text-2xl font-normal text-m3-on-surface">
             Variant Specifications
           </h2>
-          <p className="text-sm text-on-surface-variant mt-1">
+          <p className="text-sm text-m3-on-surface-variant mt-1">
             Material 3 defines five button variants to support distinct levels of action hierarchy.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Filled Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Filled Button</span>
-              <span className="text-[11px] font-mono uppercase bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Filled Button</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-primary-container text-m3-on-primary-container px-2 py-0.5 rounded-full">
                 High Emphasis
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Use for the single primary, highest-importance action on a page or flow. Only one filled button should dominate a given screen.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button variant="filled" size="sm">Filled Action</Button>
             </div>
           </div>
 
           {/* Tonal Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Tonal Button</span>
-              <span className="text-[11px] font-mono uppercase bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Tonal Button</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-secondary-container text-m3-on-secondary-container px-2 py-0.5 rounded-full">
                 Medium-High
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Provides secondary emphasis alongside filled buttons. Built with secondary container tones to separate from primary flows.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button variant="tonal" size="sm">Tonal Action</Button>
             </div>
           </div>
 
           {/* Elevated Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Elevated Button</span>
-              <span className="text-[11px] font-mono uppercase bg-surface-container text-on-surface px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Elevated Button</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-surface-container text-m3-on-surface px-2 py-0.5 rounded-full">
                 Medium Emphasis
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Lightly elevated container for cards and patterned surfaces where an outlined or flat button would lose visual separation.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button variant="elevated" size="sm">Elevated Action</Button>
             </div>
           </div>
 
           {/* Outlined Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Outlined Button</span>
-              <span className="text-[11px] font-mono uppercase bg-surface-container text-on-surface px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Outlined Button</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-surface-container text-m3-on-surface px-2 py-0.5 rounded-full">
                 Medium Emphasis
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Essential for secondary or independent actions that need boundary containment without surface fill competition.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button variant="outlined" size="sm">Outlined Action</Button>
             </div>
           </div>
 
           {/* Text Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Text Button</span>
-              <span className="text-[11px] font-mono uppercase bg-surface-container text-on-surface px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Text Button</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-surface-container text-m3-on-surface px-2 py-0.5 rounded-full">
                 Low Emphasis
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Low-emphasis actions inside dialogs, cards, and toolbars where borders or fills would add unnecessary visual friction.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button variant="text" size="sm">Text Action</Button>
             </div>
           </div>
 
           {/* Icon Button Card */}
-          <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-5 flex flex-col gap-3">
+          <div className="rounded-xl border border-m3-outline-variant/40 bg-m3-surface-container-low p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-on-surface">Circle Shape (Icon)</span>
-              <span className="text-[11px] font-mono uppercase bg-surface-container text-on-surface px-2 py-0.5 rounded-full">
+              <span className="text-sm font-semibold text-m3-on-surface">Circle Shape (Icon)</span>
+              <span className="text-[11px] font-mono uppercase bg-m3-surface-container text-m3-on-surface px-2 py-0.5 rounded-full">
                 Square Aspect
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
+            <p className="text-xs text-m3-on-surface-variant leading-relaxed">
               Circle shape enforces aspect ratio equality for standalone icon buttons while preserving the 48px touch target.
             </p>
-            <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-center gap-3 min-h-[72px] bg-surface-container-lowest rounded-lg">
+            <div className="pt-3 border-t border-m3-outline-variant/20 flex items-center justify-center gap-3 min-h-[72px] bg-m3-surface-container-lowest rounded-lg">
               <Button shape="circle" variant="filled" size="sm" aria-label="Search">
                 <SearchIcon />
               </Button>
@@ -993,17 +993,17 @@ export default Button`
       </section>
 
       {/* Size Scale Matrix */}
-      <section className="flex flex-col gap-4 pt-6 border-t border-outline-variant/40">
+      <section className="flex flex-col gap-4 pt-6 border-t border-m3-outline-variant/40">
         <div>
-          <h2 className="text-xl sm:text-2xl font-normal text-on-surface">
+          <h2 className="text-xl sm:text-2xl font-normal text-m3-on-surface">
             Size Hierarchy
           </h2>
-          <p className="text-sm text-on-surface-variant mt-1">
+          <p className="text-sm text-m3-on-surface-variant mt-1">
             Sizes range from xs (compact density) to xl (hero visual impact), maintaining proportional typography and icon bounding.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 sm:p-8 flex flex-wrap items-center gap-4 justify-center sm:justify-start">
+        <div className="rounded-2xl border border-m3-outline-variant/50 bg-m3-surface-container-lowest p-6 sm:p-8 flex flex-wrap items-center gap-4 justify-center sm:justify-start">
           <Button variant="filled" size="xs" leadingIcon={<SearchIcon />}>
             Size XS (32px)
           </Button>
