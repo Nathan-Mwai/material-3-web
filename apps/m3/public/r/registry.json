@@ -1,0 +1,31 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "name":"m3",
+    "homepage":"https://github.com/Nathan-Mwai/material-3-web",
+    "items":[
+        {
+            "name":"utils",
+            "type":"registry:lib",
+            "dependencies":["clsx","tailwind-merge"],
+            "files":[
+                {
+                    "path":"lib/utils.ts",
+                    "type":"registry:lib"
+                }
+            ]
+        },
+        {
+            "name":"button",
+            "type":"registry:ui",
+            "registryDependencies":["utils"],
+            "dependencies":["class-variance-authority","radix-ui"],
+            "files":[
+                {
+                    "path":"registry/material-v1/ui/button.tsx",
+                    "type":"registry:ui"
+                }
+            ]
+        }
+
+    ]
+}
