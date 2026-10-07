@@ -79,8 +79,8 @@ export function SiteHeader() {
   return (
     <>
       {/* Development Banner (Alpha Notice on all pages) */}
-      <div className="w-full bg-secondary-container text-on-secondary-container px-4 py-2 text-xs font-medium flex items-center justify-center gap-2 border-b border-outline-variant/40">
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-tertiary-container text-on-tertiary-container">
+      <div className="w-full bg-m3-secondary-container text-m3-on-secondary-container px-4 py-2 text-xs font-medium flex items-center justify-center gap-2 border-b border-m3-outline-variant/40">
+        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-m3-tertiary-container text-m3-on-tertiary-container">
           Alpha
         </span>
         <span>
@@ -90,20 +90,20 @@ export function SiteHeader() {
       </div>
 
       {/* Top App Bar per DESIGN.md */}
-      <header className="sticky top-0 z-50 w-full bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+      <header className="sticky top-0 z-50 w-full bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline-variant/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Brand Wordmark & Chip */}
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="flex items-center gap-2 text-on-surface hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2 text-m3-on-surface hover:opacity-90 transition-opacity"
             >
-              <span className="size-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm shadow-xs">
+              <span className="size-8 rounded-full bg-m3-primary flex items-center justify-center text-m3-on-primary font-bold text-sm shadow-xs">
                 M3
               </span>
               <span className="font-semibold text-lg tracking-tight">
                 Material 3{" "}
-                <span className="text-primary font-normal">Design</span>
+                <span className="text-m3-primary font-normal">Design</span>
               </span>
             </Link>
           </div>
@@ -111,7 +111,7 @@ export function SiteHeader() {
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             <Link href="/components">
-              <Button
+              {/* <Button
                 variant={pathname === "/components" ? "tonal" : "text"}
                 size="sm"
                 className="text-sm font-medium"
@@ -128,7 +128,7 @@ export function SiteHeader() {
                 className="text-sm font-medium"
               >
                 Button Docs
-              </Button>
+              </Button> */}
             </Link>
           </nav>
 
@@ -140,12 +140,12 @@ export function SiteHeader() {
               rel="noreferrer"
               aria-label="GitHub Repository"
             >
-              <Button shape="circle" size="sm" variant="text">
+              {/* <Button shape="circle" size="sm" variant="text">
                 <GitHubIcon />
-              </Button>
+              </Button> */}
             </a>
 
-            <Button
+            {/* <Button
               shape="circle"
               size="sm"
               variant="text"
@@ -155,12 +155,12 @@ export function SiteHeader() {
               }
             >
               {isDark ? <SunIcon /> : <MoonIcon />}
-            </Button>
+            </Button> */}
 
             <Link href="/components/button" className="hidden sm:inline-flex">
-              <Button variant="filled" size="sm">
+              {/* <Button variant="filled" size="sm">
                 Get Started
-              </Button>
+              </Button> */}
             </Link>
           </div>
         </div>

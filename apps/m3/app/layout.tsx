@@ -35,7 +35,7 @@ export default function RootLayout({
       className={`${roboto.variable} ${robotoMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-surface text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container">
+      <body className="min-h-full flex flex-col bg-m3-surface text-m3-on-surface font-sans selection:bg-m3-primary-container selection:text-m3-on-primary-container">
         <SiteHeader />
         <div className="flex-1 flex flex-col">{children}</div>
         <SiteFooter />

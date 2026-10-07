@@ -1,10 +1,10 @@
-import { type VariantProps, cva } from "class-variance-authority"
-import { cn } from "cn"
-import { Slot } from "radix-ui"
+import {cva, type VariantProps} from "class-variance-authority"
 import * as React from "react"
-
-export const buttonVariants = cva(
-  [
+import {Slot} from "radix-ui"
+import { cn } from "@/lib/utils"
+import { Slottable } from "radix-ui/slot"
+const buttonVariants = cva(
+    [
     // Base layout, interactive behavior, GPU compositing, and accessible touch target
     "relative inline-flex items-center justify-center shrink-0 select-none",
     "font-medium whitespace-nowrap outline-none cursor-pointer transform-gpu",
@@ -13,289 +13,141 @@ export const buttonVariants = cva(
     // Accessible touch target (48x48px min)
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
     // Focus indicator
-    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "focus-visible:ring-2 focus-visible:ring-m3-primary focus-visible:ring-offset-2 focus-visible:ring-offset-m3-surface",
     // Disabled state
     "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none disabled:scale-100",
     // Icon base resets
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ],
-  {
-    variants: {
-      variant: {
-        filled: "",
-        elevated: "",
-        tonal: "",
-        outlined: "",
-        text: "",
-      },
-      shape: {
-        round: "",
-        square: "",
-        circle: "aspect-square p-0 min-w-0",
-      },
-      size: {
-        // Size dimensions, padding, icon sizing, and Family C compact pressed morph
+    {
+        variants:{
+            variant:{
+                filled:"",
+                elevated:"",
+                tonal:"",
+                outlined:"",
+                text:""
+            },
+            shape:{
+                round:"",
+                square:"",
+                circle:"aspect-square p-0 min-w-0",
+            },
+            size: {
         xs: "h-8 px-3 gap-1 text-xs active:rounded-[8px] [&_svg]:size-5 [&_.material-symbols-outlined]:text-[20px] [&_.material-symbols]:text-[20px] [&_.material-icons]:text-[20px]",
         sm: "h-10 px-4 gap-2 text-sm active:rounded-[8px] [&_svg]:size-5 [&_.material-symbols-outlined]:text-[20px] [&_.material-symbols]:text-[20px] [&_.material-icons]:text-[20px]",
         md: "h-14 px-6 gap-2 text-base active:rounded-[12px] [&_svg]:size-6 [&_.material-symbols-outlined]:text-[24px] [&_.material-symbols]:text-[24px] [&_.material-icons]:text-[24px]",
         lg: "h-24 px-12 gap-3 text-2xl active:rounded-[16px] [&_svg]:size-8 [&_.material-symbols-outlined]:text-[32px] [&_.material-symbols]:text-[32px] [&_.material-icons]:text-[32px]",
         xl: "h-[136px] px-16 gap-4 text-4xl active:rounded-[16px] [&_svg]:size-10 [&_.material-symbols-outlined]:text-[40px] [&_.material-symbols]:text-[40px] [&_.material-icons]:text-[40px]",
       },
-      toggle: {
-        none: "",
-        selected: "",
-        unselected: "",
-      },
-    },
-
-    compoundVariants: [
-      // Family A: Round buttons with M3 min-width (prevents corner overlap calculation on short words)
+            toggle:{
+                none:"",
+                selected:"",
+                unselected:""
+            },
+        },
+        compoundVariants: [
+      // Family A: Round buttons
       { shape: "round", size: "xs", className: "rounded-[16px] min-w-[48px]" },
       { shape: "round", size: "sm", className: "rounded-[20px] min-w-[48px]" },
       { shape: "round", size: "md", className: "rounded-[28px] min-w-[64px]" },
       { shape: "round", size: "lg", className: "rounded-[48px] min-w-[96px]" },
       { shape: "round", size: "xl", className: "rounded-[68px] min-w-[128px]" },
 
-      // Family B: Square buttons with subtle curved resting radii
+      // Family B: Square buttons with curved resting radii
       { shape: "square", size: "xs", className: "rounded-[12px] min-w-[48px]" },
       { shape: "square", size: "sm", className: "rounded-[12px] min-w-[48px]" },
       { shape: "square", size: "md", className: "rounded-[16px] min-w-[64px]" },
       { shape: "square", size: "lg", className: "rounded-[28px] min-w-[96px]" },
-      {
-        shape: "square",
-        size: "xl",
-        className: "rounded-[28px] min-w-[128px]",
-      },
+      { shape: "square", size: "xl", className: "rounded-[28px] min-w-[128px]" },
 
-      // Circle shape: Exact half-dimension radii for circular icon buttons
+      // Family C: Circle shape
       { shape: "circle", size: "xs", className: "w-8 rounded-[16px]" },
       { shape: "circle", size: "sm", className: "w-10 rounded-[20px]" },
       { shape: "circle", size: "md", className: "w-14 rounded-[28px]" },
       { shape: "circle", size: "lg", className: "w-24 rounded-[48px]" },
       { shape: "circle", size: "xl", className: "w-[136px] rounded-[68px]" },
 
-      // Row A: Elevated button (Level 1 elevation at rest, Level 2 on hover, Level 1 on press)
-      {
-        variant: "elevated",
-        toggle: "none",
-        className:
-          "bg-surface-container-low text-primary shadow-xs hover:shadow-md active:shadow-xs",
-      },
-      {
-        variant: "elevated",
-        toggle: "unselected",
-        className:
-          "bg-surface-container-low text-primary border border-outline-variant shadow-none hover:bg-surface-container active:bg-surface-container-high",
-      },
-      {
-        variant: "elevated",
-        toggle: "selected",
-        className:
-          "bg-primary text-on-primary shadow-xs hover:shadow-md active:shadow-xs",
-      },
+      // Row A: Elevated
+      { variant: "elevated", toggle: "none", className: "bg-m3-surface-container-low text-m3-primary shadow-xs hover:shadow-md active:shadow-xs" },
+      { variant: "elevated", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-primary border border-m3-outline-variant shadow-none hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "elevated", toggle: "selected", className: "bg-m3-primary text-m3-on-primary shadow-xs hover:shadow-md active:shadow-xs" },
 
-      // Row B: Filled button (Level 0 resting, Level 1 on hover)
-      {
-        variant: "filled",
-        toggle: "none",
-        className:
-          "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90",
-      },
-      {
-        variant: "filled",
-        toggle: "unselected",
-        className:
-          "bg-surface-container text-on-surface hover:bg-surface-container-high active:bg-surface-container-highest",
-      },
-      {
-        variant: "filled",
-        toggle: "selected",
-        className:
-          "bg-primary text-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90",
-      },
+      // Row B: Filled
+      { variant: "filled", toggle: "none", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "filled", toggle: "unselected", className: "bg-m3-surface-container text-m3-on-surface hover:bg-m3-surface-container-high active:bg-m3-surface-container-highest" },
+      { variant: "filled", toggle: "selected", className: "bg-m3-primary text-m3-on-primary hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
-      // Row C: Tonal button (Level 0 resting, Level 1 on hover)
-      {
-        variant: "tonal",
-        toggle: "none",
-        className:
-          "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90",
-      },
-      {
-        variant: "tonal",
-        toggle: "unselected",
-        className:
-          "bg-surface-container-low text-on-surface-variant hover:bg-surface-container active:bg-surface-container-high",
-      },
-      {
-        variant: "tonal",
-        toggle: "selected",
-        className:
-          "bg-secondary-container text-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90",
-      },
+      // Row C: Tonal
+      { variant: "tonal", toggle: "none", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
+      { variant: "tonal", toggle: "unselected", className: "bg-m3-surface-container-low text-m3-on-surface-variant hover:bg-m3-surface-container active:bg-m3-surface-container-high" },
+      { variant: "tonal", toggle: "selected", className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-xs active:shadow-none hover:opacity-95 active:opacity-90" },
 
-      // Row D: Outlined button
-      {
-        variant: "outlined",
-        toggle: "none",
-        className:
-          "bg-transparent text-primary border border-outline hover:bg-primary/8 active:bg-primary/12",
-      },
-      {
-        variant: "outlined",
-        toggle: "unselected",
-        className:
-          "bg-transparent text-on-surface border border-outline hover:bg-on-surface/8 active:bg-on-surface/12",
-      },
-      {
-        variant: "outlined",
-        toggle: "selected",
-        className:
-          "bg-inverse-surface text-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90",
-      },
+      // Row D: Outlined
+      { variant: "outlined", toggle: "none", className: "bg-transparent text-m3-primary border border-m3-outline hover:bg-m3-primary/8 active:bg-m3-primary/12" },
+      { variant: "outlined", toggle: "unselected", className: "bg-transparent text-m3-on-surface border border-m3-outline hover:bg-m3-on-surface/8 active:bg-m3-on-surface/12" },
+      { variant: "outlined", toggle: "selected", className: "bg-m3-inverse-surface text-m3-inverse-on-surface border border-transparent hover:opacity-95 active:opacity-90" },
 
-      // Row E: Text button
-      {
-        variant: "text",
-        className:
-          "bg-transparent text-primary hover:bg-primary/8 active:bg-primary/12",
-      },
+      // Row E: Text
+      { variant: "text", className: "bg-transparent text-m3-primary hover:bg-m3-primary/8 active:bg-m3-primary/12" },
     ],
-
-    defaultVariants: {
-      variant: "filled",
-      shape: "round",
-      size: "sm",
-      toggle: "none",
-    },
-  }
+        defaultVariants:{
+            variant:"filled",
+            shape:"round",
+            size:"sm",
+            toggle:"none"
+        }
+    }
 )
 
 export interface ButtonProps
-  extends
-    React.ComponentProps<"button">,
-    Omit<VariantProps<typeof buttonVariants>, "toggle"> {
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+        /** 
+   * Wraps the button in a Radix Slot. 
+   * Useful when wrapping a Next.js `<Link>` or `<a href>` tag to inherit button styles. 
+   */
   asChild?: boolean
-  leadingIcon?: React.ReactNode
-  trailingIcon?: React.ReactNode
-  selected?: boolean
-  morphWidth?: boolean
+  /** Element placed before the button text (e.g., an SVG or Icon component) */
+  leadingIcon?:React.ReactNode
+  /** Element placed after the button text */
+  trailingIcon?:React.ReactNode
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      asChild = false,
-      leadingIcon,
-      trailingIcon,
-      selected,
-      morphWidth = false,
-      variant,
-      size,
-      shape,
-      style,
-      children,
-      ...props
-    },
-    ref
-  ) => {
+
+function Button({
+    className,
+    variant="filled",
+    size="sm",
+    asChild = false,
+    shape="round",
+    toggle="none",
+    leadingIcon,
+    trailingIcon,
+    children,
+    ...props
+}: ButtonProps) {
     const Comp = asChild ? Slot.Root : "button"
-    const buttonRef = React.useRef<HTMLButtonElement>(null)
-    const innerRef = React.useRef<HTMLSpanElement>(null)
-    const [measuredWidth, setMeasuredWidth] = React.useState<
-      number | undefined
-    >(undefined)
-    const isToggle = typeof selected === "boolean"
-    const toggleState = isToggle
-      ? selected
-        ? "selected"
-        : "unselected"
-      : "none"
-
-    // Synchronize forwarded ref and local buttonRef
-    const setButtonRef = React.useCallback(
-      (node: HTMLButtonElement | null) => {
-        buttonRef.current = node
-        if (typeof ref === "function") {
-          ref(node)
-        } else if (ref) {
-          ;(ref as React.MutableRefObject<HTMLButtonElement | null>).current =
-            node
-        }
-      },
-      [ref]
-    )
-
-    // Measure intrinsic content width + padding for smooth CSS width interpolation
-    React.useLayoutEffect(() => {
-      if (!morphWidth || !buttonRef.current || !innerRef.current) return
-
-      const measure = () => {
-        if (!buttonRef.current || !innerRef.current) return
-        const computed = window.getComputedStyle(buttonRef.current)
-        const pl = parseFloat(computed.paddingLeft) || 0
-        const pr = parseFloat(computed.paddingRight) || 0
-        const contentW = innerRef.current.scrollWidth
-        const newWidth = Math.ceil(contentW + pl + pr)
-        setMeasuredWidth(newWidth)
-      }
-
-      measure()
-
-      const observer = new ResizeObserver(measure)
-      observer.observe(innerRef.current)
-      return () => observer.disconnect()
-    }, [morphWidth, children, leadingIcon, trailingIcon, size])
-
-    return (
-      <Comp
-        ref={setButtonRef}
+  return (
+    <Comp
         data-slot="button"
         data-variant={variant}
         data-size={size}
         data-shape={shape}
-        aria-pressed={isToggle ? selected : undefined}
-        data-selected={isToggle ? selected : undefined}
-        data-state={isToggle ? (selected ? "on" : "off") : undefined}
-        style={{
-          ...(morphWidth && measuredWidth
-            ? { width: `${measuredWidth}px` }
-            : {}),
-          ...style,
-        }}
-        className={cn(
-          buttonVariants({
-            variant,
-            size,
-            shape,
-            toggle: toggleState,
-            className,
-          })
-        )}
+        data-toggle={toggle}
+        className={cn(buttonVariants({variant, size, shape, toggle}), className)}
         {...props}
-      >
-        {morphWidth ? (
-          <span
-            ref={innerRef}
-            className="inline-flex items-center justify-center gap-[inherit] whitespace-nowrap overflow-visible"
-          >
-            {leadingIcon}
-            {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}
-            {trailingIcon}
-          </span>
-        ) : (
-          <>
-            {leadingIcon}
-            {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}
-            {trailingIcon}
-          </>
-        )}
-      </Comp>
-    )
-  }
-)
+    >
+        {/* 
+        Radix Slottable allows us to use `asChild` while still safely injecting 
+        our leading and trailing icons alongside the consumer's child element.
+      */}
+        {leadingIcon && <span className="flex-shrink-0">{leadingIcon}</span>}
+        {asChild ?  <Slottable>{children}</Slottable>: children}
+        {trailingIcon && <span className="flex-shrink-0">{trailingIcon}</span>}
+    </Comp>
+  )
+}
 
-Button.displayName = "Button"
-
+export {Button, buttonVariants}
 export default Button
