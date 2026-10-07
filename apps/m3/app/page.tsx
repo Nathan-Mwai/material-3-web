@@ -35,7 +35,7 @@ export default function ButtonPlayground() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-12 text-foreground space-y-16 max-w-5xl mx-auto pb-32">
+    <div className="min-h-screen bg-surface p-12 text-on-surface space-y-16 max-w-5xl mx-auto pb-32">
       
       {/* 1. THE DYNAMIC MORPH TEST */}
       <section className="space-y-4">

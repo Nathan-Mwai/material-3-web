@@ -3,8 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fef7ff;
-  --foreground: #1d1b20;
+
 
   /* Material 3 Core Tokens (Light Baseline Scheme #6750A4) */
   --primary: #6750a4;
@@ -41,8 +40,6 @@
 }
 
 .dark {
-  --background: #141218;
-  --foreground: #e6e0e9;
 
   /* Material 3 Core Tokens (Dark Baseline Scheme #D0BCFF) */
   --primary: #d0bcff;
@@ -79,8 +76,6 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-on-primary: var(--on-primary);
   --color-primary-container: var(--primary-container);

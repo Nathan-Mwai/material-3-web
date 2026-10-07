@@ -13,7 +13,7 @@ const buttonVariants = cva(
     // Accessible touch target (48x48px min)
     "after:absolute after:min-h-[48px] after:min-w-[48px] after:content-['']",
     // Focus indicator
-    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
     // Disabled state
     "disabled:pointer-events-none disabled:opacity-38 disabled:shadow-none disabled:scale-100",
     // Icon base resets
