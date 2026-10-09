@@ -1,0 +1,38 @@
+{
+  "name": "m3-kit",
+  "version": "0.1.0-beta.0",
+  "description": "CLI to add Material 3 components to your project from the m3 shadcn registry.",
+  "keywords": ["material-3", "material-design-3", "m3", "shadcn", "components", "ui", "react", "tailwind"],
+  "license": "MIT",
+  "author": "Nathan Mwai",
+  "homepage": "https://m3.nathanmwai.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nathan-Mwai/material-3-web.git",
+    "directory": "packages/m3-kit"
+  },
+  "type": "module",
+  "bin": {
+    "m3-kit": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "shadcn": "^4.21.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsup": "^8",
+    "typescript": "^5"
+  }
+}
