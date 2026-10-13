@@ -18,7 +18,7 @@ Material 3 Web follows the modern code-registry pattern:
 - **Full Source Ownership**: Components live inside your repository (e.g. `@/registry/material-v1/ui/button.tsx`). Modify, customize, or extend them to match your application's exact needs.
 - **Native Tailwind CSS v4**: Built on standard CSS variables and Tailwind v4 `@theme inline` directives. Zero runtime style injection.
 - **Faithful M3 Specification**: Implements official Material 3 container anatomy, label typography (`label-large` 14px / 500 weight), auto-proportioned icon slots, and tonal surface elevation.
-- **Expressive Motion and Shape Morphing**: Restful pill geometry with cubic-bezier press compression (`cubic-bezier(0.2, 0, 0, 1)`) and smooth layout inertia (`morphWidth`) via `ResizeObserver`.
+- **Expressive Shape Morphing**: Corners tighten on press and swap shape when a toggle is selected, on a curve tuned to the M3 Expressive "fast spatial" spring. Real spring physics is in progress.
 - **Accessible by Default**: Meets WCAG 2.1 AA requirements with guaranteed 48dp minimum touch targets (`after:min-h-[48px]`), explicit keyboard focus indicators, `aria-pressed` states, and `prefers-reduced-motion` support.
 
 ---
@@ -27,7 +27,7 @@ Material 3 Web follows the modern code-registry pattern:
 
 | Component                  | Status      | Variants                                | Notes                                                                                                  |
 | -------------------------- | ----------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **Button**                 | Ready       | Filled, Elevated, Tonal, Outlined, Text | Supports 5 sizes (`xs`–`xl`), 3 shapes (`round`, `square`, `circle`), toggle states, and `morphWidth`. |
+| **Button**                 | Ready       | Filled, Elevated, Tonal, Outlined, Text | 5 sizes (`xs` to `xl`), 2 shapes (`round`, `square`), toggle states. See the [Button README](apps/m3/registry/material-v1/ui/button.md). |
 | **Icon Button**            | In progress | Standard, Filled, Tonal, Outlined       | 40dp visual container with guaranteed 48dp touch target.                                               |
 | **Chips**                  | In progress | Assist, Filter, Input, Suggestion       | 32dp container height with selection checks and remove actions.                                        |
 | **Navigation Bar**         | In progress | Standard bottom / rail                  | 56dp–80dp container with active indicator pill.                                                        |
@@ -95,8 +95,8 @@ export default function Example() {
         Learn More
       </Button>
 
-      {/* Toggle Button with Morphing Width */}
-      <Button variant="tonal" selected={true} morphWidth>
+      {/* Toggle button: swaps shape when selected */}
+      <Button variant="tonal" selected={true}>
         Selected Item
       </Button>
     </div>
