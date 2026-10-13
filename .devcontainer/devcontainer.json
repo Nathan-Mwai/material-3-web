@@ -1,0 +1,8 @@
+{
+  "name": "material-3-web",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+  "postCreateCommand": "corepack enable && pnpm install"
+}
