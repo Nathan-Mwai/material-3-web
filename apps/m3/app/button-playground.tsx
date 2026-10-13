@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 import Button, { type ButtonProps } from "@/registry/material-v1/ui/button"
 import {
   AddIcon,
@@ -12,9 +13,13 @@ import {
   SearchIcon,
   SunIcon,
 } from "@/registry/material-v1/ui/icons"
-import { cn } from "@/lib/utils"
-import { MotionProvider } from "@/lib/motion"
-import { SpringTrace } from "./spring-trace"
+import {
+  MotionProvider,
+  useMotion,
+  usePrefersReducedMotion,
+} from "@/lib/motion"
+import { Field, fieldClass, Segmented, Switch } from "./_playground/controls"
+import { CompareMotion, type SlowMotion } from "./_playground/compare-motion"
 
 type Variant = NonNullable<ButtonProps["variant"]>
 type Size = NonNullable<ButtonProps["size"]>
@@ -25,18 +30,6 @@ const VARIANTS: Variant[] = ["filled", "tonal", "elevated", "outlined", "text"]
 const SIZES: Size[] = ["xs", "sm", "md", "lg", "xl"]
 const SHAPES: Shape[] = ["round", "square"]
 const MOTIONS: Motion[] = ["expressive", "standard", "none"]
-const SLOW_MOTION = ["1x", "5x", "10x"] as const
-type SlowMotion = (typeof SLOW_MOTION)[number]
-
-// Mirrors the --btn-radius-* values in button.tsx, for the spring trace
-const RADII: Record<Size, { round: number; square: number; pressed: number }> =
-  {
-    xs: { round: 16, square: 12, pressed: 8 },
-    sm: { round: 20, square: 12, pressed: 8 },
-    md: { round: 28, square: 16, pressed: 12 },
-    lg: { round: 48, square: 28, pressed: 16 },
-    xl: { round: 68, square: 28, pressed: 16 },
-  }
 
 const ICONS = {
   none: null,
@@ -49,115 +42,53 @@ const ICONS = {
 } as const
 type IconKey = keyof typeof ICONS
 
-function Segmented<T extends string>({
-  label,
-  options,
-  value,
-  onChange,
-}: {
-  label: string
-  options: readonly T[]
-  value: T
-  onChange: (value: T) => void
-}) {
-  return (
-    <fieldset className="flex flex-col gap-2">
-      <legend className="mb-2 text-sm font-medium text-m3-on-surface-variant">
-        {label}
-      </legend>
-      <div className="flex flex-wrap gap-1 rounded-full bg-m3-surface-container-high p-1">
-        {options.map((option) => (
-          <label
-            key={option}
-            className={cn(
-              "flex-1 cursor-pointer rounded-full px-3 py-1.5 text-center text-sm font-medium transition-colors",
-              "has-focus-visible:outline-2 has-focus-visible:outline-m3-secondary",
-              value === option
-                ? "bg-m3-secondary-container text-m3-on-secondary-container"
-                : "text-m3-on-surface-variant hover:bg-m3-on-surface/8"
-            )}
-          >
-            <input
-              type="radio"
-              name={label}
-              value={option}
-              checked={value === option}
-              onChange={() => onChange(option)}
-              className="sr-only"
-            />
-            {option}
-          </label>
-        ))}
-      </div>
-    </fieldset>
+/**
+ * Runs a state update inside a view transition, so layout changes the springs
+ * can't cover (a new button size, a theme switch) morph instead of jumping.
+ */
+function useViewTransition() {
+  const { scheme } = useMotion()
+  return React.useCallback(
+    (update: () => void) => {
+      if (scheme === "none" || !document.startViewTransition) return update()
+      document.startViewTransition(() => flushSync(update))
+    },
+    [scheme]
   )
 }
 
-function Switch({
-  label,
-  checked,
-  onChange,
-  disabled,
-}: {
-  label: React.ReactNode
-  checked: boolean
-  onChange: (checked: boolean) => void
-  disabled?: boolean
-}) {
-  return (
-    <label
-      className={cn(
-        "flex cursor-pointer items-center justify-between gap-4 text-sm",
-        disabled && "cursor-default opacity-38"
-      )}
-    >
-      {label}
-      <input
-        type="checkbox"
-        role="switch"
-        checked={checked}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
-        className={cn(
-          "relative h-6 w-11 shrink-0 cursor-[inherit] appearance-none rounded-full border-2 transition-colors",
-          "border-m3-outline bg-m3-surface-container-highest checked:border-m3-primary checked:bg-m3-primary",
-          "before:absolute before:top-1/2 before:left-1 before:size-3 before:-translate-y-1/2 before:rounded-full before:bg-m3-outline before:transition-all",
-          "checked:before:left-5.5 checked:before:size-4 checked:before:bg-m3-on-primary",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-m3-secondary"
-        )}
-      />
-    </label>
-  )
-}
-
-function IconSelect({
-  label,
-  value,
-  onChange,
-}: {
-  label: string
-  value: IconKey
-  onChange: (value: IconKey) => void
-}) {
-  return (
-    <label className="flex flex-col gap-2 text-sm font-medium text-m3-on-surface-variant">
-      {label}
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value as IconKey)}
-        className="h-10 rounded-lg border border-m3-outline bg-transparent px-3 text-sm text-m3-on-surface focus-visible:outline-2 focus-visible:outline-m3-primary"
-      >
-        {Object.keys(ICONS).map((key) => (
-          <option key={key} value={key} className="bg-m3-surface-container">
-            {key}
-          </option>
-        ))}
-      </select>
-    </label>
-  )
+function subscribeTheme(onChange: () => void) {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  })
+  return () => observer.disconnect()
 }
 
 export function ButtonPlayground() {
+  const osReducedMotion = usePrefersReducedMotion()
+  const [previewMotion, setPreviewMotion] = React.useState(false)
+  return (
+    <MotionProvider reducedMotion={previewMotion ? "never" : "user"}>
+      <Playground
+        osReducedMotion={osReducedMotion}
+        previewMotion={previewMotion}
+        onPreviewMotion={setPreviewMotion}
+      />
+    </MotionProvider>
+  )
+}
+
+function Playground({
+  osReducedMotion,
+  previewMotion,
+  onPreviewMotion,
+}: {
+  osReducedMotion: boolean
+  previewMotion: boolean
+  onPreviewMotion: (value: boolean) => void
+}) {
   const [variant, setVariant] = React.useState<Variant>("filled")
   const [size, setSize] = React.useState<Size>("sm")
   const [shape, setShape] = React.useState<Shape>("round")
@@ -169,28 +100,16 @@ export function ButtonPlayground() {
   const [leading, setLeading] = React.useState<IconKey>("none")
   const [trailing, setTrailing] = React.useState<IconKey>("none")
   const [label, setLabel] = React.useState("Label")
+  const withTransition = useViewTransition()
   const dark = React.useSyncExternalStore(
-    (onChange) => {
-      const observer = new MutationObserver(onChange)
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      })
-      return () => observer.disconnect()
-    },
+    subscribeTheme,
     () => document.documentElement.classList.contains("dark"),
     () => false
   )
 
-  const toggleTheme = (next: boolean) => {
-    document.documentElement.classList.toggle("dark", next)
-  }
-
   const canToggle = variant !== "text"
   const toggleActive = isToggle && canToggle
   const durationScale = parseInt(slowMotion)
-  const restingShape =
-    toggleActive && selected ? (shape === "round" ? "square" : "round") : shape
   const leadingIcon = ICONS[leading]
   const trailingIcon = ICONS[trailing]
 
@@ -205,61 +124,45 @@ export function ButtonPlayground() {
     leadingIcon && `  leadingIcon={<${leadingIcon.name} />}`,
     trailingIcon && `  trailingIcon={<${trailingIcon.name} />}`,
   ].filter(Boolean)
-  const button = props.length
+  const code = props.length
     ? `<Button\n${props.join("\n")}\n>\n  ${label}\n</Button>`
     : `<Button>${label}</Button>`
-  const code =
-    durationScale === 1
-      ? button
-      : `// Debug only: slows every spring ${durationScale}x\n<MotionProvider durationScale={${durationScale}}>\n${button.replace(/^/gm, "  ")}\n</MotionProvider>`
 
   return (
-    <main className="mx-auto grid w-full max-w-7xl flex-1 gap-6 p-4 sm:p-6 lg:grid-cols-[1fr_340px] lg:p-8">
-      <div className="flex min-w-0 flex-col gap-6">
-        {/* Stage */}
-        <section className="flex min-h-[60vh] flex-col overflow-hidden rounded-[28px] bg-m3-surface-container-low">
-          <div className="flex items-center justify-between px-6 pt-5 text-sm text-m3-on-surface-variant">
-            <span className="font-medium">Button</span>
-            <span className="font-mono text-xs">
-              {variant} · {size} · {shape} · {motion}
-              {toggleActive && ` · ${selected ? "selected" : "unselected"}`}
-            </span>
-          </div>
-          <div className="flex flex-1 items-center justify-center p-8">
-            <MotionProvider durationScale={durationScale}>
-              <Button
-                variant={variant}
-                size={size}
-                shape={shape}
-                motion={motion}
-                selected={toggleActive ? selected : undefined}
-                disabled={disabled}
-                leadingIcon={leadingIcon?.node}
-                trailingIcon={trailingIcon?.node}
-                onClick={
-                  toggleActive ? () => setSelected((s) => !s) : undefined
-                }
-              >
-                {label}
-              </Button>
-            </MotionProvider>
-          </div>
-          <pre className="overflow-x-auto border-t border-m3-outline-variant/50 bg-m3-surface-container px-6 py-4 font-mono text-xs/5 text-m3-on-surface-variant">
-            <code>{code}</code>
-          </pre>
-        </section>
+    <main className="mx-auto grid w-full max-w-7xl flex-1 items-start gap-6 p-4 sm:p-6 lg:grid-cols-[1fr_340px] lg:p-8">
+      {/* Fixed heights: nothing on the page moves when the button or its code changes */}
+      <section className="min-w-0 overflow-hidden rounded-[28px] bg-m3-surface-container-low">
+        <div className="flex items-center justify-between px-6 pt-5 text-sm text-m3-on-surface-variant">
+          <span className="font-medium">Button</span>
+          <span className="font-mono text-xs">
+            {variant} · {size} · {shape} · {motion}
+            {toggleActive && ` · ${selected ? "selected" : "unselected"}`}
+          </span>
+        </div>
+        <div className="flex h-80 items-center justify-center p-8">
+          <MotionProvider durationScale={durationScale}>
+            <Button
+              style={{ viewTransitionName: "stage-button" }}
+              variant={variant}
+              size={size}
+              shape={shape}
+              motion={motion}
+              selected={toggleActive ? selected : undefined}
+              disabled={disabled}
+              leadingIcon={leadingIcon?.node}
+              trailingIcon={trailingIcon?.node}
+              onClick={toggleActive ? () => setSelected((s) => !s) : undefined}
+            >
+              {label}
+            </Button>
+          </MotionProvider>
+        </div>
+        <pre className="h-56 overflow-auto border-t border-m3-outline-variant/50 bg-m3-surface-container px-6 py-4 font-mono text-xs/5 text-m3-on-surface-variant">
+          <code>{code}</code>
+        </pre>
+      </section>
 
-        <section className="rounded-[28px] bg-m3-surface-container-low p-6">
-          <SpringTrace
-            from={RADII[size][restingShape]}
-            to={RADII[size].pressed}
-            highlight={motion}
-          />
-        </section>
-      </div>
-
-      {/* Controls */}
-      <aside className="flex flex-col gap-6 rounded-[28px] bg-m3-surface-container-low p-6">
+      <aside className="flex flex-col gap-6 rounded-[28px] bg-m3-surface-container-low p-6 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1">
         <Segmented
           label="Variant"
           options={VARIANTS}
@@ -270,7 +173,7 @@ export function ButtonPlayground() {
           label="Size"
           options={SIZES}
           value={size}
-          onChange={setSize}
+          onChange={(s) => withTransition(() => setSize(s))}
         />
         <Segmented
           label="Shape"
@@ -284,33 +187,42 @@ export function ButtonPlayground() {
           value={motion}
           onChange={setMotion}
         />
-        <Segmented
-          label="Slow motion"
-          options={SLOW_MOTION}
-          value={slowMotion}
-          onChange={setSlowMotion}
-        />
 
-        <label className="flex flex-col gap-2 text-sm font-medium text-m3-on-surface-variant">
-          Label
+        <Field label="Label">
           <input
             value={label}
             onChange={(e) => setLabel(e.target.value)}
-            className="h-10 rounded-lg border border-m3-outline bg-transparent px-3 text-sm text-m3-on-surface focus-visible:outline-2 focus-visible:outline-m3-primary"
+            className={fieldClass}
           />
-        </label>
+        </Field>
 
         <div className="grid grid-cols-2 gap-3">
-          <IconSelect
-            label="Leading icon"
-            value={leading}
-            onChange={setLeading}
-          />
-          <IconSelect
-            label="Trailing icon"
-            value={trailing}
-            onChange={setTrailing}
-          />
+          {(
+            [
+              ["Leading icon", leading, setLeading],
+              ["Trailing icon", trailing, setTrailing],
+            ] as const
+          ).map(([text, value, set]) => (
+            <Field key={text} label={text}>
+              <select
+                value={value}
+                onChange={(e) =>
+                  withTransition(() => set(e.target.value as IconKey))
+                }
+                className={fieldClass}
+              >
+                {Object.keys(ICONS).map((key) => (
+                  <option
+                    key={key}
+                    value={key}
+                    className="bg-m3-surface-container"
+                  >
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          ))}
         </div>
 
         <div className="flex flex-col gap-4 border-t border-m3-outline-variant/50 pt-6">
@@ -334,10 +246,28 @@ export function ButtonPlayground() {
               </span>
             }
             checked={dark}
-            onChange={toggleTheme}
+            onChange={(next) =>
+              withTransition(() =>
+                document.documentElement.classList.toggle("dark", next)
+              )
+            }
           />
         </div>
       </aside>
+
+      <div className="min-w-0 lg:col-start-1">
+        <MotionProvider durationScale={durationScale}>
+          <CompareMotion
+            variant={variant}
+            highlight={motion}
+            slowMotion={slowMotion}
+            onSlowMotion={setSlowMotion}
+            osReducedMotion={osReducedMotion}
+            previewMotion={previewMotion}
+            onPreviewMotion={onPreviewMotion}
+          />
+        </MotionProvider>
+      </div>
     </main>
   )
 }

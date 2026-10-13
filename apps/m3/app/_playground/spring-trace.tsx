@@ -6,6 +6,7 @@ import {
   springs,
   type MotionPreference,
   type MotionScheme,
+  type SpringToken,
 } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
@@ -13,11 +14,16 @@ const SCHEMES: MotionScheme[] = ["standard", "expressive"]
 const DURATION_MS = 450
 const STEP_MS = 2
 const H = 220
-const PAD = { top: 16, right: 16, bottom: 48, left: 88 }
+const PAD = { top: 16, right: 16, bottom: 48, left: 112 }
 
 // Same physics the button runs: the exact spring from `from` to `to`, at rest at t=0
-function trace(scheme: MotionScheme, from: number, to: number) {
-  const config = springs[scheme].fastSpatial
+function trace(
+  scheme: MotionScheme,
+  token: SpringToken,
+  from: number,
+  to: number
+) {
+  const config = springs[scheme][token]
   const points: number[] = []
   for (let t = 0; t <= DURATION_MS; t += STEP_MS) {
     points.push(to + solveSpring(config, from - to, 0, t / 1000)[0])
@@ -25,8 +31,13 @@ function trace(scheme: MotionScheme, from: number, to: number) {
   return points
 }
 
-function stats(scheme: MotionScheme, from: number, to: number) {
-  const config = springs[scheme].fastSpatial
+function stats(
+  scheme: MotionScheme,
+  token: SpringToken,
+  from: number,
+  to: number
+) {
+  const config = springs[scheme][token]
   const dir = Math.sign(to - from)
   let overshoot = 0
   let settled = 0
@@ -41,12 +52,18 @@ function stats(scheme: MotionScheme, from: number, to: number) {
 export function SpringTrace({
   from,
   to,
+  token,
   highlight,
+  labels = ["start", "end"],
 }: {
   /** Resting radius in px. */
   from: number
   /** Pressed radius in px. */
   to: number
+  /** Axis labels for `from` and `to`. */
+  labels?: [string, string]
+  /** The spring the button uses for this press. */
+  token: SpringToken
   highlight: MotionPreference
 }) {
   const [hoverIndex, setHoverIndex] = React.useState<number | null>(null)
@@ -63,10 +80,12 @@ export function SpringTrace({
     return () => observer.disconnect()
   }, [])
   const lines = React.useMemo(
-    () => SCHEMES.map((s) => ({ scheme: s, points: trace(s, from, to) })),
-    [from, to]
+    () =>
+      SCHEMES.map((s) => ({ scheme: s, points: trace(s, token, from, to) })),
+    [token, from, to]
   )
-  const rows = SCHEMES.map((s) => ({ scheme: s, ...stats(s, from, to) }))
+  const rows = SCHEMES.map((s) => ({ scheme: s, ...stats(s, token, from, to) }))
+  const bounces = rows[1].overshoot >= 0.05
 
   const span = Math.abs(from - to)
   const lo = Math.min(from, to) - span * 0.15
@@ -122,7 +141,7 @@ export function SpringTrace({
     <figure className="flex flex-col gap-3">
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <span className="text-sm font-medium text-m3-on-surface">
-          Corner radius during a press, {from}px to {to}px
+          Corner radius when selected, {from}px to {to}px
         </span>
         <span className="flex gap-4 text-xs text-m3-on-surface-variant">
           {SCHEMES.map((s) => (
@@ -179,7 +198,7 @@ export function SpringTrace({
                 textAnchor="end"
                 className="fill-m3-on-surface-variant text-[11px]"
               >
-                {v === from ? "rest" : "pressed"} {v}px
+                {v === from ? labels[0] : labels[1]} {v}px
               </text>
             </g>
           ))}
@@ -220,25 +239,29 @@ export function SpringTrace({
           ))}
 
           {/* The bounce: where expressive passes the pressed radius */}
-          <circle
-            cx={x(troughIndex)}
-            cy={y(expressive[troughIndex])}
-            r="4"
-            className={cn(
-              stroke("expressive"),
-              "fill-m3-surface-container-low"
-            )}
-            strokeWidth="2"
-          />
-          <text
-            x={Math.min(Math.max(x(troughIndex), PAD.left + 70), W - 70)}
-            textAnchor="middle"
-            y={y(expressive[troughIndex])}
-            dy={to < from ? "1.6em" : "-0.9em"}
-            className="fill-m3-on-surface text-[11px]"
-          >
-            expressive overshoots {rows[1].overshoot.toFixed(1)}px
-          </text>
+          {bounces && (
+            <>
+              <circle
+                cx={x(troughIndex)}
+                cy={y(expressive[troughIndex])}
+                r="4"
+                className={cn(
+                  stroke("expressive"),
+                  "fill-m3-surface-container-low"
+                )}
+                strokeWidth="2"
+              />
+              <text
+                x={Math.min(Math.max(x(troughIndex), PAD.left + 70), W - 70)}
+                textAnchor="middle"
+                y={y(expressive[troughIndex])}
+                dy={to < from ? "1.6em" : "-0.9em"}
+                className="fill-m3-on-surface text-[11px]"
+              >
+                expressive overshoots {rows[1].overshoot.toFixed(1)}px
+              </text>
+            </>
+          )}
 
           {hoverIndex !== null && (
             <line
@@ -284,7 +307,7 @@ export function SpringTrace({
         </thead>
         <tbody>
           {rows.map((r) => {
-            const { dampingRatio, stiffness } = springs[r.scheme].fastSpatial
+            const { dampingRatio, stiffness } = springs[r.scheme][token]
             return (
               <tr
                 key={r.scheme}

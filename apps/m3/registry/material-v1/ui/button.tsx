@@ -5,7 +5,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 import { Slottable } from "radix-ui/slot"
 import { cn } from "@/lib/utils"
-import { Spring, springs, useMotion, type MotionPreference } from "@/lib/motion"
+import {
+  Spring,
+  springs,
+  useMotion,
+  useSpringColors,
+  type MotionPreference,
+  type MotionSettings,
+  type SpringToken,
+} from "@/lib/motion"
 
 /**
  * Material 3 (Expressive) common button.
@@ -24,30 +32,38 @@ import { Spring, springs, useMotion, type MotionPreference } from "@/lib/motion"
  * "full" is written as half the height (not 9999px) so the corner radius can
  * animate smoothly into the pressed and selected shapes.
  *
- * The corner radius is driven by a spring (see useShapeSpring), not a CSS
- * transition. CSS still owns the target values through the --btn-radius-*
- * variables, so overriding them in className keeps working.
+ * Motion follows Compose's Button and ToggleButton:
+ * - corner radius: a spring (see useShapeSpring). Toggle buttons use the fast
+ *   spatial spring (bouncy in expressive); plain buttons use default effects,
+ *   which Compose picks "to prevent any bounce".
+ * - container, label and outline colour: the default effects spring
+ *   (useSpringColors). Compose snaps container and label; we spring them.
+ * - elevation: 120ms in / 120ms out tweens, snapping when disabled.
+ * - state layer: 15ms linear, 45ms when focus arrives.
+ * CSS still owns every target value, so className overrides keep working.
  */
 
 const buttonVariants = cva(
   [
     "relative isolate inline-flex shrink-0 items-center justify-center",
     "whitespace-nowrap select-none cursor-pointer no-underline",
-    // Colour and elevation on the "fast effects" curve
-    "[transition:background-color_150ms_cubic-bezier(0.31,0.94,0.34,1),color_150ms_cubic-bezier(0.31,0.94,0.34,1),box-shadow_150ms_cubic-bezier(0.31,0.94,0.34,1)]",
+    // Elevation: Compose's outgoing tween, and the incoming one on hover/press. Colours have no
+    // CSS transition on purpose: the colour spring writes inline styles every frame.
+    "[transition:box-shadow_120ms_cubic-bezier(0.4,0,0.6,1)]",
+    "hover:[transition:box-shadow_120ms_cubic-bezier(0.4,0,0.2,1)] active:[transition:box-shadow_120ms_cubic-bezier(0.4,0,0.2,1)]",
     "motion-reduce:transition-none",
     // --btn-radius-live is written by the spring; before hydration the resting radius applies
     "rounded-[var(--btn-radius-live,var(--btn-radius))]",
     // State layer: content colour at 8% hover, 10% focus, 10% pressed
     "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit]",
-    "before:bg-current before:opacity-0 before:transition-opacity before:duration-150",
+    "before:bg-current before:opacity-0 before:transition-opacity before:duration-15 before:ease-linear focus-visible:before:duration-45",
     "hover:before:opacity-8 focus-visible:before:opacity-10 active:before:opacity-10",
     // 48x48 minimum touch target, centred, even when the button is smaller
     "after:absolute after:top-1/2 after:left-1/2 after:size-full after:min-h-12 after:min-w-12 after:-translate-1/2",
     // Focus indicator: 3px secondary outline, 2px offset
     "outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-m3-secondary",
     // Disabled: on-surface container at 10%, content at 38%, no elevation or state layer
-    "data-disabled:pointer-events-none data-disabled:cursor-default data-disabled:shadow-none",
+    "data-disabled:pointer-events-none data-disabled:cursor-default data-disabled:shadow-none data-disabled:transition-none",
     "data-disabled:bg-m3-on-surface/10 data-disabled:text-m3-on-surface/38 data-disabled:before:hidden",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ],
@@ -194,6 +210,8 @@ function mergeRefs<T>(
   }
 }
 
+const BUTTON_COLORS = ["background-color", "color", "border-color"] as const
+
 const isPressKey = (key: string) => key === " " || key === "Enter"
 
 /**
@@ -202,10 +220,10 @@ const isPressKey = (key: string) => key === " " || key === "Enter"
  * and the spring writes --btn-radius-live without re-rendering React.
  */
 function useShapeSpring(
-  settings: ReturnType<typeof useMotion>,
+  node: React.RefObject<HTMLElement | null>,
+  settings: MotionSettings & { token: SpringToken },
   deps: React.DependencyList
 ) {
-  const node = React.useRef<HTMLElement | null>(null)
   const spring = React.useRef<Spring | null>(null)
   const pressed = React.useRef(false)
   const motion = React.useRef(settings)
@@ -228,17 +246,18 @@ function useShapeSpring(
     } else if (motion.current.scheme === "none") {
       spring.current.set(target)
     } else if (target !== spring.current.target || spring.current.isAnimating) {
-      const { scheme, durationScale } = motion.current
-      spring.current.to(target, springs[scheme].fastSpatial, durationScale)
+      const { scheme, durationScale, token } = motion.current
+      spring.current.to(target, springs[scheme][token], durationScale)
     }
-  }, [])
+  }, [node])
 
   // Resting shape, size or className changed: spring to the new resting radius
   React.useLayoutEffect(() => {
     motion.current = settings
     animate()
+    // `deps` is the caller's list of style inputs, spread on purpose
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [animate, settings.scheme, settings.durationScale, ...deps])
+  }, [animate, settings.scheme, settings.durationScale, settings.token, ...deps]) // prettier-ignore
 
   React.useEffect(() => () => spring.current?.stop(), [])
 
@@ -251,7 +270,7 @@ function useShapeSpring(
     [animate]
   )
 
-  return { node, press }
+  return { press }
 }
 
 function Button({
@@ -290,9 +309,16 @@ function Button({
     : {}
 
   const motionSettings = useMotion(motion)
-  const shapeSpring = useShapeSpring(motionSettings, [
-    restingShape,
-    size,
+  const node = React.useRef<HTMLElement | null>(null)
+  const shapeSpring = useShapeSpring(
+    node,
+    { ...motionSettings, token: isToggle ? "fastSpatial" : "defaultEffects" },
+    [restingShape, size, className]
+  )
+  useSpringColors(node, BUTTON_COLORS, motionSettings, [
+    variant,
+    toggle,
+    isDisabled,
     className,
   ])
 
@@ -312,7 +338,7 @@ function Button({
         className
       )}
       {...props}
-      ref={mergeRefs(ref, shapeSpring.node)}
+      ref={mergeRefs(ref, node)}
       onPointerDown={compose(
         onPointerDown,
         (e) => e.button === 0 && shapeSpring.press(true)
