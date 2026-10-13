@@ -1,8 +1,11 @@
+"use client"
+
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 import { Slottable } from "radix-ui/slot"
 import { cn } from "@/lib/utils"
+import { Spring, springs, useMotion, type MotionPreference } from "@/lib/motion"
 
 /**
  * Material 3 (Expressive) common button.
@@ -20,17 +23,21 @@ import { cn } from "@/lib/utils"
  *
  * "full" is written as half the height (not 9999px) so the corner radius can
  * animate smoothly into the pressed and selected shapes.
+ *
+ * The corner radius is driven by a spring (see useShapeSpring), not a CSS
+ * transition. CSS still owns the target values through the --btn-radius-*
+ * variables, so overriding them in className keeps working.
  */
 
 const buttonVariants = cva(
   [
     "relative isolate inline-flex shrink-0 items-center justify-center",
     "whitespace-nowrap select-none cursor-pointer no-underline",
-    // Shape morphs on the expressive "fast spatial" spring (slight overshoot);
-    // colour and elevation on the "fast effects" curve.
-    "[transition:border-radius_350ms_cubic-bezier(0.42,1.67,0.21,0.9),background-color_150ms_cubic-bezier(0.31,0.94,0.34,1),color_150ms_cubic-bezier(0.31,0.94,0.34,1),box-shadow_150ms_cubic-bezier(0.31,0.94,0.34,1)]",
+    // Colour and elevation on the "fast effects" curve
+    "[transition:background-color_150ms_cubic-bezier(0.31,0.94,0.34,1),color_150ms_cubic-bezier(0.31,0.94,0.34,1),box-shadow_150ms_cubic-bezier(0.31,0.94,0.34,1)]",
     "motion-reduce:transition-none",
-    "rounded-(--btn-radius) active:rounded-(--btn-radius-pressed)",
+    // --btn-radius-live is written by the spring; before hydration the resting radius applies
+    "rounded-[var(--btn-radius-live,var(--btn-radius))]",
     // State layer: content colour at 8% hover, 10% focus, 10% pressed
     "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit]",
     "before:bg-current before:opacity-0 before:transition-opacity before:duration-150",
@@ -79,34 +86,40 @@ const buttonVariants = cva(
       {
         variant: "elevated",
         toggle: ["default", "unselected"],
-        className: "bg-m3-surface-container-low text-m3-primary shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_2px_6px_2px_rgb(0_0_0/0.15)] active:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]",
+        className:
+          "bg-m3-surface-container-low text-m3-primary shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_2px_6px_2px_rgb(0_0_0/0.15)] active:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]",
       },
       {
         variant: "elevated",
         toggle: "selected",
-        className: "bg-m3-primary text-m3-on-primary shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_2px_6px_2px_rgb(0_0_0/0.15)] active:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]",
+        className:
+          "bg-m3-primary text-m3-on-primary shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_2px_6px_2px_rgb(0_0_0/0.15)] active:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]",
       },
       // Filled
       {
         variant: "filled",
         toggle: ["default", "selected"],
-        className: "bg-m3-primary text-m3-on-primary hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
+        className:
+          "bg-m3-primary text-m3-on-primary hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
       },
       {
         variant: "filled",
         toggle: "unselected",
-        className: "bg-m3-surface-container text-m3-on-surface-variant hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
+        className:
+          "bg-m3-surface-container text-m3-on-surface-variant hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
       },
       // Tonal
       {
         variant: "tonal",
         toggle: ["default", "unselected"],
-        className: "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
+        className:
+          "bg-m3-secondary-container text-m3-on-secondary-container hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
       },
       {
         variant: "tonal",
         toggle: "selected",
-        className: "bg-m3-secondary text-m3-on-secondary hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
+        className:
+          "bg-m3-secondary text-m3-on-secondary hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none",
       },
       // Outlined
       {
@@ -150,6 +163,95 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
   leadingIcon?: React.ReactNode
   /** Icon shown after the label. Decorative: hidden from screen readers. */
   trailingIcon?: React.ReactNode
+  /**
+   * Motion scheme for the shape spring. Defaults to the nearest
+   * MotionProvider, else "expressive". Reduced-motion users always get "none".
+   */
+  motion?: MotionPreference
+}
+
+type Handler<E> = ((event: E) => void) | undefined
+
+/** Runs the consumer's handler first; ours is skipped if they call preventDefault(). */
+function compose<E extends React.SyntheticEvent>(
+  theirs: Handler<E>,
+  ours: (event: E) => void
+) {
+  return (event: E) => {
+    theirs?.(event)
+    if (!event.defaultPrevented) ours(event)
+  }
+}
+
+function mergeRefs<T>(
+  ...refs: (React.Ref<T> | undefined)[]
+): React.RefCallback<T> {
+  return (node) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(node)
+      else if (ref) ref.current = node
+    }
+  }
+}
+
+const isPressKey = (key: string) => key === " " || key === "Enter"
+
+/**
+ * Springs the corner radius between the resting and pressed shapes.
+ * Targets are read from the computed --btn-radius / --btn-radius-pressed,
+ * and the spring writes --btn-radius-live without re-rendering React.
+ */
+function useShapeSpring(
+  settings: ReturnType<typeof useMotion>,
+  deps: React.DependencyList
+) {
+  const node = React.useRef<HTMLElement | null>(null)
+  const spring = React.useRef<Spring | null>(null)
+  const pressed = React.useRef(false)
+  const motion = React.useRef(settings)
+
+  const animate = React.useCallback(() => {
+    const el = node.current
+    if (!el) return
+    const target = parseFloat(
+      getComputedStyle(el).getPropertyValue(
+        pressed.current ? "--btn-radius-pressed" : "--btn-radius"
+      )
+    )
+    if (Number.isNaN(target)) return
+
+    if (!spring.current) {
+      spring.current = new Spring(target, (value) =>
+        el.style.setProperty("--btn-radius-live", `${Math.max(0, value)}px`)
+      )
+      spring.current.set(target)
+    } else if (motion.current.scheme === "none") {
+      spring.current.set(target)
+    } else if (target !== spring.current.target || spring.current.isAnimating) {
+      const { scheme, durationScale } = motion.current
+      spring.current.to(target, springs[scheme].fastSpatial, durationScale)
+    }
+  }, [])
+
+  // Resting shape, size or className changed: spring to the new resting radius
+  React.useLayoutEffect(() => {
+    motion.current = settings
+    animate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animate, settings.scheme, settings.durationScale, ...deps])
+
+  React.useEffect(() => () => spring.current?.stop(), [])
+
+  const press = React.useCallback(
+    (down: boolean) => {
+      if (pressed.current === down) return
+      pressed.current = down
+      animate()
+    },
+    [animate]
+  )
+
+  return { node, press }
 }
 
 function Button({
@@ -162,7 +264,16 @@ function Button({
   leadingIcon,
   trailingIcon,
   disabled,
+  motion,
+  ref,
   children,
+  onPointerDown,
+  onPointerUp,
+  onPointerLeave,
+  onPointerCancel,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   ...props
 }: ButtonProps) {
   const Comp = asChild ? Slot.Root : "button"
@@ -178,6 +289,13 @@ function Button({
     ? { "aria-disabled": true, tabIndex: -1 }
     : {}
 
+  const motionSettings = useMotion(motion)
+  const shapeSpring = useShapeSpring(motionSettings, [
+    restingShape,
+    size,
+    className,
+  ])
+
   return (
     <Comp
       data-slot="button"
@@ -186,6 +304,7 @@ function Button({
       data-shape={shape}
       data-selected={isToggle ? selected : undefined}
       data-disabled={isDisabled ? "" : undefined}
+      data-motion={motionSettings.scheme}
       aria-pressed={isToggle ? selected : undefined}
       {...(asChild ? disabledLinkProps : { type: "button" as const, disabled })}
       className={cn(
@@ -193,6 +312,23 @@ function Button({
         className
       )}
       {...props}
+      ref={mergeRefs(ref, shapeSpring.node)}
+      onPointerDown={compose(
+        onPointerDown,
+        (e) => e.button === 0 && shapeSpring.press(true)
+      )}
+      onPointerUp={compose(onPointerUp, () => shapeSpring.press(false))}
+      onPointerLeave={compose(onPointerLeave, () => shapeSpring.press(false))}
+      onPointerCancel={compose(onPointerCancel, () => shapeSpring.press(false))}
+      onKeyDown={compose(
+        onKeyDown,
+        (e) => isPressKey(e.key) && !e.repeat && shapeSpring.press(true)
+      )}
+      onKeyUp={compose(
+        onKeyUp,
+        (e) => isPressKey(e.key) && shapeSpring.press(false)
+      )}
+      onBlur={compose(onBlur, () => shapeSpring.press(false))}
     >
       {leadingIcon && (
         <span aria-hidden className="inline-flex">

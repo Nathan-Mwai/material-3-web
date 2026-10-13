@@ -13,14 +13,30 @@ import {
   SunIcon,
 } from "@/registry/material-v1/ui/icons"
 import { cn } from "@/lib/utils"
+import { MotionProvider } from "@/lib/motion"
+import { SpringTrace } from "./spring-trace"
 
 type Variant = NonNullable<ButtonProps["variant"]>
 type Size = NonNullable<ButtonProps["size"]>
 type Shape = NonNullable<ButtonProps["shape"]>
+type Motion = NonNullable<ButtonProps["motion"]>
 
 const VARIANTS: Variant[] = ["filled", "tonal", "elevated", "outlined", "text"]
 const SIZES: Size[] = ["xs", "sm", "md", "lg", "xl"]
 const SHAPES: Shape[] = ["round", "square"]
+const MOTIONS: Motion[] = ["expressive", "standard", "none"]
+const SLOW_MOTION = ["1x", "5x", "10x"] as const
+type SlowMotion = (typeof SLOW_MOTION)[number]
+
+// Mirrors the --btn-radius-* values in button.tsx, for the spring trace
+const RADII: Record<Size, { round: number; square: number; pressed: number }> =
+  {
+    xs: { round: 16, square: 12, pressed: 8 },
+    sm: { round: 20, square: 12, pressed: 8 },
+    md: { round: 28, square: 16, pressed: 12 },
+    lg: { round: 48, square: 28, pressed: 16 },
+    xl: { round: 68, square: 28, pressed: 16 },
+  }
 
 const ICONS = {
   none: null,
@@ -145,6 +161,8 @@ export function ButtonPlayground() {
   const [variant, setVariant] = React.useState<Variant>("filled")
   const [size, setSize] = React.useState<Size>("sm")
   const [shape, setShape] = React.useState<Shape>("round")
+  const [motion, setMotion] = React.useState<Motion>("expressive")
+  const [slowMotion, setSlowMotion] = React.useState<SlowMotion>("1x")
   const [isToggle, setIsToggle] = React.useState(false)
   const [selected, setSelected] = React.useState(false)
   const [disabled, setDisabled] = React.useState(false)
@@ -170,6 +188,9 @@ export function ButtonPlayground() {
 
   const canToggle = variant !== "text"
   const toggleActive = isToggle && canToggle
+  const durationScale = parseInt(slowMotion)
+  const restingShape =
+    toggleActive && selected ? (shape === "round" ? "square" : "round") : shape
   const leadingIcon = ICONS[leading]
   const trailingIcon = ICONS[trailing]
 
@@ -177,45 +198,65 @@ export function ButtonPlayground() {
     variant !== "filled" && `  variant="${variant}"`,
     size !== "sm" && `  size="${size}"`,
     shape !== "round" && `  shape="${shape}"`,
+    motion !== "expressive" && `  motion="${motion}"`,
     toggleActive && `  selected={${selected}}`,
     toggleActive && "  onClick={() => setSelected((s) => !s)}",
     disabled && "  disabled",
     leadingIcon && `  leadingIcon={<${leadingIcon.name} />}`,
     trailingIcon && `  trailingIcon={<${trailingIcon.name} />}`,
   ].filter(Boolean)
-  const code = props.length
+  const button = props.length
     ? `<Button\n${props.join("\n")}\n>\n  ${label}\n</Button>`
     : `<Button>${label}</Button>`
+  const code =
+    durationScale === 1
+      ? button
+      : `// Debug only: slows every spring ${durationScale}x\n<MotionProvider durationScale={${durationScale}}>\n${button.replace(/^/gm, "  ")}\n</MotionProvider>`
 
   return (
     <main className="mx-auto grid w-full max-w-7xl flex-1 gap-6 p-4 sm:p-6 lg:grid-cols-[1fr_340px] lg:p-8">
-      {/* Stage */}
-      <section className="flex min-h-[60vh] flex-col overflow-hidden rounded-[28px] bg-m3-surface-container-low">
-        <div className="flex items-center justify-between px-6 pt-5 text-sm text-m3-on-surface-variant">
-          <span className="font-medium">Button</span>
-          <span className="font-mono text-xs">
-            {variant} · {size} · {shape}
-            {toggleActive && ` · ${selected ? "selected" : "unselected"}`}
-          </span>
-        </div>
-        <div className="flex flex-1 items-center justify-center p-8">
-          <Button
-            variant={variant}
-            size={size}
-            shape={shape}
-            selected={toggleActive ? selected : undefined}
-            disabled={disabled}
-            leadingIcon={leadingIcon?.node}
-            trailingIcon={trailingIcon?.node}
-            onClick={toggleActive ? () => setSelected((s) => !s) : undefined}
-          >
-            {label}
-          </Button>
-        </div>
-        <pre className="overflow-x-auto border-t border-m3-outline-variant/50 bg-m3-surface-container px-6 py-4 font-mono text-xs/5 text-m3-on-surface-variant">
-          <code>{code}</code>
-        </pre>
-      </section>
+      <div className="flex min-w-0 flex-col gap-6">
+        {/* Stage */}
+        <section className="flex min-h-[60vh] flex-col overflow-hidden rounded-[28px] bg-m3-surface-container-low">
+          <div className="flex items-center justify-between px-6 pt-5 text-sm text-m3-on-surface-variant">
+            <span className="font-medium">Button</span>
+            <span className="font-mono text-xs">
+              {variant} · {size} · {shape} · {motion}
+              {toggleActive && ` · ${selected ? "selected" : "unselected"}`}
+            </span>
+          </div>
+          <div className="flex flex-1 items-center justify-center p-8">
+            <MotionProvider durationScale={durationScale}>
+              <Button
+                variant={variant}
+                size={size}
+                shape={shape}
+                motion={motion}
+                selected={toggleActive ? selected : undefined}
+                disabled={disabled}
+                leadingIcon={leadingIcon?.node}
+                trailingIcon={trailingIcon?.node}
+                onClick={
+                  toggleActive ? () => setSelected((s) => !s) : undefined
+                }
+              >
+                {label}
+              </Button>
+            </MotionProvider>
+          </div>
+          <pre className="overflow-x-auto border-t border-m3-outline-variant/50 bg-m3-surface-container px-6 py-4 font-mono text-xs/5 text-m3-on-surface-variant">
+            <code>{code}</code>
+          </pre>
+        </section>
+
+        <section className="rounded-[28px] bg-m3-surface-container-low p-6">
+          <SpringTrace
+            from={RADII[size][restingShape]}
+            to={RADII[size].pressed}
+            highlight={motion}
+          />
+        </section>
+      </div>
 
       {/* Controls */}
       <aside className="flex flex-col gap-6 rounded-[28px] bg-m3-surface-container-low p-6">
@@ -225,12 +266,29 @@ export function ButtonPlayground() {
           value={variant}
           onChange={setVariant}
         />
-        <Segmented label="Size" options={SIZES} value={size} onChange={setSize} />
+        <Segmented
+          label="Size"
+          options={SIZES}
+          value={size}
+          onChange={setSize}
+        />
         <Segmented
           label="Shape"
           options={SHAPES}
           value={shape}
           onChange={setShape}
+        />
+        <Segmented
+          label="Motion"
+          options={MOTIONS}
+          value={motion}
+          onChange={setMotion}
+        />
+        <Segmented
+          label="Slow motion"
+          options={SLOW_MOTION}
+          value={slowMotion}
+          onChange={setSlowMotion}
         />
 
         <label className="flex flex-col gap-2 text-sm font-medium text-m3-on-surface-variant">
@@ -243,7 +301,11 @@ export function ButtonPlayground() {
         </label>
 
         <div className="grid grid-cols-2 gap-3">
-          <IconSelect label="Leading icon" value={leading} onChange={setLeading} />
+          <IconSelect
+            label="Leading icon"
+            value={leading}
+            onChange={setLeading}
+          />
           <IconSelect
             label="Trailing icon"
             value={trailing}

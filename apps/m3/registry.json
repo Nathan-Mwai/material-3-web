@@ -122,11 +122,23 @@
       }
     },
         {
+            "name":"motion",
+            "type":"registry:lib",
+            "title":"Motion",
+            "description":"M3 spring tokens (expressive and standard), a dependency-free spring, and MotionProvider.",
+            "files":[
+                {
+                    "path":"lib/motion.tsx",
+                    "type":"registry:lib"
+                }
+            ]
+        },
+        {
             "name":"button",
             "type":"registry:ui",
             "title":"Button",
             "description":"A button component that adheres to Material 3 design principles.",
-            "registryDependencies":["@m3/utils","@m3/tokens"],
+            "registryDependencies":["@m3/utils","@m3/tokens","@m3/motion"],
             "dependencies":["class-variance-authority","radix-ui"],
             "files":[
                 {
