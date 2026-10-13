@@ -1,116 +1,171 @@
+import type { Metadata } from "next"
 import Link from "next/link"
-import Button from "@/registry/material-v1/ui/button"
+import Button, { type ButtonProps } from "@/registry/material-v1/ui/button"
+import { CopyCommand } from "../_site/copy-command"
 
-const ArrowRightIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-4"
-  >
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-)
+export const metadata: Metadata = {
+  title: "Components · Material 3 Web",
+  description: "Material 3 components in the registry, when to use each one, and how to install them.",
+}
 
-export default function ComponentsIndexPage() {
+const DOCS_URL =
+  "https://github.com/Nathan-Mwai/material-3-web/blob/main/apps/m3/registry/material-v1/ui/button.md"
+
+// Emphasis guidance from m3.material.io/components/buttons/guidelines
+const USE_CASES: {
+  variant: NonNullable<ButtonProps["variant"]>
+  label: string
+  when: string
+}[] = [
+  {
+    variant: "filled",
+    label: "Save changes",
+    when: "Highest emphasis. The action that completes the task on screen, such as saving or confirming.",
+  },
+  {
+    variant: "tonal",
+    label: "Next",
+    when: "A step below filled. Important actions that aren't the final one, like Next in a setup flow.",
+  },
+  {
+    variant: "elevated",
+    label: "Add to album",
+    when: "A tonal button with a shadow. Reach for it only when the button has to stand off a busy or patterned background.",
+  },
+  {
+    variant: "outlined",
+    label: "Back",
+    when: "Medium emphasis. Important actions that aren't the primary one, often next to a filled button.",
+  },
+  {
+    variant: "text",
+    label: "View details",
+    when: "Lowest emphasis. Minor actions, and lists of options inside dialogs and cards.",
+  },
+]
+
+// From the README's component status table
+const IN_PROGRESS = [
+  { name: "Icon Button", variants: "Standard, filled, tonal, outlined" },
+  { name: "Chips", variants: "Assist, filter, input, suggestion" },
+  { name: "Navigation Bar", variants: "Bottom bar and rail" },
+  { name: "Cards", variants: "Elevated, filled, outlined" },
+  { name: "Switch", variants: "Standard, with icons" },
+  { name: "Dialog", variants: "Basic, full-screen" },
+  { name: "Text Field", variants: "Outlined, filled" },
+  { name: "Floating Action Button", variants: "Standard, small, large, extended" },
+]
+
+const code = "font-mono text-[0.9em] text-ink"
+
+export default function ComponentsPage() {
   return (
-    <main className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col gap-8">
-      {/* Header Section */}
-      <section className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-m3-tertiary-container text-m3-on-tertiary-container">
-            Registry Alpha
-          </span>
-          <span className="text-xs text-m3-on-surface-variant">
-            Material 3 Design System
-          </span>
-        </div>
-
-        <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-m3-on-surface">
-          Components Catalog
+    <main className="mx-auto flex w-full max-w-[1280px] flex-col gap-[clamp(4rem,8vw,7rem)] px-6 pt-[clamp(3rem,5vw,5rem)] pb-[clamp(4rem,8vw,8rem)]">
+      <header className="flex max-w-[60ch] flex-col gap-4">
+        <h1 className="text-[clamp(2.5rem,5vw,4rem)]/[1.1] font-bold tracking-tight">
+          Components
         </h1>
-        <p className="text-base text-m3-on-surface-variant max-w-2xl leading-relaxed">
-          Open-source, shadcn-compatible Material 3 components designed for React, Tailwind CSS, and Radix UI primitives. Copy source code directly or install via CLI.
+        <p className="text-lg/[1.7] text-ink-muted">
+          One component is in the registry today. Its entry shows when to reach
+          for each variant and how to install it.
         </p>
-      </section>
+      </header>
 
-      {/* Development Status Notice */}
-      <section className="rounded-xl border border-m3-outline-variant/60 bg-m3-surface-container-low p-5">
-        <h2 className="text-sm font-semibold text-m3-on-surface">
-          First Component Release
-        </h2>
-        <p className="text-xs sm:text-sm text-m3-on-surface-variant mt-1 leading-relaxed">
-          We are currently focusing on the Button component as our first production-ready milestone. Additional Material 3 components (Chips, Cards, Dialogs, Top App Bar, Floating Action Buttons) are scheduled for subsequent iterations.
-        </p>
-      </section>
-
-      {/* Component Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Button Card (Active) */}
-        <div className="rounded-2xl border border-m3-outline-variant/60 bg-m3-surface-container-low p-6 flex flex-col justify-between gap-6 hover:shadow-xs transition-shadow">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold text-m3-on-surface">Button</span>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-m3-primary-container text-m3-on-primary-container font-medium">
-                Live Preview
+      <article aria-labelledby="button-title" className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex max-w-[60ch] flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <h2 id="button-title" className="text-[2.25rem]/tight font-bold">
+                Button
+              </h2>
+              <span className="rounded-sm border border-seal px-1.5 text-[0.8125rem]/5 font-semibold text-seal">
+                Beta
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-m3-on-surface-variant leading-relaxed">
-              Material 3 action component featuring filled, tonal, elevated, outlined, and text variants with fluid shape morphing and touch targets.
+            <p className="text-ink-muted">
+              The M3 Expressive common button. Five variants, five sizes, round
+              or square, plain or toggle, with spring motion on the shape and
+              colors.
             </p>
-
-            {/* Mini Live Preview */}
-            <div className="rounded-xl bg-m3-surface-container-lowest p-4 flex flex-wrap items-center justify-center gap-2 border border-m3-outline-variant/30 my-2">
-              <Button variant="filled" size="xs">Filled</Button>
-              <Button variant="tonal" size="xs">Tonal</Button>
-              <Button variant="outlined" size="xs">Outlined</Button>
-            </div>
           </div>
-
-          <Button asChild variant="filled" size="sm" trailingIcon={<ArrowRightIcon />}>
-            <Link href="/components/button">
-              Explore Button Component
-            </Link>
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild variant="filled">
+              <Link href="/components/button">Open the playground</Link>
+            </Button>
+            <Button asChild variant="outlined" className="text-ink">
+              <a href={DOCS_URL} target="_blank" rel="noreferrer">
+                Read the docs on GitHub
+              </a>
+            </Button>
+          </div>
         </div>
 
-        {/* Upcoming Placeholder Cards */}
-        <div className="rounded-2xl border border-m3-outline-variant/40 bg-m3-surface-container-lowest/50 p-6 flex flex-col justify-between gap-6 opacity-75">
+        <div>
+          <h3 className="mb-4 text-[1.5rem]/tight font-semibold">
+            When to use each variant
+          </h3>
+          <ol className="flex flex-col divide-y divide-wash/40 border-y border-wash/40">
+            {USE_CASES.map((useCase) => (
+              <li
+                key={useCase.variant}
+                className="grid gap-4 py-4 sm:grid-cols-[15rem_1fr] sm:items-center sm:gap-8"
+              >
+                <div className="m3-stage flex h-24 items-center justify-center rounded-lg">
+                  <Button variant={useCase.variant}>{useCase.label}</Button>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="font-semibold capitalize">{useCase.variant}</p>
+                  <p className="max-w-[60ch] text-ink-muted">{useCase.when}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[5fr_7fr]">
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold text-m3-on-surface">Chip</span>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-m3-surface-container-highest text-m3-on-surface-variant font-medium">
-                Coming Next
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-m3-on-surface-variant leading-relaxed">
-              Filter, assist, suggestion, and input chips following official Material 3 specification.
+            <h3 className="text-[1.5rem]/tight font-semibold">Install</h3>
+            <p className="text-ink-muted">
+              Needs the <code className={code}>@m3</code> registry entry in{" "}
+              <code className={code}>components.json</code>. The{" "}
+              <Link
+                href="/#install"
+                className="sumi-focus text-ink underline decoration-wash underline-offset-4 hover:decoration-seal"
+              >
+                install steps
+              </Link>{" "}
+              show how to add it. The command also brings in{" "}
+              <code className={code}>utils</code>,{" "}
+              <code className={code}>tokens</code> and{" "}
+              <code className={code}>motion</code>.
             </p>
           </div>
-          <span className="text-xs font-mono text-m3-on-surface-variant">
-            Planned for sprint release
-          </span>
+          <CopyCommand label="Install command" code="npx shadcn@latest add @m3/button" />
         </div>
+      </article>
 
-        <div className="rounded-2xl border border-m3-outline-variant/40 bg-m3-surface-container-lowest/50 p-6 flex flex-col justify-between gap-6 opacity-75">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold text-m3-on-surface">Card</span>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-m3-surface-container-highest text-m3-on-surface-variant font-medium">
-                Coming Next
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-m3-on-surface-variant leading-relaxed">
-              Elevated, filled, and outlined surface containers with structured header, media, and action slots.
-            </p>
-          </div>
-          <span className="text-xs font-mono text-m3-on-surface-variant">
-            Planned for sprint release
-          </span>
+      <section
+        id="in-progress"
+        aria-labelledby="in-progress-title"
+        className="grid scroll-mt-20 gap-8 border-t border-wash/40 pt-12 md:grid-cols-[4fr_8fr]"
+      >
+        <div className="flex flex-col gap-3">
+          <h2 id="in-progress-title" className="text-[1.5rem]/tight font-semibold">
+            In progress
+          </h2>
+          <p className="text-ink-muted">
+            These aren&rsquo;t in the registry yet, so there is nothing to
+            install.
+          </p>
         </div>
+        <ul className="grid gap-x-8 sm:grid-cols-2">
+          {IN_PROGRESS.map((item) => (
+            <li key={item.name} className="flex flex-col border-b border-wash/40 py-3">
+              <span className="font-medium">{item.name}</span>
+              <span className="text-sm text-ink-muted">{item.variants}</span>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   )

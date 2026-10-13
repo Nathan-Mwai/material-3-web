@@ -1,9 +1,23 @@
 import type { Metadata } from "next"
-import { Roboto, Roboto_Mono } from "next/font/google"
+import { JetBrains_Mono, Noto_Serif_JP, Roboto } from "next/font/google"
 import "./globals.css"
 import { SiteHeader } from "./site-header"
 import { SiteFooter } from "./site-footer"
 
+const notoSerifJP = Noto_Serif_JP({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-jp",
+  display: "swap",
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+})
+
+// Previews keep Roboto, the typeface the M3 type scale is specified in
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
@@ -11,17 +25,10 @@ const roboto = Roboto({
   display: "swap",
 })
 
-const robotoMono = Roboto_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  variable: "--font-roboto-mono",
-  display: "swap",
-})
-
 export const metadata: Metadata = {
-  title: "Material 3 Design for Web — React Component Library",
+  title: "Material 3 Web: Material 3 components you copy into your React app",
   description:
-    "An open-source, shadcn-style component library and registry for Material 3 design in React and Tailwind CSS.",
+    "A shadcn-style registry of Material 3 components for React and Tailwind CSS v4. In beta.",
 }
 
 export default function RootLayout({
@@ -32,12 +39,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${roboto.variable} ${robotoMono.variable} h-full antialiased`}
+      className={`${notoSerifJP.variable} ${jetbrainsMono.variable} ${roboto.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-m3-surface text-m3-on-surface font-sans selection:bg-m3-primary-container selection:text-m3-on-primary-container">
+      <body className="sumi flex min-h-full flex-col selection:bg-seal selection:text-paper">
         <SiteHeader />
-        <div className="flex-1 flex flex-col">{children}</div>
+        <div className="flex flex-1 flex-col">{children}</div>
         <SiteFooter />
       </body>
     </html>

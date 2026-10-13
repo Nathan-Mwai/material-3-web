@@ -3,39 +3,13 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Menu, Moon, Sun, X } from "lucide-react"
 import Button from "@/registry/material-v1/ui/button"
-
-const SunIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-5"
-  >
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-  </svg>
-)
-
-const MoonIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-5"
-  >
-    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-  </svg>
-)
+import { cn } from "@/lib/utils"
+import { BrushStroke, Seal } from "./_site/ink"
 
 const GitHubIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -44,126 +18,184 @@ const GitHubIcon = () => (
   </svg>
 )
 
-export function SiteHeader() {
-  const pathname = usePathname()
+const NAV = [
+  { href: "/components", label: "Components" },
+  { href: "/components/button", label: "Button" },
+]
 
-  const isDark = React.useSyncExternalStore(
+function useIsDark() {
+  return React.useSyncExternalStore(
     (onStoreChange) => {
-      const observer = new MutationObserver(() => onStoreChange())
+      const observer = new MutationObserver(onStoreChange)
       observer.observe(document.documentElement, {
         attributes: true,
         attributeFilter: ["class"],
       })
       return () => observer.disconnect()
     },
-    () =>
-      typeof document !== "undefined"
-        ? document.documentElement.classList.contains("dark")
-        : false,
+    () => document.documentElement.classList.contains("dark"),
     () => false
   )
+}
+
+function NavLink({
+  href,
+  label,
+  active,
+  onNavigate,
+  className,
+}: {
+  href: string
+  label: string
+  active: boolean
+  onNavigate?: () => void
+  className?: string
+}) {
+  return (
+    <Button
+      asChild
+      variant="text"
+      size="sm"
+      className={cn(active ? "font-semibold text-seal" : "text-ink", className)}
+    >
+      <Link
+        href={href}
+        aria-current={active ? "page" : undefined}
+        onClick={onNavigate}
+      >
+        {label}
+        {active && (
+          // Wrapped: the Button sizes every descendant svg to its icon slot
+          <span className="pointer-events-none absolute inset-x-3 bottom-0.5 h-1.5 text-seal">
+            <BrushStroke className="!size-full" />
+          </span>
+        )}
+      </Link>
+    </Button>
+  )
+}
+
+export function SiteHeader() {
+  const pathname = usePathname()
+  const isDark = useIsDark()
+  const [menuOpen, setMenuOpen] = React.useState(false)
+  const menuButton = React.useRef<HTMLButtonElement>(null)
 
   React.useEffect(() => {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches
-    if (prefersDark && !document.documentElement.classList.contains("dark")) {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.classList.add("dark")
     }
   }, [])
 
-  const toggleTheme = () => {
-    document.documentElement.classList.toggle("dark")
-  }
+  React.useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return
+      setMenuOpen(false)
+      menuButton.current?.focus()
+    }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
+  }, [menuOpen])
+
+  // The /components link must not light up on /components/button
+  const isActive = (href: string) =>
+    href === "/components" ? pathname === href : pathname.startsWith(href)
 
   return (
     <>
-      {/* Development Banner (Alpha Notice on all pages) */}
-      <div className="w-full bg-m3-secondary-container text-m3-on-secondary-container px-4 py-2 text-xs font-medium flex items-center justify-center gap-2 border-b border-m3-outline-variant/40">
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-m3-tertiary-container text-m3-on-tertiary-container">
-          Alpha
+      <div
+        role="note"
+        className="flex items-center justify-center gap-3 border-b border-wash/40 bg-paper-deep px-4 py-2 text-[0.8125rem]/5 text-ink"
+      >
+        <span className="shrink-0 rounded-sm border border-seal px-1.5 font-semibold text-seal">
+          Beta
         </span>
         <span>
-          Material 3 Design for Web is currently in active development.
-          Components are live in preview.
+          Components and tokens can still change.{" "}
+          <Link
+            href="/#beta"
+            className="sumi-focus underline decoration-wash underline-offset-4 hover:decoration-seal"
+          >
+            What beta means here
+          </Link>
         </span>
       </div>
 
-      {/* Top App Bar per DESIGN.md */}
-      <header className="sticky top-0 z-50 w-full bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline-variant/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Brand Wordmark & Chip */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-m3-on-surface hover:opacity-90 transition-opacity"
-            >
-              <span className="size-8 rounded-full bg-m3-primary flex items-center justify-center text-m3-on-primary font-bold text-sm shadow-xs">
-                M3
-              </span>
-              <span className="font-semibold text-lg tracking-tight">
-                Material 3{" "}
-                <span className="text-m3-primary font-normal">Design</span>
-              </span>
-            </Link>
-          </div>
+      <header className="sticky top-0 z-[100] border-b border-wash/40 bg-paper">
+        <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-6">
+          <Link
+            href="/"
+            className="sumi-focus flex items-center gap-3 text-ink"
+            aria-label="Material 3 Web, home"
+          >
+            <Seal />
+            <span className="text-lg font-semibold tracking-tight">
+              Material 3 Web
+            </span>
+          </Link>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
-            <Link href="/components">
-              {/* <Button
-                variant={pathname === "/components" ? "tonal" : "text"}
-                size="sm"
-                className="text-sm font-medium"
-              >
-                Components
-              </Button>
-            </Link>
-            <Link href="/components/button">
-              <Button
-                variant={
-                  pathname.startsWith("/components/button") ? "tonal" : "text"
-                }
-                size="sm"
-                className="text-sm font-medium"
-              >
-                Button Docs
-              </Button> */}
-            </Link>
+          <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+            {NAV.map((item) => (
+              <NavLink key={item.href} {...item} active={isActive(item.href)} />
+            ))}
           </nav>
 
-          {/* Action icons & Theme toggle */}
-          <div className="flex items-center gap-2">
-            <a
-              href="https://github.com/Nathan-Mwai/material-3-web"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub Repository"
-            >
-              {/* <Button shape="circle" size="sm" variant="text">
+          <div className="flex items-center gap-1">
+            <Button asChild variant="text" size="xs" className="text-ink">
+              <a
+                href="https://github.com/Nathan-Mwai/material-3-web"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Source on GitHub (opens in a new tab)"
+              >
                 <GitHubIcon />
-              </Button> */}
-            </a>
-
-            {/* <Button
-              shape="circle"
-              size="sm"
+              </a>
+            </Button>
+            <Button
               variant="text"
-              onClick={toggleTheme}
-              aria-label={
-                isDark ? "Switch to light mode" : "Switch to dark mode"
-              }
+              size="xs"
+              className="text-ink"
+              onClick={() => document.documentElement.classList.toggle("dark")}
+              aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
             >
-              {isDark ? <SunIcon /> : <MoonIcon />}
-            </Button> */}
-
-            <Link href="/components/button" className="hidden sm:inline-flex">
-              {/* <Button variant="filled" size="sm">
-                Get Started
-              </Button> */}
-            </Link>
+              {isDark ? <Sun /> : <Moon />}
+            </Button>
+            <Button
+              ref={menuButton}
+              variant="text"
+              size="xs"
+              className="text-ink md:hidden"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              {menuOpen ? <X /> : <Menu />}
+            </Button>
           </div>
         </div>
+
+        {menuOpen && (
+          <nav
+            id="mobile-nav"
+            aria-label="Main"
+            className="border-t border-wash/40 px-4 pt-2 pb-4 md:hidden"
+          >
+            <ul className="flex flex-col gap-1">
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <NavLink
+                    {...item}
+                    active={isActive(item.href)}
+                    onNavigate={() => setMenuOpen(false)}
+                    className="w-full justify-start"
+                  />
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </header>
     </>
   )

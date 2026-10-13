@@ -2,9 +2,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-
-
+:root,
+.m3-stage {
   /* Material 3 Core Tokens (Light Baseline Scheme #6750A4) */
   --m3-primary: #6750a4;
   --m3-on-primary: #ffffff;
@@ -39,8 +38,8 @@
   --m3-scrim: #000000;
 }
 
-.dark {
-
+.dark,
+.dark .m3-stage {
   /* Material 3 Core Tokens (Dark Baseline Scheme #D0BCFF) */
   --m3-primary: #d0bcff;
   --m3-on-primary: #381e72;
@@ -105,14 +104,104 @@
   --color-m3-inverse-surface: var(--m3-inverse-surface);
   --color-m3-inverse-on-surface: var(--m3-inverse-on-surface);
   --color-m3-inverse-primary: var(--m3-inverse-primary);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-seal: var(--seal);
+  --color-wash: var(--wash);
   --font-sans: var(--font-roboto), Roboto, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-roboto-mono), Roboto Mono, monospace;
+  --font-serif: var(--font-noto-serif-jp), "Noto Serif JP", Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+}
+
+/*
+ * Sumi-e site palette (DESIGN.md). Checked for WCAG AA: ink on paper 17.2:1,
+ * ink-muted on paper 6.0:1, seal on paper 8.2:1. Wash is for borders only.
+ */
+:root {
+  --paper: #f4f1e8;
+  --paper-raised: #faf8f2;
+  --paper-deep: #e9e3d3;
+  --ink: #0d0d0d;
+  --ink-muted: #5f5b52;
+  --seal: #8a1c15;
+  --wash: #808080;
+  --grain-opacity: 0.07;
+}
+
+/* Ink-night: the same palette inverted, seal lifted to 5.4:1 */
+.dark {
+  --paper: #141312;
+  --paper-raised: #1c1a18;
+  --paper-deep: #26231f;
+  --ink: #f4f1e8;
+  --ink-muted: #8f8a80;
+  --seal: #e0645a;
+  --wash: #6b665c;
+  --grain-opacity: 0.05;
+}
+
+/*
+ * The site dogfoods the M3 Button by pointing its tokens at the Sumi-e palette.
+ * .m3-stage undoes this, so previews show exactly what the registry installs.
+ */
+.sumi {
+  --m3-primary: var(--seal);
+  --m3-on-primary: var(--paper);
+  --m3-secondary: var(--seal);
+  --m3-on-secondary: var(--paper);
+  --m3-secondary-container: var(--paper-deep);
+  --m3-on-secondary-container: var(--ink);
+  --m3-surface: var(--paper);
+  --m3-on-surface: var(--ink);
+  --m3-on-surface-variant: var(--ink-muted);
+  --m3-surface-container-lowest: var(--paper-raised);
+  --m3-surface-container-low: var(--paper-raised);
+  --m3-surface-container: var(--paper-deep);
+  --m3-surface-container-high: var(--paper-deep);
+  --m3-surface-container-highest: var(--paper-deep);
+  --m3-outline: var(--wash);
+  --m3-outline-variant: var(--wash);
+  --m3-inverse-surface: var(--ink);
+  --m3-inverse-on-surface: var(--paper);
 }
 
 body {
-  background: var(--m3-surface);
-  color: var(--m3-on-surface);
-  font-family: var(--font-sans);
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-noto-serif-jp), "Noto Serif JP", Georgia, serif;
+}
+
+/* Rice paper grain: fractal noise, kept faint so it never touches text contrast */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark body::before {
+  mix-blend-mode: screen;
+}
+
+@layer components {
+  .m3-stage {
+    background-color: var(--m3-surface-container-low);
+    color: var(--m3-on-surface);
+    font-family: var(--font-roboto), Roboto, system-ui, sans-serif;
+  }
+}
+
+/* Site links and plain controls: 2px seal ring, offset 2px (DESIGN.md inputs/focus) */
+.sumi-focus:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @keyframes m3-morph-exit {

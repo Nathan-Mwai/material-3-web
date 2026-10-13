@@ -5,7 +5,7 @@ An open-source, shadcn-style component registry bringing Google's Material 3 (M3
 Components are distributed as accessible TypeScript source files that you copy or install directly into your codebase. You own the code, the styling tokens, and the dependencies.
 
 > [!NOTE]
-> **Alpha Status**: This project is in active alpha development. The Button component and design token system are fully specified and tested. Additional Material 3 components are actively being authored and ported to the registry.
+> **Beta**: the Button and the design tokens are ready to try, but prop and token names can still change. Additional Material 3 components are being authored and ported to the registry.
 
 ---
 
@@ -43,17 +43,18 @@ Material 3 Web follows the modern code-registry pattern:
 
 ### 1. Install via CLI
 
-Add individual components into your project using the CLI:
+You need a project with Tailwind CSS v4 and shadcn set up (`npx shadcn@latest init`). Point shadcn at this registry in `components.json`, replacing the origin with wherever the site is hosted:
+
+```json
+"registries": {
+  "@m3": "https://<site>/r/{name}.json"
+}
+```
+
+Then add a component. This also installs `@m3/utils`, `@m3/tokens` and `@m3/motion`:
 
 ```bash
-# Using pnpm
-pnpm dlx @m3/ui add button
-
-# Using npm
-npx @m3/ui add button
-
-# Using bun
-bunx @m3/ui add button
+npx shadcn@latest add @m3/button
 ```
 
 ### 2. Manual Installation
@@ -61,10 +62,11 @@ bunx @m3/ui add button
 If you prefer not to use the CLI, copy the component source directly from this repository:
 
 1. Copy `apps/m3/registry/material-v1/ui/button.tsx` into your project's `components/ui/` directory.
-2. Ensure you have installed the required utility packages:
+2. Copy `apps/m3/lib/motion.tsx` and `apps/m3/lib/utils.ts` into `lib/`, and the `--m3-*` tokens from `apps/m3/app/globals.css` into your CSS.
+3. Install the npm dependencies:
 
 ```bash
-pnpm add class-variance-authority radix-ui
+pnpm add class-variance-authority radix-ui clsx tailwind-merge
 ```
 
 ### 3. Usage Example

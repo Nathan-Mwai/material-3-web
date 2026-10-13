@@ -6,9 +6,9 @@ colors:
   primary: "#F4F1E8"
   secondary: "#0D0D0D"
   tertiary: "#8A1C15"
-  neutral: "#000000"
+  neutral: "#0D0D0D"
   surface: "#808080"
-  accent: "#F4F1E8"
+  accent: "#8A1C15"
 typography:
   h1:
     fontFamily: Noto Serif JP
@@ -20,8 +20,8 @@ typography:
     fontWeight: 400
 components:
   button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.neutral}"
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.primary}"
     padding: 12px
 ---
 
@@ -33,6 +33,7 @@ That philosophy translates to interfaces more honestly than most designers admit
 
 What makes sumi-e genuinely useful as a design reference isn't the aesthetic (though it's gorgeous). It's the underlying constraint: say more with less. Ma — the Japanese concept of negative space as active, breathing presence — predates every minimalism manifesto by centuries. Empty space isn't absence. It's architecture.
 
+- Dial: ENERGY 2 / RHYTHM 3 / MOTION 1
 - Density: 5/10 — Balanced
 - Variance: 8/10 — Expressive
 - Motion: 4/10 — Subtle
@@ -40,16 +41,24 @@ What makes sumi-e genuinely useful as a design reference isn't the aesthetic (th
 - **Style:** Cultural, Artistic, Fused
 - **Keywords:** sumi-e, ink, asian, traditional, landscape, tech, isometric, red accent
 - **Era:** Traditional/Modern Fusion
-- **Light/Dark:** ✓ Full / ✗ No
+- **Light/Dark:** Both. Light is rice paper, dark is ink-night
 
 ## Colors
 
 - **Background** (#F4F1E8) — Primary background surface
-- **Text** (#0D0D0D) — Primary text color
-- **Accent** (#8A1C15) — Primary accent, CTAs and interactive elements
-- **Ink Black** (#000000) — Deep contrast surface
-- **Wash Grey** (#808080) — Secondary text, borders, muted elements
-- **Paper Cream** (#F4F1E8) — Secondary surface
+- **Text** (#0D0D0D) — Primary text color, also the deepest ink (no pure black)
+- **Accent** (#8A1C15) — Seal red. The only accent: primary button fill, active nav item, the seal mark
+- **Wash Grey** (#808080) — Borders and brush strokes only. It is 3.5:1 on paper, too low for text
+- **Muted text** (#5F5B52) — Secondary text, 6.0:1 on paper
+- **Paper Cream** (#F4F1E8) — Secondary surface, with #FAF8F2 (raised) and #E9E3D3 (deep) tints
+
+### Ink-night (dark)
+
+Paper #141312, ink #F4F1E8, muted #8F8A80, wash #6B665C, seal lifted to #E0645A (5.4:1).
+
+### Site vs. components
+
+The site shell uses this palette. The registry components keep the baseline M3 tokens, because those are what people install. The site re-skins the M3 Button by pointing its `--m3-*` tokens at this palette (`.sumi`); previews undo that (`.m3-stage`).
 
 
 ## Typography
@@ -83,7 +92,7 @@ Scale:
 Traditional ink wash landscapes mixed with modern isometric technical diagrams, aged rice paper grain, ink bleed.
 
 - **Physics:** Ease-out curves, 200-300ms duration. Smooth and predictable.
-- **Entry animations:** Fade + translate-Y (16px → 0) over 420ms ease-out. Staggered cascades for lists: 80ms between items.
+- **Entry animations:** None. The components' spring motion is the showpiece, so the page stays still (decided 2026-10-13, antislop R-19).
 - **Hover states:** Subtle color shift + shadow adjustment over 200ms.
 - **Page transitions:** Fade only (200ms).
 - **Performance:** Only transform and opacity animated. No layout-triggering properties.
@@ -107,7 +116,7 @@ Base corner radius: 8px. See rounded tokens in front matter for the full scale.
 
 ## Do's and Don'ts
 
-- No emojis in UI — use icon system only (Lucide, Heroicons)
+- No emojis in UI — use icon system only (Lucide; brand marks such as GitHub stay inline SVG). Kept by owner decision over antislop R-04
 - No pure black (#000000) — use off-black or charcoal variants
 - No oversaturated accent colors (saturation cap: 80%)
 - No 3-column equal-width feature layouts — use zig-zag or asymmetric grid

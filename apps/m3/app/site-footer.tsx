@@ -1,49 +1,42 @@
 import Link from "next/link"
+import { BrushStroke } from "./_site/ink"
+
+const linkClass =
+  "sumi-focus inline-flex min-h-11 items-center underline-offset-4 hover:text-seal hover:underline"
 
 export function SiteFooter() {
   return (
-    <footer className="w-full bg-m3-surface-container text-m3-on-surface-variant border-t border-m3-outline-variant/40 py-12 px-6 sm:px-8 mt-auto">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs leading-relaxed">
-        <div className="flex flex-col gap-1 text-center md:text-left">
-          <p className="font-semibold text-m3-on-surface text-sm">
-            Material 3 Design for Web
+    <footer className="mt-auto px-6 pt-4 pb-10 text-sm text-ink-muted">
+      <div className="mx-auto max-w-[1280px]">
+        <BrushStroke className="mb-8 h-2.5 text-wash/60" />
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <p className="max-w-xl leading-relaxed">
+            Material 3 Web is an independent open-source project, not affiliated
+            with or endorsed by Google LLC. &ldquo;Material&rdquo; is a trademark
+            of Google LLC.
           </p>
-          <p className="max-w-xl text-m3-on-surface-variant">
-            An independent open-source component library and registry for React
-            & Tailwind CSS. Not affiliated with or endorsed by Google LLC.
-            &ldquo;Material&rdquo; is a trademark of Google LLC.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-6 text-m3-on-surface-variant font-medium">
-          <Link
-            href="/components"
-            className="hover:text-m3-primary transition-colors"
-          >
-            Components
-          </Link>
-          <Link
-            href="/components/button"
-            className="hover:text-m3-primary transition-colors"
-          >
-            Button Docs
-          </Link>
-          <a
-            href="https://m3.material.io"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:text-m3-primary transition-colors"
-          >
-            M3 Specs
-          </a>
-          <a
-            href="https://github.com/Nathan-Mwai/material-3-web"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:text-m3-primary transition-colors"
-          >
-            GitHub
-          </a>
+          <ul className="flex flex-wrap gap-x-6 text-ink">
+            <li>
+              <Link href="/components" className={linkClass}>
+                Components
+              </Link>
+            </li>
+            <li>
+              <a href="https://m3.material.io" target="_blank" rel="noreferrer" className={linkClass}>
+                M3 spec
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/Nathan-Mwai/material-3-web"
+                target="_blank"
+                rel="noreferrer"
+                className={linkClass}
+              >
+                GitHub
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
